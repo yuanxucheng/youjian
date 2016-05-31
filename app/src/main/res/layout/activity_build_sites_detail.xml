@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/theme"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.example.yj.mapapp.activity.BuildEnterprisesDetailActivity">
+
+    <!--<include layout="@layout/content_build_enterprises_detail" />-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buildSites_layout_height"
+        android:background="@color/frist_toolbar_background">
+
+        <ImageView
+            android:id="@+id/id_back"
+            android:layout_width="@dimen/buildSites_imageView_width"
+            android:layout_height="@dimen/buildSites_imageView_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/buildSites_imageView_marginRight"
+            android:src="@mipmap/icon_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/buildSites_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buildSites_font__titleSize" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/buildSites_margin_bottom"
+            android:layout_marginLeft="@dimen/buildSites_margin_left"
+            android:layout_marginTop="@dimen/buildSites_margin_bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/buildSites_projectName"
+                android:textColor="#000000"
+                android:textSize="@dimen/buildSites_font__size" />
+
+            <TextView
+                android:id="@+id/tv_build_site_projectName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="@dimen/buildSites_font__size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/buildSites_margin_bottom"
+            android:layout_marginLeft="@dimen/buildSites_margin_left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buildSites_CUName"
+                android:visibility="gone"
+                android:textColor="#000000"
+                android:textSize="@dimen/buildSites_font__size" />
+
+            <TextView
+                android:id="@+id/tv_build_site_CUName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="@dimen/buildSites_font__size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/buildSites_margin_bottom"
+            android:layout_marginLeft="@dimen/buildSites_margin_left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/buildSites_contacts"
+                android:textColor="#000000"
+                android:textSize="@dimen/buildSites_font__size" />
+
+            <TextView
+                android:id="@+id/tv_build_site_contacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="@dimen/buildSites_font__size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/buildSites_margin_bottom"
+            android:layout_marginLeft="@dimen/buildSites_margin_left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buildSites_startTime"
+                android:visibility="gone"
+                android:textColor="#000000"
+                android:textSize="@dimen/buildSites_font__size" />
+
+            <TextView
+                android:id="@+id/tv_build_site_startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="@dimen/buildSites_font__size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/buildSites_margin_bottom"
+            android:layout_marginLeft="@dimen/buildSites_margin_left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buildSites_endTime"
+                android:textColor="#000000"
+                android:visibility="gone"
+                android:textSize="@dimen/buildSites_font__size" />
+
+            <TextView
+                android:id="@+id/tv_build_site_endTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="@dimen/buildSites_font__size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/buildSites_margin_bottom"
+            android:layout_marginLeft="@dimen/buildSites_margin_left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buildSites_address"
+                android:textColor="#000000"
+                android:visibility="gone"
+                android:textSize="@dimen/buildSites_font__size" />
+
+            <TextView
+                android:id="@+id/tv_build_site_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="@dimen/buildSites_font__size" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

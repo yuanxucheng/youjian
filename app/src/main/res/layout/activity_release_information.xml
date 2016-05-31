@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E9E9E9"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/release_information_layout_height"
+        android:background="@color/frist_toolbar_background">
+        *
+
+        <ImageView
+            android:id="@+id/id_back"
+            android:layout_width="@dimen/release_information_imageView_width"
+            android:layout_height="@dimen/release_information_imageView_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/release_information_imageView_marginRight"
+            android:src="@mipmap/icon_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/release_supply_demand_information"
+            android:textColor="@color/white"
+            android:textSize="@dimen/release_information_font__titleSize" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/release_information_textview_marginBottom"
+        android:layout_marginLeft="@dimen/release_information_layout_marginLeft"
+        android:layout_marginRight="@dimen/release_information_layout_marginLeft"
+        android:layout_marginTop="@dimen/release_information_layout_marginTop"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/release_information_textview_marginRight"
+                android:text="@string/release_information_title"
+                android:textSize="@dimen/release_information_edittext_textsize" />
+
+            <EditText
+                android:id="@+id/id_release_information_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/release_information_edittext_height_title"
+                android:layout_marginRight="@dimen/release_information_edittext_marginRight"
+                android:background="@color/white"
+                android:hint="@string/please_input_title_name"
+                android:singleLine="true"
+                android:textSize="@dimen/release_information_edittext_textsize" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/release_information_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/release_information_textview_marginRight"
+                android:text="@string/release_information_contacts"
+                android:textSize="@dimen/release_information_edittext_textsize" />
+
+            <EditText
+                android:id="@+id/id_release_information_contacts"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/release_information_edittext_height_contacts"
+                android:layout_marginRight="@dimen/release_information_edittext_marginRight"
+                android:background="@color/white"
+                android:hint="@string/please_input_contacts"
+                android:singleLine="true"
+                android:textSize="@dimen/release_information_edittext_textsize" />
+
+        </LinearLayout>
+        <!--android:background="@drawable/shape_register_edittext"-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/release_information_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/release_information_textview_marginRight"
+                android:text="@string/release_information_contacts_phone"
+                android:textSize="@dimen/release_information_edittext_textsize" />
+
+            <EditText
+                android:id="@+id/id_release_information_contacts_phone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/release_information_edittext_height_phone"
+                android:layout_marginRight="@dimen/release_information_edittext_marginRight"
+                android:background="@color/white"
+                android:hint="@string/please_input_contacts_phone"
+                android:singleLine="true"
+                android:textSize="@dimen/release_information_edittext_textsize" />
+        </LinearLayout>
+        <!--android:background="@drawable/shape_register_edittext"-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/release_information_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/release_information_textview_marginRight"
+                android:text="@string/release_information_details"
+                android:textSize="@dimen/release_information_edittext_textsize" />
+
+            <EditText
+                android:id="@+id/id_release_information_content"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/release_information_edittext_height_details"
+                android:layout_marginRight="@dimen/release_information_edittext_marginRight"
+                android:background="@color/white"
+                android:hint="@string/please_input_details_information"
+                android:singleLine="true"
+                android:textSize="@dimen/release_information_edittext_textsize" />
+        </LinearLayout>
+        <!--android:background="@drawable/shape_register_edittext"-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/release_information_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/release_information_textview_marginRight"
+                android:text="@string/release_information_address"
+                android:textSize="@dimen/release_information_edittext_textsize" />
+
+            <EditText
+                android:id="@+id/id_release_information_address"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/release_information_edittext_height_address"
+                android:layout_marginRight="@dimen/release_information_edittext_marginRight"
+                android:background="@color/white"
+                android:hint="@string/please_input_address_information"
+                android:singleLine="true"
+                android:textSize="@dimen/release_information_edittext_textsize" />
+        </LinearLayout>
+        <!--android:background="@drawable/shape_register_edittext"-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/release_information_margin_top"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/release_information_textview_marginRight"
+                android:text="@string/release_information_category"
+                android:textSize="@dimen/release_information_edittext_textsize" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/release_information_layout_marginRight"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/id_release_material"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/release_information_button_height"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:text="@string/release_information_material" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="@dimen/release_information_button_height"
+                    android:background="@color/gray"></View>
+
+                <Button
+                    android:id="@+id/id_release_appointed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/release_information_button_height"
+                    android:layout_weight="1"
+                    android:background="@color/grays"
+                    android:text="@string/release_information_equipment" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="@dimen/release_information_button_height"
+                    android:background="@color/gray"></View>
+
+                <Button
+                    android:id="@+id/id_release_vacancy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/release_information_button_height"
+                    android:layout_weight="1"
+                    android:background="@color/grays"
+                    android:text="@string/release_information_recruitment" />
+            </LinearLayout>
+            <!--android:background="@drawable/shape_register_edittext"-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/release_information_margin_top"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/release_information_textview_marginRight"
+                android:text="@string/release_information_category_gq"
+                android:textSize="@dimen/release_information_edittext_textsize" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/release_information_layout_marginRight"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/id_supply_information"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/release_information_button_height"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:text="@string/supply_demand_information" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="@dimen/release_information_button_height"
+                    android:background="@color/gray"></View>
+
+                <Button
+                    android:id="@+id/id_buying_leads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/release_information_button_height"
+                    android:layout_weight="1"
+                    android:background="@color/grays"
+                    android:text="@string/purchase_information" />
+            </LinearLayout>
+            <!--android:background="@drawable/shape_register_edittext"-->
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/id_now_release"
+        android:layout_width="@dimen/release_information_release_btn_width"
+        android:layout_height="@dimen/release_information_release_btn_height"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/release_information_release_btn_marginBottom"
+        android:layout_marginLeft="@dimen/release_information_release_btn_textsize_marginLeft"
+        android:layout_marginRight="@dimen/release_information_release_btn_marginRight"
+        android:layout_marginTop="@dimen/release_information_release_btn_marginTop"
+        android:background="@drawable/shape_login_greens"
+        android:text="@string/release_information_now_release"
+        android:textColor="@color/white"
+        android:textSize="@dimen/release_information_release_btn_textsize" />
+</LinearLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/theme"
+    android:orientation="vertical"
+    tools:context="com.example.yj.mapapp.activity.RelatedCompaniesActivity">
+
+    <!--<include layout="@layout/content_related_companies" />-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/related_companies_layout_height"
+        android:background="@color/frist_toolbar_background">
+
+        <ImageView
+            android:id="@+id/id_back"
+            android:layout_width="@dimen/related_companies_imageView_width"
+            android:layout_height="@dimen/related_companies_imageView_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/related_companies_imageView_marginRight"
+            android:src="@mipmap/icon_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/related_companies_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/related_companies_font__titleSize" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- 自定义控件或者重写控件在调用该控件时需要指明该控件所属的类 -->
+        <com.example.yj.mapapp.view.MListView
+            android:id="@+id/lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:scrollingCache="false" />
+    </LinearLayout>
+</LinearLayout>

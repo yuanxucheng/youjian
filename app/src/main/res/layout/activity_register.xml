@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.example.yj.mapapp.activity.RegisterActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/register_background"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/icon_back" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/fragment_cycle_viewpager_content"
+            android:name="com.buyjc.yj.banner.CycleViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="180dip"
+            android:background="@color/register_background"
+            android:src="@mipmap/login_logo" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/register_textview_marginBottom"
+        android:layout_marginLeft="@dimen/register_layout_marginLeft"
+        android:layout_marginTop="@dimen/register_layout_marginTop"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/register_textview_marginRight"
+                android:text="@string/register_user_name"
+                android:textColor="@color/phoneOrPwd"
+                android:textSize="@dimen/register_edittext_textsize" />
+
+            <EditText
+                android:layout_width="@dimen/register_edittext_width_pwd"
+                android:layout_height="@dimen/register_edittext_height_pwd"
+                android:layout_marginRight="@dimen/register_edittext_marginRight"
+                android:background="@drawable/shape_login_edittext"
+                android:hint="@string/register_enter_telephone_number"
+                android:textSize="@dimen/register_edittext_textsize" />
+
+            <Button
+                android:layout_width="@dimen/register_btn_viewPwd_width"
+                android:layout_height="@dimen/register_btn_viewPwd_height"
+                android:background="@drawable/shape_login_blue"
+                android:text="@string/register_get_identifying_code"
+                android:textColor="@color/white"
+                android:textSize="@dimen/register_viewPwd_textsize" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/register_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/register_textview_marginRight"
+                android:text="@string/register_password"
+                android:textColor="@color/phoneOrPwd"
+                android:textSize="@dimen/register_edittext_textsize" />
+
+            <EditText
+                android:layout_width="@dimen/register_edittext_width_pwd"
+                android:layout_height="@dimen/register_edittext_height_pwd"
+                android:layout_marginRight="@dimen/register_edittext_marginRight"
+                android:background="@drawable/shape_login_edittext"
+                android:hint="@string/register_enter_password"
+                android:textSize="@dimen/register_edittext_textsize" />
+
+            <Button
+                android:layout_width="@dimen/register_btn_viewPwd_width"
+                android:layout_height="@dimen/register_btn_viewPwd_height"
+                android:background="@drawable/shape_login_blue"
+                android:text="@string/view_password"
+                android:textColor="@color/white"
+                android:textSize="@dimen/register_viewPwd_textsize" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/register_margin"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/register_textview_marginRight"
+                android:text="@string/register_identifying_code"
+                android:textColor="@color/register_identifying_code"
+                android:textSize="@dimen/register_edittext_textsize" />
+
+            <EditText
+                android:layout_width="@dimen/register_edittext_width_pwd"
+                android:layout_height="@dimen/register_edittext_height_pwd"
+                android:layout_marginRight="@dimen/register_edittext_marginRight"
+                android:background="@drawable/shape_login_edittext"
+                android:textSize="@dimen/register_edittext_textsize" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/register_background"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/id_finish_register"
+            android:layout_width="@dimen/login_loginBtn_width"
+            android:layout_height="@dimen/login_loginBtn_height"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/login_loginBtn_marginBottom"
+            android:layout_marginLeft="@dimen/login_loginBtn_marginLeft"
+            android:layout_marginTop="@dimen/login_loginBtn_marginTop"
+            android:background="@drawable/shape_login_red"
+            android:text="@string/register_finish_register"
+            android:textColor="@color/white"
+            android:textSize="@dimen/login_loginBtn_textsize" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/with_username"
+                android:textSize="@dimen/login_noRegiste_textSize" />
+
+            <TextView
+                android:id="@+id/id_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_downLine"
+                android:textColor="@color/register"
+                android:textSize="@dimen/login_registe_textSize" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

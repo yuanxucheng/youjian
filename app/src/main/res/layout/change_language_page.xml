@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingLeft="24dp"
+              android:paddingRight="24dp">
+
+    <include
+        layout="@layout/black_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="33dp"/>
+
+    <TextView
+        android:id="@+id/jianti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="14dp"
+        android:paddingTop="14dp"
+        android:textColor="@color/black"
+        android:text="@string/setting_second_type_jianti"
+        android:textSize="17sp"/>
+    <include
+        layout="@layout/black_line"/>
+    <TextView
+        android:id="@+id/fanti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="14dp"
+        android:paddingTop="14dp"
+        android:textColor="@color/black"
+        android:text="@string/setting_second_type_fanti"
+        android:textSize="17sp"/>
+    <include
+        layout="@layout/black_line"/>
+    <TextView
+        android:id="@+id/english"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="14dp"
+        android:paddingTop="14dp"
+        android:textColor="@color/black"
+        android:text="@string/setting_second_type_english"
+        android:textSize="17sp"/>
+    <include
+        layout="@layout/black_line"/>
+</LinearLayout>

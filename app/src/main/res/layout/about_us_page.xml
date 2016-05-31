@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingLeft="24dp"
+              android:paddingRight="24dp">
+
+    <include
+        layout="@layout/black_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="33dp"/>
+
+    <TextView
+        android:id="@+id/us_web"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="14dp"
+        android:paddingTop="14dp"
+        android:text="@string/setting_second_us_web"
+        android:textColor="@color/black"
+        android:textSize="17sp"/>
+
+    <include
+        layout="@layout/black_line"/>
+
+    <TextView
+        android:id="@+id/us_weixin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="14dp"
+        android:paddingTop="14dp"
+        android:text="@string/setting_second_us_weixin"
+        android:textColor="@color/black"
+        android:textSize="17sp"/>
+
+    <include
+        layout="@layout/black_line"/>
+
+    <TextView
+        android:id="@+id/us_weibo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="14dp"
+        android:paddingTop="14dp"
+        android:text="@string/setting_second_us_weibo"
+        android:textColor="@color/black"
+        android:textSize="17sp"/>
+
+    <include
+        layout="@layout/black_line"/>
+
+    <RelativeLayout
+        android:id="@+id/us_tel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            android:text="@string/setting_second_us_tel"
+            android:textColor="@color/black"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/us_tel_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            android:text="@string/setting_second_us_tel_num"
+            android:textColor="@color/black"
+            android:textSize="17sp"/>
+        <!--android:drawableRight="@mipmap/setting_right"-->
+    </RelativeLayout>
+
+    <include
+        layout="@layout/black_line"/>
+    <RelativeLayout
+        android:id="@+id/us_mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            android:text="@string/setting_second_us_mail"
+            android:textColor="@color/black"
+            android:textSize="17sp"/>
+
+        <TextView
+            android:id="@+id/us_mail_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
+            android:text="@string/setting_second_us_mail_num"
+
+            android:textColor="@color/black"
+            android:textSize="17sp"/> <!--android:drawableRight="@mipmap/setting_right"-->
+    </RelativeLayout>
+
+    <include
+        layout="@layout/black_line"/>
+</LinearLayout>

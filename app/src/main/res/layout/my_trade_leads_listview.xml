@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#DEE9E8"
+    android:orientation="vertical"
+    tools:context=".activity.MyTradeLeadsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/my_buying_leads_margin_bottom"
+            android:layout_marginLeft="@dimen/my_buying_leads_margin_left"
+            android:layout_marginRight="@dimen/my_buying_leads_margin_right"
+            android:layout_marginTop="@dimen/my_buying_leads_margin_bottom"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_buying_leads_stitle"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/my_buying_leads_font__size" />
+
+                <TextView
+                    android:id="@+id/id_my_buying_leads_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/my_buying_leads_font__size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_buying_leads_category"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/my_buying_leads_font__size" />
+
+                <TextView
+                    android:id="@+id/id_my_buying_leads_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/my_buying_leads_font__size" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/my_buying_leads_margin_bottom"
+            android:layout_marginLeft="@dimen/my_buying_leads_margin_left"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_buying_leads_contacts"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/my_buying_leads_font__size" />
+
+                <TextView
+                    android:id="@+id/id_my_buying_leads_contacts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/my_buying_leads_font__size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/my_buying_leads_margin_right"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_buying_leads_phone"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/my_buying_leads_font__size" />
+
+                <TextView
+                    android:id="@+id/id_my_buying_leads_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/my_buying_leads_font__size" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/my_buying_leads_margin_bottom"
+            android:layout_marginLeft="@dimen/my_buying_leads_margin_left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_buying_leads_content"
+                android:textColor="#000000"
+                android:textSize="@dimen/my_buying_leads_font__size" />
+
+            <TextView
+                android:id="@+id/id_my_buying_leads_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="@dimen/my_buying_leads_font__size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/my_buying_leads_margin_bottom"
+            android:layout_marginLeft="@dimen/my_buying_leads_margin_left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_buying_leads_address"
+                android:textColor="#000000"
+                android:textSize="@dimen/my_buying_leads_font__size" />
+
+            <TextView
+                android:id="@+id/id_my_buying_leads_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="@dimen/my_buying_leads_font__size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/my_buying_leads_margin_bottom"
+            android:layout_marginLeft="@dimen/my_buying_leads_margin_left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_buying_leads_ctime"
+                android:textColor="#000000"
+                android:textSize="@dimen/my_buying_leads_font__size" />
+
+            <TextView
+                android:id="@+id/id_my_buying_leads_ctime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="@dimen/my_buying_leads_font__size" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

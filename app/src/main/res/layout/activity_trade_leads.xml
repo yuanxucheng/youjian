@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.example.yj.mapapp.activity.TradeLeadsActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/trade_leads_layout_height"
+        android:background="@color/frist_toolbar_background">
+
+        <ImageView
+            android:id="@+id/id_back"
+            android:layout_width="@dimen/trade_leads_imageView_width"
+            android:layout_height="@dimen/trade_leads_imageView_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/trade_leads_imageView_marginRight"
+            android:src="@mipmap/icon_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/trade_leads"
+            android:textColor="@color/white"
+            android:textSize="@dimen/trade_leads_font__titleSize1" />
+
+        <TextView
+            android:id="@+id/id_trade_leads_release_news"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/buying_leads_margin_right"
+            android:text="@string/trade_leads_release_news"
+            android:textColor="@color/green"
+            android:textSize="@dimen/trade_leads_font__titleSize3" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/trade_leads_layout_height"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/layout_supply_information"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="@string/trade_leads_supply"
+            android:textColor="@color/black"
+            android:textSize="@dimen/trade_leads_font__titleSize2" />
+
+        <TextView
+            android:id="@+id/layout_buying_leads"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:text="@string/trade_leads_buying_leads"
+            android:textColor="@color/white"
+            android:textSize="@dimen/trade_leads_font__titleSize2" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </RelativeLayout>
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/id_layout1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+        <!--&lt;!&ndash; 自定义控件或者重写控件在调用该控件时需要指明该控件所属的类 &ndash;&gt;-->
+        <!--<com.example.yj.mapapp.view.MListView-->
+            <!--android:id="@+id/lv1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:scrollbars="none"-->
+            <!--android:scrollingCache="false" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/id_layout2"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:visibility="gone">-->
+        <!--&lt;!&ndash; 自定义控件或者重写控件在调用该控件时需要指明该控件所属的类 &ndash;&gt;-->
+        <!--<com.example.yj.mapapp.view.MListView-->
+            <!--android:id="@+id/lv2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:scrollbars="none"-->
+            <!--android:scrollingCache="false" />-->
+    <!--</LinearLayout>-->
+    <!--<include layout="@layout/content_trade_leads" />-->
+</LinearLayout>

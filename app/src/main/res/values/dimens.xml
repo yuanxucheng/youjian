@@ -1,0 +1,328 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="view_small_padding">1dp</dimen>
+    <dimen name="view_padding">6dp</dimen>
+
+    <!-- 刷新 -->
+    <dimen name="footer_height">90dp</dimen>
+    <dimen name="header_height">60dp</dimen>
+    <dimen name="footer_padding">10dp</dimen>
+
+    <!--对于所有控件的Margin偏移量-->
+    <dimen name="offset_1dp">1dp</dimen>
+    <dimen name="offset_2dp">2dp</dimen>
+    <dimen name="offset_3dp">3dp</dimen>
+    <dimen name="offset_4dp">4dp</dimen>
+    <dimen name="offset_5dp">5dp</dimen>
+    <dimen name="offset_6dp">6dp</dimen>
+    <dimen name="offset_7dp">7dp</dimen>
+    <dimen name="offset_8dp">8dp</dimen>
+    <dimen name="offset_10dp">10dp</dimen>
+
+    <dimen name="font_size_tiny">106dp</dimen>
+    <dimen name="font_size_small">12dp</dimen>
+    <dimen name="font_size_nomal">14dp</dimen>
+    <dimen name="font_size_nomal_high">16dp</dimen>
+    <dimen name="font_size_large">18dp</dimen>
+    <dimen name="font_size_large_high">20dp</dimen>
+    <dimen name="font_size_xlarge">22dp</dimen>
+    <dimen name="font_size_xxlarge">24dp</dimen>
+
+    <!--首页-->
+    <dimen name="frist_font__size">22sp</dimen>
+    <dimen name="frist_font__size2">18sp</dimen>
+    <dimen name="frist_margin_left">40dp</dimen>
+    <dimen name="frist_margin_top">30dp</dimen>
+    <dimen name="frist_margin_button">40dp</dimen>
+    <dimen name="frist_margin_buttonleft">40dp</dimen>
+    <dimen name="frist_margin_buttonright">40dp</dimen>
+    <dimen name="frist_btn_popwindow">13dp</dimen>
+    <dimen name="frist_layout_height">48dp</dimen>
+    <dimen name="frist_margin">5dp</dimen>
+    <dimen name="frist_fragment_height">140dp</dimen>
+    <dimen name="frist_btn_height">70dp</dimen>
+    <dimen name="frist_btn_width">40dp</dimen>
+    <dimen name="frist_bottom_height">50dp</dimen>
+
+    <!--关联企业-->
+    <dimen name="related_companies_layout_height">48dp</dimen>
+    <dimen name="related_companies_imageView_height">30dp</dimen>
+    <dimen name="related_companies_imageView_width">30dp</dimen>
+    <dimen name="related_companies_imageView_marginRight">10dp</dimen>
+    <dimen name="related_companies_font__titleSize">22sp</dimen>
+    <dimen name="related_companies_margin_bottom">19dp</dimen>
+    <dimen name="related_companies_margin_left">8dp</dimen>
+    <dimen name="related_companies_font__size">18sp</dimen>
+    <dimen name="related_companies_listViewItem_height">150dp</dimen>
+
+    <!--建筑工地-->
+    <dimen name="buildSites_dingwei_size">16sp</dimen>
+    <!--建筑工地详情-->
+    <dimen name="buildSites_layout_height">48dp</dimen>
+    <dimen name="buildSites_imageView_height">30dp</dimen>
+    <dimen name="buildSites_imageView_width">30dp</dimen>
+    <dimen name="buildSites_imageView_marginRight">10dp</dimen>
+    <dimen name="buildSites_font__titleSize">22sp</dimen>
+    <dimen name="buildSites_font__size">18sp</dimen>
+    <dimen name="buildSites_margin_bottom">19dp</dimen>
+    <dimen name="buildSites_margin_left">8dp</dimen>
+
+    <!--建材企业-->
+    <dimen name="buildEnterprises_dingwei_size">16sp</dimen>
+    <!--建材企业详情-->
+    <dimen name="buildEnterprises_layout_height">48dp</dimen>
+    <dimen name="buildEnterprises_imageView_height">30dp</dimen>
+    <dimen name="buildEnterprises_imageView_width">30dp</dimen>
+    <dimen name="buildEnterprises_imageView_marginRight">10dp</dimen>
+    <dimen name="buildEnterprises_font__titleSize">22sp</dimen>
+    <dimen name="buildEnterprises_font__size">18sp</dimen>
+    <dimen name="buildEnterprises_margin_bottom">19dp</dimen>
+    <dimen name="buildEnterprises_margin_left">8dp</dimen>
+    <dimen name="buildEnterprises_fragment_left">15dp</dimen>
+    <dimen name="buildEnterprises_fragment_height">200dp</dimen>
+
+    <!--五金超市-->
+    <dimen name="hard_super_layout_height">48dp</dimen>
+    <dimen name="hard_super_imageView_width">30dp</dimen>
+    <dimen name="hard_super_imageView_height">30dp</dimen>
+    <dimen name="hard_super_imageView_marginRight">10dp</dimen>
+    <dimen name="hard_super_font__titleSize">22sp</dimen>
+    <dimen name="hard_super_margin_bottom">19dp</dimen>
+    <dimen name="hard_super_margin_left">8dp</dimen>
+    <dimen name="hard_super_font__size">18sp</dimen>
+    <dimen name="hard_super_recycleViewItem_height">190dp</dimen>
+
+    <!--劳务中介-->
+    <dimen name="labour_agency_layout_height">48dp</dimen>
+    <dimen name="labour_agency_imageView_height">30dp</dimen>
+    <dimen name="labour_agency_imageView_width">30dp</dimen>
+    <dimen name="labour_agency_imageView_marginRight">10dp</dimen>
+    <dimen name="labour_agency_font__titleSize">22sp</dimen>
+    <dimen name="labour_agency_margin_bottom">19dp</dimen>
+    <dimen name="labour_agency_margin_left">8dp</dimen>
+    <dimen name="labour_agency_font__size">18sp</dimen>
+    <dimen name="labour_agency_listViewItem_height">150dp</dimen>
+
+    <!--登录-->
+    <dimen name="login_layout_marginTop">12dp</dimen>
+    <dimen name="login_layout_marginLeft">18dp</dimen>
+    <dimen name="login_layout_marginRight">18dp</dimen>
+    <dimen name="login_textview_marginRight">10dp</dimen>
+    <dimen name="login_edittext_height_phone">50dp</dimen>
+
+    <dimen name="login_edittext_width_phone">280dp</dimen>
+    <dimen name="login_edittext_textsize">16sp</dimen>
+    <dimen name="login_edittext_width_pwd">280dp</dimen>
+    <dimen name="login_edittext_height_pwd">50dp</dimen>
+    <dimen name="login_edittext_marginRight">7dp</dimen>
+    <dimen name="login_btn_viewPwd_height">40dp</dimen>
+    <dimen name="login_btn_viewPwd_width">70dp</dimen>
+    <dimen name="login_textview_marginBottom">11dp</dimen>
+    <dimen name="login_loginBtn_marginLeft">14dp</dimen>
+    <dimen name="login_loginBtn_marginRight">14dp</dimen>
+    <dimen name="login_loginBtn_marginTop">8dp</dimen>
+    <dimen name="login_loginBtn_width">300dp</dimen>
+    <dimen name="login_loginBtn_height">50dp</dimen>
+    <dimen name="login_viewPwd_textsize">16sp</dimen>
+    <dimen name="login_loginBtn_textsize">16sp</dimen>
+    <dimen name="login_loginBtn_marginBottom">60dp</dimen>
+    <dimen name="login_margin">10dp</dimen>
+    <dimen name="login_noRegiste_textSize">15sp</dimen>
+    <dimen name="login_registe_textSize">25sp</dimen>
+
+    <!--注册-->
+    <dimen name="register_btn_viewPwd_width">80dp</dimen>
+    <dimen name="register_textview_marginBottom">11dp</dimen>
+    <dimen name="register_layout_marginLeft">18dp</dimen>
+    <dimen name="register_layout_marginTop">12dp</dimen>
+    <dimen name="register_edittext_textsize">16sp</dimen>
+    <dimen name="register_textview_marginRight">10dp</dimen>
+    <dimen name="register_edittext_marginRight">7dp</dimen>
+    <dimen name="register_edittext_width_pwd">200dp</dimen>
+    <dimen name="register_edittext_height_pwd">50dp</dimen>
+    <dimen name="register_tip_textsize">12sp</dimen>
+    <dimen name="register_textview_margin_top">20dp</dimen>
+
+    <dimen name="register_viewPwd_textsize">16sp</dimen>
+    <dimen name="register_btn_viewPwd_height">40dp</dimen>
+    <dimen name="register_margin">10dp</dimen>
+    <dimen name="register_identifying_code_margin">10dp</dimen>
+
+    <!--注册-->
+    <dimen name="register_layout_height">48dp</dimen>
+    <dimen name="register_imageView_height">30dp</dimen>
+    <dimen name="register_imageView_width">30dp</dimen>
+    <dimen name="register_imageView_marginRight">10dp</dimen>
+    <dimen name="register_font__titleSize">22sp</dimen>
+    <dimen name="register_button_height_corporate_users">50dp</dimen>
+    <dimen name="register_button_height_construction_user">50dp</dimen>
+    <dimen name="register_registerBtn_width">320dp</dimen>
+    <dimen name="register_registerBtn_marginLeft">10dp</dimen>
+    <dimen name="register_registerBtn_height">50dp</dimen>
+    <dimen name="register_registerBtn_marginBottom">60dp</dimen>
+    <dimen name="register_registerBtn_marginRight">10dp</dimen>
+    <dimen name="register_registerBtn_marginTop">8dp</dimen>
+    <dimen name="register_registerBtn_textsize">16sp</dimen>
+    <dimen name="register_layout_marginRight">5sp</dimen>
+    <dimen name="register_margin_top">10dp</dimen>
+    <dimen name="register_edittext_height_username">50dp</dimen>
+    <dimen name="register_edittext_height_password">50dp</dimen>
+    <dimen name="register_edittext_height_sure_password">50dp</dimen>
+    <dimen name="register_edittext_height_contact">50dp</dimen>
+    <dimen name="register_edittext_height_number">50dp</dimen>
+
+    <!--发布信息-->
+    <dimen name="release_information_layout_height">48dp</dimen>
+    <dimen name="release_information_imageView_height">30dp</dimen>
+    <dimen name="release_information_imageView_width">30dp</dimen>
+    <dimen name="release_information_imageView_marginRight">10dp</dimen>
+    <dimen name="release_information_font__titleSize">22sp</dimen>
+    <dimen name="release_information_textview_marginBottom">11dp</dimen>
+    <dimen name="release_information_layout_marginLeft">18dp</dimen>
+    <dimen name="release_information_layout_marginTop">12dp</dimen>
+    <dimen name="release_information_textview_marginRight">10dp</dimen>
+    <dimen name="release_information_edittext_textsize">16sp</dimen>
+    <dimen name="release_information_edittext_marginRight">7dp</dimen>
+    <dimen name="release_information_margin_top">10dp</dimen>
+    <dimen name="release_information_edittext_height_title">40dp</dimen>
+    <dimen name="release_information_edittext_height_contacts">40dp</dimen>
+    <dimen name="release_information_edittext_height_phone">40dp</dimen>
+    <dimen name="release_information_edittext_height_details">40dp</dimen>
+    <dimen name="release_information_edittext_height_address">40dp</dimen>
+    <dimen name="release_information_layout_marginRight">5sp</dimen>
+    <dimen name="release_information_button_height">40dp</dimen>
+    <dimen name="release_information_release_btn_width">320dp</dimen>
+    <dimen name="release_information_release_btn_height">40dp</dimen>
+    <dimen name="release_information_release_btn_marginBottom">60dp</dimen>
+    <dimen name="release_information_release_btn_marginRight">10dp</dimen>
+    <dimen name="release_information_release_btn_marginTop">8dp</dimen>
+    <dimen name="release_information_release_btn_textsize">16sp</dimen>
+    <dimen name="release_information_release_btn_textsize_marginLeft">10dp</dimen>
+
+    <!--响应信息-->
+    <dimen name="respone_message_layout_height">48dp</dimen>
+    <dimen name="respone_message_imageView_height">30dp</dimen>
+    <dimen name="respone_message_imageView_width">30dp</dimen>
+    <dimen name="respone_message_imageView_marginRight">10dp</dimen>
+    <dimen name="respone_message_font__titleSize">22sp</dimen>
+    <dimen name="respone_message_textview_marginBottom">11dp</dimen>
+    <dimen name="respone_message_layout_marginLeft">18dp</dimen>
+    <dimen name="respone_message_layout_marginTop">12dp</dimen>
+    <dimen name="respone_message_textview_marginRight">10dp</dimen>
+    <dimen name="respone_message_edittext_textsize">16sp</dimen>
+    <dimen name="respone_message_margin_top">10dp</dimen>
+    <dimen name="respone_message_edittext_marginRight">7dp</dimen>
+    <dimen name="respone_message_edittext_height">50dp</dimen>
+    <dimen name="respone_message_respone_btn_width">320dp</dimen>
+    <dimen name="respone_message_respone_btn_height">50dp</dimen>
+    <dimen name="respone_message_respone_btn_marginBottom">60dp</dimen>
+    <dimen name="respone_message_respone_btn_marginRight">10dp</dimen>
+    <dimen name="respone_message_respone_btn_marginTop">8dp</dimen>
+    <dimen name="respone_message_respone_btn_textsize">16sp</dimen>
+    <dimen name="respone_message_respone_btn_marginLeft">10dp</dimen>
+
+    <!--个人资料-->
+    <dimen name="personal_center_btn_margin_top">10dp</dimen>
+    <dimen name="personal_center_btn_margin_bottom">10dp</dimen>
+    <dimen name="personal_center_width">325dp</dimen>
+    <dimen name="personal_center_btn_textsize">16sp</dimen>
+    <dimen name="personal_center_btn_marginRight">10dp</dimen>
+    <dimen name="personal_center_btn_marginLeft">10dp</dimen>
+    <dimen name="personal_center_btn_marginBottom">60dp</dimen>
+    <dimen name="personal_center_btn_height">50dp</dimen>
+    <dimen name="personal_center_btn_width">320dp</dimen>
+    <dimen name="personal_center_layout_marginTop">12dp</dimen>
+    <dimen name="personal_center_margin_top">10dp</dimen>
+    <dimen name="personal_center_layout_height">48dp</dimen>
+    <dimen name="personal_center_imageView_height">30dp</dimen>
+    <dimen name="personal_center_imageView_width">30dp</dimen>
+    <dimen name="personal_center_imageView_marginRight">10dp</dimen>
+    <dimen name="personal_center_font__titleSize">22sp</dimen>
+    <dimen name="personal_center_textview_marginBottom">11dp</dimen>
+    <dimen name="personal_center_layout_marginLeft">18dp</dimen>
+    <dimen name="personal_center_layout_marginRight">18dp</dimen>
+    <dimen name="personal_center_edittext_textsize">16sp</dimen>
+    <dimen name="personal_center_textview_marginRight">10dp</dimen>
+    <dimen name="personal_center_edittext_height">50dp</dimen>
+    <dimen name="personal_center_edittext_marginRight">7dp</dimen>
+
+    <!--扫一扫-->
+    <dimen name="scan_layout_width">48dp</dimen>
+    <dimen name="scan_text_size">18sp</dimen>
+    <dimen name="scan_imageview_minWidth">70dp</dimen>
+    <dimen name="scan_imageview_width">30dp</dimen>
+    <dimen name="scan_imageview_height">30dp</dimen>
+    <dimen name="scan_layout_marginRight">4dp</dimen>
+
+    <!--startActivity-->
+    <dimen name="start_layout_spacing">20dp</dimen>
+
+    <!--供求信息-->
+    <dimen name="trade_leads_layout_height">48dp</dimen>
+    <dimen name="trade_leads_imageView_width">30dp</dimen>
+    <dimen name="trade_leads_imageView_height">30dp</dimen>
+    <dimen name="trade_leads_imageView_marginRight">10dp</dimen>
+    <dimen name="trade_leads_font__titleSize1">22sp</dimen>
+    <dimen name="trade_leads_font__titleSize2">20sp</dimen>
+    <dimen name="trade_leads_font__titleSize3">18sp</dimen>
+
+    <!--求购信息-->
+    <dimen name="buying_leads_recycleViewItem_height">220dp</dimen>
+    <dimen name="buying_leads_layout_height">48dp</dimen>
+    <dimen name="buying_leads_imageView_width">30dp</dimen>
+    <dimen name="buying_leads_imageView_height">30dp</dimen>
+    <dimen name="buying_leads_imageView_marginRight">10dp</dimen>
+    <dimen name="buying_leads_font__titleSize">22sp</dimen>
+    <dimen name="buying_leads_margin_bottom">19dp</dimen>
+    <dimen name="buying_leads_margin_left">8dp</dimen>
+    <dimen name="buying_leads_margin_right">8dp</dimen>
+    <dimen name="buying_leads_font__size">18sp</dimen>
+
+    <!--供求信息-->
+    <dimen name="supply_recycleViewItem_height">220dp</dimen>
+    <dimen name="supply_layout_height">48dp</dimen>
+    <dimen name="supply_imageView_width">30dp</dimen>
+    <dimen name="supply_imageView_height">30dp</dimen>
+    <dimen name="supply_imageView_marginRight">10dp</dimen>
+    <dimen name="supply_font__titleSize">22sp</dimen>
+    <dimen name="supply_margin_bottom">19dp</dimen>
+    <dimen name="supply_margin_left">8dp</dimen>
+    <dimen name="supply_margin_right">8dp</dimen>
+    <dimen name="supply_font__size">18sp</dimen>
+
+    <!--我的供求信息-->
+    <dimen name="my_buying_leads_layout_height">48dp</dimen>
+    <dimen name="my_buying_leads_imageView_height">30dp</dimen>
+    <dimen name="my_buying_leads_imageView_width">30dp</dimen>
+    <dimen name="my_buying_leads_imageView_marginRight">10dp</dimen>
+    <dimen name="my_buying_leads_font__titleSize">22sp</dimen>
+
+    <dimen name="my_buying_leads_margin_bottom">19dp</dimen>
+    <dimen name="my_buying_leads_margin_left">8dp</dimen>
+    <dimen name="my_buying_leads_margin_right">8dp</dimen>
+    <dimen name="my_buying_leads_font__size">18sp</dimen>
+    <dimen name="my_buying_leads_listViewItem_height">150dp</dimen>
+
+    <!--我的响应信息-->
+    <dimen name="my_response_layout_height">48dp</dimen>
+    <dimen name="my_response_imageView_height">30dp</dimen>
+    <dimen name="my_response_imageView_width">30dp</dimen>
+    <dimen name="my_response_imageView_marginRight">10dp</dimen>
+    <dimen name="my_response_font__titleSize">22sp</dimen>
+
+    <dimen name="my_response_margin_bottom">19dp</dimen>
+    <dimen name="my_response_margin_left">8dp</dimen>
+    <dimen name="my_response_margin_right">8dp</dimen>
+    <dimen name="my_response_font__size">18sp</dimen>
+    <dimen name="my_response_listViewItem_height">150dp</dimen>
+
+    <!--expandablelistview-->
+    <dimen name="button_text_size">14sp</dimen>
+    <dimen name="expand_tab_item_height">45dp</dimen>
+    <dimen name="expand_tab_eara_height">380dp</dimen>
+    <dimen name="head_bar_height">45dp</dimen>
+</resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--黑色-->
+    <color name="black">#000000</color>
+    <!--白色-->
+    <color name="white">#FFFFFF</color>
+    <!--绿色-->
+    <color name="green">#128130</color>
+    <!--灰色-->
+    <color name="gray">#3F4C52</color>
+    <color name="grays">#CACFC3</color>
+    <!--蓝色-->
+    <color name="blue">#0000FF</color>
+    <!--红色-->
+    <color name="red">#FF0000</color>
+
+    <!--界面顶部布局背景颜色-->
+    <color name="main_bar">#1B1926</color>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorAddModel">#41535A</color>
+
+    <!--退出程序对话框蓝色按钮的文字颜色-->
+    <color name="dialog_blue_text">#0075A9</color>
+
+    <!--首页-->
+    <color name="frist_toolbar_background">#2B2B2B</color>
+
+    <!--登录-->
+    <color name="view_password">#5B9FD1</color>
+    <color name="login_btn">#FF5B45</color>
+    <color name="register">#0FC0AB</color>
+    <color name="phoneOrPwd">#4592CA</color>
+    <color name="login_editText_background">#E9E9E9</color>
+    <color name="login_background">#E6E5E5</color>
+
+    <!--注册-->
+    <color name="register_background">#E6E5E5</color>
+    <color name="register_identifying_code">#4592CA</color>
+    <color name="register_now_register">#30C27B</color>
+    <color name="register_btn_login">#30C27B</color>
+    <color name="register_btn_color">#02BEA8</color>
+    <color name="register_btn_color_click">#CACFC3</color>
+
+    <!--扫一扫-->
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="scan_layout_baground">#2B2B2B</color>
+
+    <!--城市列表-->
+    <color name="listview_item_normal">#eef0ed</color>
+    <color name="listview_item_pressed">#d4d4d4</color>
+
+    <!--建材企业详情页-->
+    <color name="SI_YJAuthentication_blue">#121BBE</color>
+    <color name="SI_YJAuthentication_red">#BE123D</color>
+
+    <!--expandablelistview-->
+    <color name="popup_main_background">#b0000000</color>
+    <color name="choose_eara_item_press_color">#f4f4f4</color>
+    <color name="no_color">#00000000</color>
+</resources>

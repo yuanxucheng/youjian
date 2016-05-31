@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 填充 -->
+    <solid
+        android:color="@android:color/transparent"/><!-- 填充的颜色 -->
+    <!--<stroke-->
+        <!--android:width="2.0dip"-->
+        <!--android:color="#000000"-->
+        <!--android:dashGap="0.0dip"-->
+        <!--android:dashWidth="3.0dip" />-->
+    <!--<corners android:radius="8dp" />-->
+    <!--<gradient></gradient>-->
+    <!--<padding></padding>-->
+    <!--<size></size>-->
+</shape>
+<!--
+简单说明一下：
+gradient    对应颜色渐变。
+solid        填充。
+stroke    描边。
+corners  圆角。
+padding   定义内容离边界的距离。
+-->

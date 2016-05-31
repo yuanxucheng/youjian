@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 自定义属性 -->
+    <attr name="root_view_bg" format="reference|color"/>
+    <attr name="btn_bg" format="reference|color"/>
+    <attr name="text_color" format="reference|color"/>
+
+    <attr name="rightPadding" format="dimension"></attr>
+
+    <declare-styleable name="SlidingMenu">
+        <attr name="rightPadding"></attr>
+    </declare-styleable>
+
+    <!-- 圆形图片（开始） -->
+    <declare-styleable name="RoundImageView">
+        <attr name="border_thickness" format="dimension"></attr>
+        <attr name="border_outside_color" format="color"/>
+        <attr name="border_inside_color" format="color"/>
+    </declare-styleable>
+    <!-- 圆形图片（结束） -->
+
+
+    <!-- 圆角图片（开始） -->
+    <declare-styleable name="RoundAngleImageView">
+        <attr name="rWidth" format="dimension"/>
+        <attr name="rHeight" format="dimension"/>
+    </declare-styleable>
+    <!-- 圆角图片（结束） -->
+
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension"/>
+        <attr name="civ_border_color" format="color"/>
+        <attr name="civ_border_overlay" format="boolean"/>
+        <attr name="civ_fill_color" format="color"/>
+    </declare-styleable>
+    <!-- 圆点 -->
+    <declare-styleable name="BottomTab">
+        <attr name="android:text"/>
+        <attr name="android:textColor"/>
+        <attr name="android:drawableTop"/>
+    </declare-styleable>
+</resources>

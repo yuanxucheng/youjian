@@ -1,0 +1,364 @@
+<resources>
+    <!--<string name="app_name">yj</string>-->
+    <string name="app_name">优建网</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_trade_leads">TradeLeadsActivity</string>
+
+    <!-- 退出应用程序对话框 -->
+    <string name="input_search_logout_ok">确定</string>
+    <string name="input_search_logout_cancle">取消</string>
+    <string name="input_search_logout_title">是否确定退出客户端？</string>
+    <string name="main_logout_all">确认退出？</string>
+    <string name="main_logout_clear_all">是否清除账号?</string>
+
+    <!-- 首页 -->
+    <string name="first_city">上海市</string>
+    <string name="first_website">优建网</string>
+    <string name="first_building_site">建筑工地</string>
+    <string name="first_building_materials_enterprises">建材企业</string>
+    <string name="first_affiliated_enterprise">关联企业</string>
+    <string name="first_hardware_supermarket">五金超市</string>
+    <string name="first_labor_agency">劳务中介</string>
+    <string name="first_enterprise_certification">企业认证</string>
+    <string name="first_legal_advice">法律咨询</string>
+    <string name="first_financing_loan">融资贷款</string>
+    <string name="first_demand_release">需求发布</string>
+    <string name="first_release_query">发布查询</string>
+    <string name="first_wait_respond_query">待响应查询</string>
+    <string name="first_ok_respond_query">已响应查询</string>
+    <string name="first_homeCarouse_fail">获取首页图片轮播接口失败</string>
+    <string name="first_homeCarouse_success">获取首页图片轮播接口成功</string>
+
+    <string name="first_sweep">扫一扫</string>
+    <string name="first_share">分享</string>
+    <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
+    <string name="scan_back">返回</string>
+    <string name="scan_sweep">二维码扫描</string>
+
+    <string name="frist_under_construction">正在建设中,敬请期待...</string>
+    <string name="main_location">正在定位中...</string>
+
+    <!--关联企业-->
+    <string name="related_companies_title">关联企业</string>
+    <string name="related_companies_name">市场名称:</string>
+    <string name="related_companies_area">区域:</string>
+    <string name="related_companies_category">类别:</string>
+    <string name="related_companies_contacts">联系人:</string>
+    <string name="related_companies_phone">电话:</string>
+    <string name="related_companies_address">地址:</string>
+    <string name="related_companies_fail">分页获取企业设备信息接口失败！</string>
+    <string name="related_companies_success">分页获取企业设备信息接口成功！</string>
+
+    <!--建筑工地-->
+    <string name="buildSites_dingwei">定位</string>
+    <string name="buildSites_fail">承建坐标搜索接口失败！</string>
+    <string name="buildSites_success">承建坐标搜索接口成功！</string>
+    <string name="buildSites_loadMap">正在加载地图,请稍后...</string>
+    <!--建筑工地详情-->
+    <string name="buildSites_title">建筑工地</string>
+    <string name="buildSites_projectName">项目名称:</string>
+    <string name="buildSites_CUName">承建单位:</string>
+    <string name="buildSites_contacts">联系人:</string>
+    <string name="buildSites_startTime">开始时间:</string>
+    <string name="buildSites_endTime">结束时间:</string>
+    <string name="buildSites_address">地址:</string>
+
+    <!--建材企业-->
+    <string name="buildEnterprises_dingwei">定位</string>
+    <string name="buildEnterprises_fail">企业坐标点搜索接口失败！</string>
+    <string name="buildEnterprises_success">企业坐标点搜索接口成功！</string>
+    <string name="buildEnterprises_loadMap">正在加载地图,请稍后...</string>
+    <!--建材企业详情-->
+    <string name="buildEnterprises_title">建材企业</string>
+    <string name="buildEnterprises_companyName">公司名称:</string>
+    <string name="buildEnterprises_address">地址:</string>
+    <string name="buildEnterprises_contacts">联系人:</string>
+    <string name="buildEnterprises_phone">联系电话:</string>
+    <string name="buildEnterprises_YJAuthentication">优健网认证:</string>
+
+    <!--五金超市-->
+    <string name="hard_super_title">五金超市</string>
+    <string name="hard_super_name">市场名称:</string>
+    <string name="hard_super_area">区域:</string>
+    <string name="hard_super_category">类别:</string>
+    <string name="hard_super_contacts">联系人:</string>
+    <string name="hard_super_phone">电话:</string>
+    <string name="hard_super_address">地址:</string>
+    <string name="hard_super_fail">分页获取五金超市信息接口失败！</string>
+    <string name="hard_super_success">分页获取五金超市信息接口成功！</string>
+
+    <!--劳务中介-->
+    <string name="labour_agency_title">劳务中介</string>
+    <string name="labour_agency_name">市场名称:</string>
+    <string name="labour_agency_area">区域:</string>
+    <string name="labour_agency_category">类别:</string>
+    <string name="labour_agency_contacts">联系人:</string>
+    <string name="labour_agency_phone">电话:</string>
+    <string name="labour_agency_address">地址:</string>
+    <string name="labour_agency_fail">分页获取劳务中介信息接口失败！</string>
+    <string name="labour_agency_success">分页获取劳务中介信息接口成功！</string>
+
+    <!-- 刷新 -->
+    <string name="footer_hint_load_normal">加载更多</string>
+    <string name="header_hint_refresh_normal">下拉刷新</string>
+    <string name="header_hint_refresh_time">时间：</string>
+    <string name="footer_hint_load_ready">释放加载更多</string>
+    <string name="header_hint_refresh_ready">释放刷新</string>
+    <string name="header_hint_refresh_loading">正在刷新&#8230;</string>
+
+    <!-- 登陆-->
+    <string name="login">登陆</string>
+    <string name="regist">注册</string>
+    <string name="login_user_name">手机号</string>
+    <string name="login_password">密&#160;&#160;&#160;&#160;码</string>
+    <string name="forget_password">忘记密码?</string>
+    <string name="name_is_null">手机号不能为空</string>
+    <string name="pwd_is_null">密码不能为空</string>
+    <string name="repwd_is_null">确认密码不能为空</string>
+    <string name="two_pwd_is_not_same">两次输入的密码不同</string>
+    <string name="code_is_null">验证码不能为空</string>
+    <string name="code_is_wrong">验证码有误</string>
+    <string name="login_sucess">登陆成功！</string>
+    <string name="login_fail">登陆失败！</string>
+    <string name="request_address_failed">网络请求的地址不对</string>
+    <string name="request_request_already_login">用户已经登录过了</string>
+    <string name="request_no_response">服务器没有响应</string>
+    <string name="regist_account_conflict">该用户已存在</string>
+    <string name="enter_phone_number">输入手机号</string>
+    <string name="enter_password">输入密码</string>
+    <string name="view_password">查看密码</string>
+    <string name="register_downLine"><u>注册</u></string>
+    <string name="no_register_username">还没有注册账号?</string>
+
+    <!--登录-->
+    <string name="login_input_username">请输入用户名!</string>
+    <string name="login_input_password">请输入密码!</string>
+
+    <!--注册-->
+    <string name="register_user_register">用户注册</string>
+    <string name="register_confirm_password">确认密码</string>
+    <string name="register_identifying_code">验证码</string>
+    <string name="register_get_identifying_code">获取验证码</string>
+    <string name="register_commit">提交</string>
+    <string name="register_sucess">注册成功！</string>
+    <string name="register_fail">注册失败！</string>
+    <string name="register_finish_register">完成注册</string>
+    <string name="login_downLine"><u>登录</u></string>
+    <string name="with_username">已有账号?</string>
+    <string name="register_user_name">手机号</string>
+    <string name="register_password">密&#160;&#160;&#160;&#160;码</string>
+    <string name="register_enter_telephone_number">输入手机号</string>
+    <string name="register_enter_password">9~12(a~z_0~9)</string>
+
+    <!--注册-->
+    <string name="register_title">用户注册</string>
+    <string name="register_now_register">立即注册</string>
+    <string name="register_user">*用户名:&#160;&#160;&#160;&#160;</string>
+    <string name="register_pwd">*密码:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="register_sure_password">*确认密码:</string>
+    <string name="register_contact_person">*联系人:&#160;&#160;&#160;&#160;</string>
+    <string name="register_contact_number">*联系电话:</string>
+    <string name="register_user_type">*用户类型:</string>
+    <string name="register_input_username">请输入用户名!</string>
+    <string name="register_input_password">请输入密码!</string>
+    <string name="register_input_sure_password">请输入确认密码!</string>
+    <string name="register_input_contact">请输入联系人!</string>
+    <string name="register_input_number">请输入电话!</string>
+    <string name="register_corporate_users">企业用户</string>
+    <string name="register_construction_user">承建用户</string>
+    <string name="register_construction_unit">承建单位</string>
+    <string name="register_tip">字母+数字6~10位</string>
+
+    <!--发布信息-->
+    <string name="release_supply_demand_information">发布供求信息</string>
+    <string name="release_information_now_release">立即发布</string>
+    <string name="release_information_title">*信息标题:</string>
+    <string name="release_information_contacts">*联系人:&#160;&#160;&#160;&#160;</string>
+    <string name="release_information_contacts_phone">*联系电话:</string>
+    <string name="release_information_details">*信息详情:</string>
+    <string name="release_information_address">*地址:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="release_information_category">*信息类别:</string>
+    <string name="release_information_category_gq">*供求类别:</string>
+    <string name="release_information_material">材料</string>
+    <string name="release_information_equipment">设备</string>
+    <string name="release_information_recruitment">招工</string>
+    <string name="supply_demand_information">供求信息</string>
+    <string name="purchase_information">求购信息</string>
+    <string name="please_input_title_name">请输入标题名称!</string>
+    <string name="please_input_contacts">请输入联系人!</string>
+    <string name="please_input_contacts_phone">请输入联系电话!</string>
+    <string name="please_input_details_information">请输入信息详情!</string>
+    <string name="please_input_address_information">请输入地址信息!</string>
+
+    <!--响应信息-->
+    <string name="response_messages">响应信息</string>
+    <string name="response_messages_now_response">立即响应</string>
+    <string name="response_messages_title">响应标题:</string>
+    <string name="response_messages_category">响应类别:</string>
+    <string name="response_messages_contacts">联系人:&#160;&#160;&#160;&#160;</string>
+    <string name="response_messages_contacts_phone">联系电话:</string>
+    <string name="response_messages_details">响应详情:</string>
+    <string name="response_messages_please_input_contacts">请输入响应联系人!</string>
+    <string name="response_messages_please_input_contacts_phone">请输入响应联系电话!</string>
+    <string name="response_messages_please_input_details">请输入响应信息详情!</string>
+
+    <!--发布-->
+    <string name="are_you_sure_release">是否确定发布该条信息？</string>
+    <!--响应-->
+    <string name="are_you_sure_response">是否确定响应该条信息？</string>
+
+    <!--设置-->
+    <string name="setting_title">设置</string>
+    <string name="setting_change_l">更换语言</string>
+    <string name="setting_change_type">中文（简体）</string>
+    <string name="setting_change_skin">主题</string>
+    <string name="setting_change_lady">女士版</string>
+    <string name="setting_black_num">人</string>
+    <string name="setting_black">黑名单</string>
+    <string name="setting_about_us">关于我们</string>
+    <string name="setting_logout">退出登陆</string>
+    <string name="setting_second_type_jianti">中文（简体）</string>
+    <string name="setting_second_type_fanti">中文（繁體）</string>
+    <string name="setting_second_type_english">English</string>
+    <string name="setting_second_type_man">男士版</string>
+    <string name="setting_second_type_women">女士版</string>
+    <string name="setting_second_us_web">官方网站</string>
+    <string name="setting_second_us_weixin">官方微信</string>
+    <string name="setting_second_us_weibo">官方微博</string>
+    <string name="setting_second_us_tel">客服电话</string>
+    <string name="setting_second_us_tel_num">客服电话</string>
+    <string name="setting_second_us_mail">客服邮箱</string>
+    <string name="setting_second_us_mail_num">客服邮箱</string>
+    <string name="setting_second_black_editor">编辑</string>
+    <string name="setting_second_black_cancel">取消</string>
+    <string name="setting_second_black_del">删除</string>
+    <string name="setting_second_black_l">语言</string>
+    <string name="setting_second_black_skin">皮肤</string>
+    <string name="setting_second_black_title">黑名单</string>
+    <string name="setting_second_about_us_title">关于我们</string>
+
+    <string name="title_activity_add_module">AddModuleActivity</string>
+    <string name="title_activity_net">NetActivity</string>
+    <string name="title_activity_http">HttpActivity</string>
+    <string name="title_activity_frist">FristActivity</string>
+    <string name="title_activity_intent">IntentActivity</string>
+    <string name="title_activity_related_companies">RelatedCompaniesActivity</string>
+    <string name="title_activity_poi_search">PoiSearchActivity</string>
+    <string name="title_activity_under_construction">UnderConstructionActivity</string>
+    <string name="title_activity_legal_advice">LegalAdviceActivity</string>
+    <string name="title_activity_financing_loan">FinancingLoanActivity</string>
+    <string name="title_activity_mipca_activity_capture">MipcaActivityCapture</string>
+    <string name="title_activity_scan_result">ScanResultActivity</string>
+    <string name="title_activity_city_list">CityListActivity</string>
+    <string name="title_activity_show_store">ShowStoreActivity</string>
+    <string name="title_activity_hard_super">HardSuperActivity</string>
+    <string name="title_activity_building_sites">BuildingSitesActivity</string>
+    <string name="title_activity_build_enterprises_detail">BuildEnterprisesDetailActivity</string>
+    <string name="title_activity_build_sites_detail">BuildSitesDetailActivity</string>
+    <string name="title_activity_labour_agency">LabourAgencyActivity</string>
+    <string name="title_activity_release_information">ReleaseInformationActivity</string>
+    <string name="title_activity_response_messages">ResponseMessagesActivity</string>
+    <string name="title_activity_personal_center">PersonalCenterActivity</string>
+    <string name="title_activity_my_response">MyResponseActivity</string>
+    <string name="title_activity_my_buying_leads">MyBuyingLeadsActivity</string>
+    <string name="title_activity_buying_leads_detail">BuyingLeadsDetailActivity</string>
+
+    <!--jpushDemo-->
+    <string name="hello">Hello World, JPush!</string>
+    <string name="tag_hint">Tag为大小写字母，数字，下划线,中文， 多个用以逗号分隔</string>
+    <string name="alias_hint">Alias为大小写字母，数字，下划线</string>
+    <string name="style_hint">style为数字</string>
+    <string name="error_style_empty">style不能为空</string>
+    <string name="error_alias_empty">alias不能为空</string>
+    <string name="error_tag_empty">tag不能为空</string>
+    <string name="error_tag_gs_empty">格式不对</string>
+    <string name="error_network">网络连接异常,初始化失败 请检查网络！</string>
+    <string name="logining">程序在后台执行, 请查看日志！</string>
+    <string name="setting_su">设置成功</string>
+
+
+    <!--供求信息-->
+    <string name="trade_leads">供求信息</string>
+    <string name="trade_leads_release_news">发布信息</string>
+    <string name="trade_leads_supply">供应信息</string>
+    <string name="trade_leads_buying_leads">求购信息</string>
+
+    <!--求购信息-->
+    <string name="buying_leads_name">供求名称:</string>
+    <string name="buying_leads_type">供求类型:</string>
+    <string name="buying_leads_contacts">联系人:</string>
+    <string name="buying_leads_content">详情:</string>
+    <string name="buying_leads_address">地址:</string>
+    <string name="buying_leads_ctime">发布时间:</string>
+    <string name="buying_leads_phone">电话:</string>
+    <string name="buying_leads_fail">分页获取求购信息接口失败！</string>
+    <string name="buying_leads_success">分页获取求购信息接口成功！</string>
+    <string name="buying_leads_loading">正在加载中,请稍后...</string>
+
+    <!--供应信息-->
+    <string name="supply_name">供求名称:</string>
+    <string name="supply_type">供求类型:</string>
+    <string name="supply_contacts">联系人:</string>
+    <string name="supply_content">详情:</string>
+    <string name="supply_address">地址:</string>
+    <string name="supply_ctime">发布时间:</string>
+    <string name="supply_phone">电话:</string>
+    <string name="supply_fail">分页获取供应信息接口失败！</string>
+    <string name="supply_success">分页获取供应信息接口成功！</string>
+    <string name="supply_loading">正在加载中,请稍后...</string>
+
+    <!--个人资料-->
+    <string name="personal_center_title">个人中心</string>
+    <string name="personal_center_username">用户名:</string>
+    <string name="personal_center_contacts">联系人:</string>
+    <string name="personal_center_phone">联系电话:</string>
+    <string name="personal_center_my_release">我的供求信息</string>
+    <string name="personal_center_my_response">我的响应信息</string>
+    <string name="personal_center_logged_on">退出登录</string>
+    <string name="personal_center_function_description">功能介绍</string>
+    <string name="personal_center_about_us">关于我们</string>
+    <string name="personal_center_later_updating">以后再说</string>
+    <string name="personal_center_immediate_updating">立即更新</string>
+    <string name="personal_center_version_updating">版本更新</string>
+    <string name="personal_center_version_info">版本信息</string>
+
+    <!--我的供求信息-->
+    <string name="my_buying_leads_title">我的供求信息</string>
+    <string name="my_buying_leads_stitle">信息标题:</string>
+    <string name="my_buying_leads_category">信息类别:</string>
+    <string name="my_buying_leads_contacts">联系人:</string>
+    <string name="my_buying_leads_phone">联系电话:</string>
+    <string name="my_buying_leads_content">信息详情:</string>
+    <string name="my_buying_leads_address">地址:</string>
+    <string name="my_buying_leads_ctime">发布时间:</string>
+    <string name="my_buying_leads_fail">分页获取我的供求信息失败！</string>
+    <string name="my_buying_leads_success">分页获取我的供求信息成功！</string>
+
+    <!--我的响应信息-->
+    <string name="my_response_title">我的响应信息</string>
+    <string name="my_response_stitle">信息标题:</string>
+    <string name="my_response_intention">是否有意向:</string>
+    <string name="my_response_contacts">联系人:</string>
+    <string name="my_response_phone">联系电话:</string>
+    <string name="my_response_content">信息详情:</string>
+    <string name="my_response_ctime">响应时间:</string>
+    <string name="my_response_fail">分页获取我的响应信息失败！</string>
+    <string name="my_response_success">分页获取我的响应信息成功！</string>
+
+    <!--响应-->
+    <string name="no_intention">暂无意向</string>
+    <string name="intentional_response">意向响应</string>
+    <string name="hint_message">提示消息</string>
+    <string name="is_recognized_intentional_response">是否确认为意向响应?</string>
+    <string name="whether_to_dial_telephone">是否拨打电话?</string>
+    <string name="ok">确认</string>
+    <string name="cancel">取消</string>
+    <string name="no_call_phone">还不是意向响应不能拨打电话</string>
+
+    <!--expandablelistview-->
+    <string name="no_data">没有找到符合条件的</string>
+</resources>

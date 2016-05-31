@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/personal_center_layout_height"
+        android:background="@color/frist_toolbar_background">
+
+        <ImageView
+            android:id="@+id/id_back"
+            android:layout_width="@dimen/personal_center_imageView_width"
+            android:layout_height="@dimen/personal_center_imageView_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/personal_center_imageView_marginRight"
+            android:src="@mipmap/icon_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/personal_center_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/personal_center_font__titleSize" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/personal_center_width"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/personal_center_textview_marginBottom"
+        android:layout_marginLeft="@dimen/personal_center_layout_marginLeft"
+        android:layout_marginRight="@dimen/personal_center_layout_marginLeft"
+        android:layout_marginTop="@dimen/personal_center_layout_marginTop"
+        android:background="#E9E9E9"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="@dimen/personal_center_width"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="@dimen/personal_center_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/personal_center_textview_marginRight"
+                android:text="@string/personal_center_username"
+                android:textColor="@color/black"
+                android:textSize="@dimen/personal_center_edittext_textsize" />
+
+            <TextView
+                android:id="@+id/id_user"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/personal_center_edittext_height"
+                android:layout_marginRight="@dimen/personal_center_edittext_marginRight"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/personal_center_edittext_textsize" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/personal_center_width"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="@dimen/personal_center_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/personal_center_textview_marginRight"
+                android:text="@string/personal_center_contacts"
+                android:textColor="@color/black"
+                android:textSize="@dimen/personal_center_edittext_textsize" />
+
+            <TextView
+                android:id="@+id/id_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/personal_center_edittext_height"
+                android:layout_marginRight="@dimen/personal_center_edittext_marginRight"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/personal_center_edittext_textsize" />
+
+        </LinearLayout>
+        <!--android:background="@drawable/shape_register_edittext"-->
+
+        <LinearLayout
+            android:layout_width="@dimen/personal_center_width"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="@dimen/personal_center_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/personal_center_textview_marginRight"
+                android:text="@string/personal_center_phone"
+                android:textColor="@color/black"
+                android:textSize="@dimen/personal_center_edittext_textsize" />
+
+            <TextView
+                android:id="@+id/id_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/personal_center_edittext_height"
+                android:layout_marginRight="@dimen/personal_center_edittext_marginRight"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/personal_center_edittext_textsize" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/personal_center_width"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/personal_center_textview_marginBottom"
+        android:layout_marginLeft="@dimen/personal_center_layout_marginLeft"
+        android:layout_marginRight="@dimen/personal_center_layout_marginLeft"
+        android:layout_marginTop="@dimen/personal_center_margin_top"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/id_my_release_message"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/personal_center_edittext_height"
+            android:background="#E9E9E9"
+            android:drawableRight="@mipmap/icon_get_into"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:text="@string/personal_center_my_release"
+            android:textColor="@color/black"
+            android:textSize="@dimen/personal_center_edittext_textsize" />
+        <!--android:background="@drawable/shape_register_edittext"-->
+
+        <TextView
+            android:id="@+id/id_my_respone_message"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/personal_center_edittext_height"
+            android:layout_marginTop="2dp"
+            android:background="#E9E9E9"
+            android:drawableRight="@mipmap/icon_get_into"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:text="@string/personal_center_my_response"
+            android:textColor="@color/black"
+            android:textSize="@dimen/personal_center_edittext_textsize" />
+        <!--android:background="@drawable/shape_register_edittext"-->
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/personal_center_width"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/personal_center_textview_marginBottom"
+        android:layout_marginLeft="@dimen/personal_center_layout_marginLeft"
+        android:layout_marginRight="@dimen/personal_center_layout_marginLeft"
+        android:layout_marginTop="@dimen/personal_center_margin_top"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/id_my_operation_guide"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/personal_center_edittext_height"
+            android:background="#E9E9E9"
+            android:drawableRight="@mipmap/icon_get_into"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:text="@string/personal_center_function_description"
+            android:textColor="@color/black"
+            android:textSize="@dimen/personal_center_edittext_textsize" />
+
+        <TextView
+            android:id="@+id/id_my_version_info"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/personal_center_edittext_height"
+            android:layout_marginTop="2dp"
+            android:background="#E9E9E9"
+            android:drawableRight="@mipmap/icon_get_into"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:text="@string/personal_center_version_info"
+            android:textColor="@color/black"
+            android:textSize="@dimen/personal_center_edittext_textsize" />
+
+        <TextView
+            android:id="@+id/id_my_about_us"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/personal_center_edittext_height"
+            android:layout_marginTop="2dp"
+            android:background="#E9E9E9"
+            android:drawableRight="@mipmap/icon_get_into"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:text="@string/personal_center_about_us"
+            android:textColor="@color/black"
+            android:textSize="@dimen/personal_center_edittext_textsize" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/id_logged_on"
+        android:layout_width="@dimen/personal_center_btn_width"
+        android:layout_height="@dimen/personal_center_btn_height"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/personal_center_btn_marginBottom"
+        android:layout_marginLeft="@dimen/personal_center_btn_marginLeft"
+        android:layout_marginRight="@dimen/personal_center_btn_marginRight"
+        android:layout_marginTop="@dimen/personal_center_btn_margin_top"
+        android:background="@drawable/shape_login_greens"
+        android:text="@string/personal_center_logged_on"
+        android:textColor="@color/white"
+        android:textSize="@dimen/personal_center_btn_textsize" />
+</LinearLayout>
+
+    <!--<include layout="@layout/content_personal_center" />-->
+

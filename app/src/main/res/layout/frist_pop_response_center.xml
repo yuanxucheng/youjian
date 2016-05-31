@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@mipmap/popup"
+    android:orientation="vertical">
+<!--android:background="@color/white"-->
+    <TextView
+        android:id="@+id/id_first_wait_respond_query"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:text="@string/first_wait_respond_query"
+        android:textColor="@color/black"
+        android:textSize="@dimen/frist_btn_popwindow" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/offset_5dp"
+        android:layout_marginRight="@dimen/offset_5dp"
+        android:layout_height="@dimen/offset_1dp"
+        android:background="@color/black">
+
+    </View>
+
+    <TextView
+        android:id="@+id/id_first_ok_respond_query"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:text="@string/first_ok_respond_query"
+        android:textColor="@color/black"
+        android:textSize="@dimen/frist_btn_popwindow" />
+</LinearLayout>

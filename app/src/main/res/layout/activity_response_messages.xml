@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E9E9E9"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/respone_message_layout_height"
+        android:background="@color/frist_toolbar_background">
+
+        <ImageView
+            android:id="@+id/id_back"
+            android:layout_width="@dimen/respone_message_imageView_width"
+            android:layout_height="@dimen/respone_message_imageView_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/respone_message_imageView_marginRight"
+            android:src="@mipmap/icon_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/response_messages"
+            android:textColor="@color/white"
+            android:textSize="@dimen/respone_message_font__titleSize" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/respone_message_textview_marginBottom"
+        android:layout_marginLeft="@dimen/respone_message_layout_marginLeft"
+        android:layout_marginRight="@dimen/respone_message_layout_marginLeft"
+        android:layout_marginTop="@dimen/respone_message_layout_marginTop"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/respone_message_textview_marginRight"
+                android:text="@string/response_messages_title"
+                android:textSize="@dimen/respone_message_edittext_textsize" />
+
+            <EditText
+                android:id="@+id/id_response_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/respone_message_edittext_height"
+                android:layout_marginRight="@dimen/respone_message_edittext_marginRight"
+                android:background="@color/grays"
+                android:editable="false"
+                android:textSize="@dimen/respone_message_edittext_textsize" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/respone_message_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/respone_message_textview_marginRight"
+                android:text="@string/response_messages_category"
+                android:textSize="@dimen/respone_message_edittext_textsize" />
+
+            <EditText
+                android:id="@+id/id_response_type"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/respone_message_edittext_height"
+                android:layout_marginRight="@dimen/respone_message_edittext_marginRight"
+                android:background="@color/grays"
+                android:editable="false"
+                android:textSize="@dimen/respone_message_edittext_textsize" />
+
+        </LinearLayout>
+        <!--android:background="@drawable/shape_register_edittext"-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/respone_message_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/respone_message_textview_marginRight"
+                android:text="@string/response_messages_contacts"
+                android:textSize="@dimen/respone_message_edittext_textsize" />
+
+            <EditText
+                android:id="@+id/id_response_contacts"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/respone_message_edittext_height"
+                android:layout_marginRight="@dimen/respone_message_edittext_marginRight"
+                android:background="@color/white"
+                android:hint="@string/response_messages_please_input_contacts"
+                android:singleLine="true"
+                android:textSize="@dimen/respone_message_edittext_textsize" />
+        </LinearLayout>
+        <!--android:background="@drawable/shape_register_edittext"-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/respone_message_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/respone_message_textview_marginRight"
+                android:text="@string/response_messages_contacts_phone"
+                android:textSize="@dimen/respone_message_edittext_textsize" />
+
+            <EditText
+                android:id="@+id/id_response_phone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/respone_message_edittext_height"
+                android:layout_marginRight="@dimen/respone_message_edittext_marginRight"
+                android:background="@color/white"
+                android:hint="@string/response_messages_please_input_contacts_phone"
+                android:singleLine="true"
+                android:textSize="@dimen/respone_message_edittext_textsize" />
+        </LinearLayout>
+        <!--android:background="@drawable/shape_register_edittext"-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/respone_message_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/respone_message_textview_marginRight"
+                android:text="@string/response_messages_details"
+                android:textSize="@dimen/respone_message_edittext_textsize" />
+
+            <EditText
+                android:id="@+id/id_response_content"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/respone_message_edittext_height"
+                android:layout_marginRight="@dimen/respone_message_edittext_marginRight"
+                android:background="@color/white"
+                android:hint="@string/response_messages_please_input_details"
+                android:singleLine="true"
+                android:textSize="@dimen/respone_message_edittext_textsize" />
+        </LinearLayout>
+        <!--android:background="@drawable/shape_register_edittext"-->
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/id_now_response"
+        android:layout_width="@dimen/respone_message_respone_btn_width"
+        android:layout_height="@dimen/respone_message_respone_btn_height"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/respone_message_respone_btn_marginBottom"
+        android:layout_marginLeft="@dimen/respone_message_respone_btn_marginLeft"
+        android:layout_marginRight="@dimen/respone_message_respone_btn_marginRight"
+        android:layout_marginTop="@dimen/respone_message_respone_btn_marginTop"
+        android:background="@drawable/shape_login_greens"
+        android:text="@string/response_messages_now_response"
+        android:textColor="@color/white"
+        android:textSize="@dimen/respone_message_respone_btn_textsize" />
+</LinearLayout>

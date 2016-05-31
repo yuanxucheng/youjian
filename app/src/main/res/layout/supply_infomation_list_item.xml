@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/supply_recycleViewItem_height"
+    android:background="#DEE9E8"
+    android:orientation="vertical"
+    tools:context="com.example.yj.mapapp.activity.TradeLeadsActivity">
+
+    <!--<include layout="@layout/content_trade_leads" />-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/supply_margin_bottom"
+            android:layout_marginLeft="@dimen/supply_margin_left"
+            android:layout_marginTop="@dimen/supply_margin_bottom"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/supply_name"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/supply_font__size" />
+
+                <TextView
+                    android:id="@+id/id_supply_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/supply_font__size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/supply_margin_right"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/supply_type"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/supply_font__size" />
+
+                <TextView
+                    android:id="@+id/id_supply_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/supply_font__size" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/supply_margin_bottom"
+            android:layout_marginLeft="@dimen/supply_margin_left"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/supply_contacts"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/supply_font__size" />
+
+                <TextView
+                    android:id="@+id/id_supply_contacts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/supply_font__size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/supply_margin_right"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/supply_phone"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/supply_font__size" />
+
+                <TextView
+                    android:id="@+id/id_supply_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/supply_font__size" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/supply_margin_bottom"
+            android:layout_marginLeft="@dimen/supply_margin_left"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/supply_content"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/supply_font__size" />
+
+                <TextView
+                    android:id="@+id/id_supply_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/supply_font__size" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/supply_margin_bottom"
+            android:layout_marginLeft="@dimen/supply_margin_left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/supply_address"
+                android:textColor="#000000"
+                android:textSize="@dimen/supply_font__size" />
+
+            <TextView
+                android:id="@+id/id_supply_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="@dimen/supply_font__size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/supply_margin_bottom"
+            android:layout_marginLeft="@dimen/supply_margin_left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/supply_ctime"
+                android:textColor="#000000"
+                android:textSize="@dimen/supply_font__size" />
+
+            <TextView
+                android:id="@+id/id_supply_ctime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="@dimen/supply_font__size" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

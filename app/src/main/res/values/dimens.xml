@@ -47,6 +47,16 @@
     <dimen name="frist_btn_height">70dp</dimen>
     <dimen name="frist_btn_width">40dp</dimen>
     <dimen name="frist_bottom_height">50dp</dimen>
+    <dimen name="frist_downlayout_layoutheight">84dp</dimen>
+    <dimen name="frist_downlayout_imageheight">50dp</dimen>
+    <dimen name="frist_downlayout_imageleft">20dp</dimen>
+    <dimen name="frist_downlayout_imageright">35dp</dimen>
+    <dimen name="frist_downlayout_imagetop">35dp</dimen>
+    <dimen name="frist_downlayout_imagewidth">70dp</dimen>
+    <dimen name="frist_downimage_imageheight">71dp</dimen>
+    <dimen name="frist_downimage_imageleft">12dp</dimen>
+    <dimen name="frist_downimage_imageright">15dp</dimen>
+    <dimen name="frist_downimage_imagetop">4dp</dimen>
 
     <!--关联企业-->
     <dimen name="related_companies_layout_height">48dp</dimen>

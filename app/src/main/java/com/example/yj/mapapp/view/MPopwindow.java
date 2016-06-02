@@ -149,10 +149,10 @@ public class MPopwindow {
         // 一个自定义的布局，作为显示的内容
         View contentView = LayoutInflater.from(context).inflate(
                 R.layout.frist_pop, null);
-        tv_sweep = (TextView) contentView.findViewById(R.id.id_first_sweep);
+//        tv_sweep = (TextView) contentView.findViewById(R.id.id_first_sweep);
         tv_share = (TextView) contentView.findViewById(R.id.id_first_share);
         //扫一扫监听事件
-        tv_sweep.setOnClickListener(sweepListener);
+//        tv_sweep.setOnClickListener(sweepListener);
         //分享询监听事件
         tv_share.setOnClickListener(shareListener);
         //设置PopupWindow显示宽度

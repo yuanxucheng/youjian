@@ -57,7 +57,7 @@
     <string name="buildSites_dingwei">定位</string>
     <string name="buildSites_fail">承建坐标搜索接口失败！</string>
     <string name="buildSites_success">承建坐标搜索接口成功！</string>
-    <string name="buildSites_loadMap">正在加载地图,请稍后...</string>
+    <string name="buildSites_loadMap">正在加载中,请稍后...</string>
     <!--建筑工地详情-->
     <string name="buildSites_title">建筑工地</string>
     <string name="buildSites_projectName">项目名称:</string>
@@ -71,7 +71,7 @@
     <string name="buildEnterprises_dingwei">定位</string>
     <string name="buildEnterprises_fail">企业坐标点搜索接口失败！</string>
     <string name="buildEnterprises_success">企业坐标点搜索接口成功！</string>
-    <string name="buildEnterprises_loadMap">正在加载地图,请稍后...</string>
+    <string name="buildEnterprises_loadMap">正在加载中,请稍后...</string>
     <!--建材企业详情-->
     <string name="buildEnterprises_title">建材企业</string>
     <string name="buildEnterprises_companyName">公司名称:</string>

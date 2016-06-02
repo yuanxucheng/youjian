@@ -179,7 +179,8 @@
                             android:layout_height="@dimen/frist_btn_height"
                             android:layout_marginRight="@dimen/frist_margin_buttonright"
                             android:layout_weight="1"
-                            android:background="@mipmap/icon_home_bf" />
+                            android:background="@mipmap/icon_home_bf"
+                            android:visibility="invisible" />
 
                         <Button
                             android:layout_width="@dimen/frist_btn_width"
@@ -204,31 +205,43 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/frist_bottom_height"
+            android:layout_height="@dimen/frist_downlayout_layoutheight"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:background="@mipmap/frist_bg"
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/frist_btn_release_center"
+            <ImageView
+                android:id="@+id/id_first_one_hundreds"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/frist_downlayout_imageheight"
+                android:layout_marginLeft="@dimen/frist_downlayout_imageleft"
+                android:layout_marginRight="@dimen/frist_downlayout_imageright"
+                android:layout_marginTop="@dimen/frist_downlayout_imagetop"
                 android:layout_weight="1"
-                android:background="@mipmap/icon_home_release_center" />
+                android:scaleType="fitCenter"
+                android:src="@mipmap/one_hundreds" />
 
-            <Button
-                android:id="@+id/frist_btn_response_center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/id_first_sweep"
+                android:layout_width="@dimen/frist_downlayout_imagewidth"
+                android:layout_height="@dimen/frist_downimage_imageheight"
+                android:layout_marginLeft="@dimen/frist_downimage_imageleft"
+                android:layout_marginRight="@dimen/frist_downimage_imageright"
+                android:layout_marginTop="@dimen/frist_downimage_imagetop"
                 android:layout_weight="1"
-                android:background="@mipmap/icon_home_response_center" />
+                android:scaleType="fitCenter"
+                android:src="@mipmap/sweep" />
 
-            <Button
-                android:id="@+id/frist_btn_my_profile"
+            <ImageView
+                android:id="@+id/id_first_personal_center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/frist_downlayout_imageheight"
+                android:layout_marginLeft="@dimen/frist_downlayout_imageleft"
+                android:layout_marginRight="@dimen/frist_downlayout_imageright"
+                android:layout_marginTop="@dimen/frist_downlayout_imagetop"
                 android:layout_weight="1"
-                android:background="@mipmap/icon_home_my_profile" />
+                android:scaleType="fitCenter"
+                android:src="@mipmap/personal_center" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

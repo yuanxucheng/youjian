@@ -37,6 +37,7 @@ public class SubListHandler extends ResponseHandler {
             //后台返回的数据进行过处理的,使用GSON解析
             List<IndustryClassification> Classification = JsonParser.deserializeFromJson(data, new TypeToken<List<IndustryClassification>>() {
             }.getType());
+            ic.setP_Id(Classification.get(0).getP_ParentId());
             for (IndustryClassification classification : Classification) {
                 tItem.add(classification);
             }

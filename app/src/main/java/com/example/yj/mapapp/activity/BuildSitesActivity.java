@@ -150,12 +150,20 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
 
     }
 
+    //屏蔽返回键
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     @Override
     public void initView(View view) {
         ButterKnife.bind(this);
 
         pb = new ProgressDialog(this);
         pb.setMessage(getString(R.string.buildEnterprises_loadMap));
+        pb.setCancelable(true);//设置进度条是否可以按退回键取消
+        pb.setCanceledOnTouchOutside(true); //设置点击进度对话框外的区域对话框消失
 
         // 初始化搜索模块，注册搜索事件监听
         mPoiSearch = PoiSearch.newInstance();

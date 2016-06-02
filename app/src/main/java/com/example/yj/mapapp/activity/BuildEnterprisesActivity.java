@@ -3,15 +3,19 @@ package com.example.yj.mapapp.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -54,7 +58,6 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.example.yj.mapapp.model.Companys;
 import com.example.yj.mapapp.model.EnterpriseMapPoint;
 import com.example.yj.mapapp.model.IndustryClassification;
-import com.example.yj.mapapp.model.RelatedCompanies;
 import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
 import com.example.yj.mapapp.net.handler.HttpUtil;
@@ -71,9 +74,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.yj.mapapp.view.ExpandTabView;
+import com.example.yj.mapapp.view.ViewBaseAction;
 import com.example.yj.mapapp.view.ViewLeft;
-import com.example.yj.mapapp.view.ViewMiddle;
-import com.example.yj.mapapp.view.ViewRight;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestHandle;
@@ -122,9 +124,7 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
     //ExpandableListView
     private ExpandTabView expandTabView;
     private ArrayList<View> mViewArray = new ArrayList<View>();
-    private ViewMiddle viewMiddle;
     private ViewLeft viewLeft;
-    private ViewRight viewRight;
 
 //    @Bind(R.id.id_dingwei)
 //    Button dingwei;
@@ -177,6 +177,8 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
 
         pb = new ProgressDialog(this);
         pb.setMessage(getString(R.string.buildSites_loadMap));
+        pb.setCancelable(true);//设置进度条是否可以按退回键取消
+        pb.setCanceledOnTouchOutside(true); //设置点击进度对话框外的区域对话框消失
 
         // 初始化搜索模块，注册搜索事件监听
         mPoiSearch = PoiSearch.newInstance();
@@ -291,9 +293,7 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
     private void initView() {
 
         expandTabView = (ExpandTabView) findViewById(R.id.expandtab_view);
-        viewMiddle = new ViewMiddle(this);
         viewLeft = new ViewLeft(this);
-        viewRight = new ViewRight(this);
 
     }
 
@@ -314,14 +314,6 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
 
     private void initListener() {
 
-//        viewMiddle.setOnSelectListener(new ViewMiddle.OnSelectListener() {
-//
-//            @Override
-//            public void getValue(String distance, IndustryClassification showText) {
-//                onRefresh(viewMiddle, showText);
-//            }
-//        });
-
         viewLeft.setOnSelectListener(new ViewLeft.OnSelectListener() {
 
             @Override
@@ -331,15 +323,6 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
 
             }
         });
-
-//        viewRight.setOnSelectListener(new ViewRight.OnSelectListener() {
-//
-//            @Override
-//            public void getValue(String distance, String showText) {
-//                onRefresh(viewRight, showText);
-//            }
-//        });
-
     }
 
     private void onRefresh(View view, final IndustryClassification showText) {
@@ -349,9 +332,14 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
         if (position >= 0 && !expandTabView.getTitle(position).equals(showText)) {
             expandTabView.setTitle(showText.getP_Name(), position);
         }
-        // 不延迟，直接发送
-        handler.sendEmptyMessage(SHOW);
-        getetEnterpriseMapPointByType("120", "30", "122", "32", Integer.valueOf(showText.getP_Id()));
+        if (showText.equals("全部")) {
+//            getetEnterpriseMapPointByType("120", "30", "122", "32", Integer.valueOf(showText.getP_Id()));
+            ToastUtil.shortT(BuildEnterprisesActivity.this, "全部");
+        } else {
+            // 不延迟，直接发送
+            handler.sendEmptyMessage(SHOW);
+            getetEnterpriseMapPointByType("120", "30", "122", "32", Integer.valueOf(showText.getP_Id()));
+        }
     }
 
     private int getPositon(View tView) {
@@ -365,12 +353,18 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
 
     @Override
     public void onBackPressed() {
-
+        super.onBackPressed();
         if (!expandTabView.onPressBack()) {
             finish();
         }
 
     }
+
+    //    //屏蔽返回键
+//    @Override
+//    public void onBackPressed() {
+////        super.onBackPressed();
+//    }
 
     /**
      * 定位SDK监听函数

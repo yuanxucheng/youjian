@@ -5,27 +5,26 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/id_first_sweep"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="7dp"
-        android:gravity="center"
-        android:text="@string/first_sweep"
-        android:textColor="@color/black"
-        android:textSize="@dimen/frist_btn_popwindow" />
+    <!--<TextView-->
+        <!--android:id="@+id/id_first_sweep"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:layout_marginTop="7dp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="@string/first_sweep"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="@dimen/frist_btn_popwindow" />-->
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/offset_5dp"
-        android:layout_marginRight="@dimen/offset_5dp"
-        android:layout_height="@dimen/offset_1dp"
-        android:background="@color/black">
-
-    </View>
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_marginLeft="@dimen/offset_5dp"-->
+        <!--android:layout_marginRight="@dimen/offset_5dp"-->
+        <!--android:layout_height="@dimen/offset_1dp"-->
+        <!--android:background="@color/black">-->
+    <!--</View>-->
 
     <TextView
         android:id="@+id/id_first_share"

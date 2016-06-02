@@ -78,12 +78,12 @@ public class FristActivity extends BaseActivity {
 
     private String imageUrls = "http://api.51buyjc.com/Content/UploadImage/icon_home_bg.png";
 
-    @Bind(R.id.frist_btn_release_center)
-    Button btn_release_center;
-    @Bind(R.id.frist_btn_response_center)
-    Button btn_response_center;
-    @Bind(R.id.frist_btn_my_profile)
-    Button btn__my_profile;
+    //    @Bind(R.id.frist_btn_release_center)
+//    Button btn_release_center;
+//    @Bind(R.id.frist_btn_response_center)
+//    Button btn_response_center;
+    @Bind(R.id.id_first_personal_center)
+    ImageView personal_center;
 
     @Bind(R.id.frist_btn_build_site)
     Button frist_btn_build_site;
@@ -120,6 +120,12 @@ public class FristActivity extends BaseActivity {
 
     @Bind(R.id.id_current_city)
     TextView current_city;
+
+    @Bind(R.id.id_first_sweep)
+    ImageView first_sweep;
+
+    @Bind(R.id.id_first_one_hundreds)
+    ImageView first_one_hundreds;
 
     @OnClick(R.id.id_frist_menu)
     public void menu(View v) {
@@ -177,23 +183,40 @@ public class FristActivity extends BaseActivity {
         toPage(BuildEnterprisesActivity.class);
     }
 
-    //发布中心
-    @OnClick(R.id.frist_btn_release_center)
-    public void releaseCenter(View view) {
-        //显示泡泡窗口
-        popwindow.showPopupWindowReleaseCenter(view);
-    }
+//    //发布中心
+//    @OnClick(R.id.frist_btn_release_center)
+//    public void releaseCenter(View view) {
+//        //显示泡泡窗口
+//        popwindow.showPopupWindowReleaseCenter(view);
+//    }
 
     //响应中心
-    @OnClick(R.id.frist_btn_response_center)
-    public void responseCenter(View view) {
-        //显示泡泡窗口
-        popwindow.showPopupWindowResponseCenter(view);
+//    @OnClick(R.id.frist_btn_response_center)
+//    public void responseCenter(View view) {
+//        //显示泡泡窗口
+//        popwindow.showPopupWindowResponseCenter(view);
+//    }
+
+    //扫一扫
+    @OnClick(R.id.id_first_sweep)
+    public void sweep(View view) {
+        Intent intent = new Intent();
+        intent.setClass(FristActivity.this, MipcaActivityCapture.class);
+        startActivity(intent);
     }
 
-    //我的资料
-    @OnClick(R.id.frist_btn_my_profile)
-    public void _myProfile(View view) {
+    @OnClick(R.id.id_first_one_hundreds)
+    public void one_hundreds() {
+        if (MApplication.login == true) {
+            toPage(TradeLeadsActivity.class);
+        } else {
+            toPage(NetActivity.class);
+        }
+    }
+
+    //个人中心
+    @OnClick(R.id.id_first_personal_center)
+    public void personal_center(View view) {
 //        toPage(LoginActivity.class);
 
         if (MApplication.login == true) {
@@ -203,14 +226,14 @@ public class FristActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.frist_btn_gqxx)
-    public void gqxx() {
-        if (MApplication.login == true) {
-            toPage(TradeLeadsActivity.class);
-        } else {
-            toPage(NetActivity.class);
-        }
-    }
+//    @OnClick(R.id.frist_btn_gqxx)
+//    public void gqxx() {
+//        if (MApplication.login == true) {
+//            toPage(TradeLeadsActivity.class);
+//        } else {
+//            toPage(NetActivity.class);
+//        }
+//    }
 
     @Override
     public int bindLayout() {

@@ -13,26 +13,28 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.yj.mapapp.R;
+import com.example.yj.mapapp.activity.BuildEnterprisesActivity;
 import com.example.yj.mapapp.model.IndustryClassification;
 import com.example.yj.mapapp.util.LogUtil;
 import com.example.yj.mapapp.util.ToastUtil;
 import com.example.yj.mapapp.view.ExpandTabView;
+import com.example.yj.mapapp.view.ViewBaseAction;
 
-public class TextAdapter extends ArrayAdapter<IndustryClassification> {
+public class TextAdapter extends ArrayAdapter<IndustryClassification> implements ViewBaseAction {
 
     private Context mContext;
     private List<IndustryClassification> mListData;
     //    private String[] mArrayData;
     private IndustryClassification[] mArrayData;
     private int selectedPos = -1;
-    //    private String selectedText = "";
-    private IndustryClassification selectedText = null;
+    private String selectedText = "";
     private int normalDrawbleId;
     private Drawable selectedDrawble;
     private float textSize;
     private OnClickListener onClickListener;
     private OnItemClickListener mOnItemClickListener;
     private ExpandTabView expandTabView;
+    private View view;
 
     public TextAdapter(Context context, List<IndustryClassification> listData, int sId, int nId) {
         super(context, R.string.no_data, listData);
@@ -73,21 +75,26 @@ public class TextAdapter extends ArrayAdapter<IndustryClassification> {
      */
     public void setSelectedPosition(int pos) {
 //        ToastUtil.shortT(getContext(),"aaaaaaaaaaaaaaaaaaa");
-
         LogUtil.d("pos:============" + pos);
+
         if (pos == 0) {
             expandTabView.getExpandTabView(expandTabView);
         }
         if (mListData != null && pos < mListData.size()) {
             selectedPos = pos;
-            selectedText = mListData.get(pos);
+            selectedText = mListData.get(pos).getP_Name();
             notifyDataSetChanged();
         } else if (mArrayData != null && pos < mArrayData.length) {
             selectedPos = pos;
-            selectedText = mArrayData[pos];
+            selectedText = mArrayData[pos].getP_Name();
             notifyDataSetChanged();
         }
-
+        if (selectedText.equals("全部分类")) {
+            LogUtil.d("bbbbbbbbbbbbbbbbbb");
+            //隐藏菜单
+            expandTabView.onPressBack();
+            notifyDataSetChanged();
+        }
     }
 
     /**
@@ -96,9 +103,9 @@ public class TextAdapter extends ArrayAdapter<IndustryClassification> {
     public void setSelectedPositionNoNotify(int pos) {
         selectedPos = pos;
         if (mListData != null && pos < mListData.size()) {
-            selectedText = mListData.get(pos);
+            selectedText = mListData.get(pos).getP_Name();
         } else if (mArrayData != null && pos < mArrayData.length) {
-            selectedText = mArrayData[pos];
+            selectedText = mArrayData[pos].getP_Name();
         }
     }
 
@@ -125,6 +132,7 @@ public class TextAdapter extends ArrayAdapter<IndustryClassification> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        this.view = convertView;
         TextView view;
         if (convertView == null) {
             view = (TextView) LayoutInflater.from(mContext).inflate(R.layout.choose_item, parent, false);
@@ -150,10 +158,11 @@ public class TextAdapter extends ArrayAdapter<IndustryClassification> {
 
         if (selectedText != null && selectedText.equals(mString)) {
             view.setBackgroundDrawable(selectedDrawble);//设置选中的背景图片
-//            ToastUtil.longT(getContext(),"aaaa");
+//            ToastUtil.shortT(getContext(),"aaaa");
         } else {
             view.setBackgroundDrawable(mContext.getResources().getDrawable(normalDrawbleId));//设置未选中状态背景图片
         }
+
         view.setPadding(20, 0, 0, 0);
         view.setOnClickListener(onClickListener);
         return view;
@@ -161,6 +170,16 @@ public class TextAdapter extends ArrayAdapter<IndustryClassification> {
 
     public void setOnItemClickListener(OnItemClickListener l) {
         mOnItemClickListener = l;
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void show() {
+
     }
 
     /**

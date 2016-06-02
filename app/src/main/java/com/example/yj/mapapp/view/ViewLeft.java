@@ -156,15 +156,7 @@ public class ViewLeft extends LinearLayout implements ViewBaseAction {
 
 //        mClassificationList = new ArrayList<>();
 
-        new Thread() {
-            @Override
-            public void run() {
-                //这里写入子线程需要做的工作
-                Looper.prepare();
-                HttpUtil.allCategories(0, allCategoriesHandler);
-                Looper.loop();
-            }
-        }.start();
+        HttpUtil.allCategories(0, allCategoriesHandler);
 
         earaListViewAdapter = new TextAdapter(context, mNameList,
                 R.mipmap.choose_item_selected,

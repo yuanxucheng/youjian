@@ -3,11 +3,13 @@ package com.example.yj.mapapp.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -223,10 +225,111 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
 //        HttpUtil.ConstructionCoordinate("121", "31", "121.5", "31.5", ConstructionCoordinateHandler);
         HttpUtil.ConstructionCoordinate("120", "30", "122", "32", ConstructionCoordinateHandler);
 
+        mBaiduMap.setOnMapStatusChangeListener(statusChangeListener);
+
         mBaiduMap.setOnMarkerClickListener(markerClickListener);
 
         mLocClient.start();
+
     }
+
+    BaiduMap.OnMapStatusChangeListener statusChangeListener = new BaiduMap.OnMapStatusChangeListener() {
+        @Override
+        public void onMapStatusChangeStart(MapStatus mapStatus) {
+
+        }
+
+        @Override
+        public void onMapStatusChange(MapStatus mapStatus) {
+            //===========================
+            LatLng pointLeft = mBaiduMap.getProjection().fromScreenLocation(new Point(0, 0));
+            LatLng pointRight = mBaiduMap.getProjection().fromScreenLocation(new Point(mMapView.getWidth(), mMapView.getHeight()));
+            LogUtil.d("tag", "pointLeft:=============" + pointLeft);
+            LogUtil.d("tag", "pointRight:==============" + pointRight);
+
+            //===========================
+//                GeoPoint centerPoint = mMapView.getMapCenter();// 地图中心坐标点
+//                int tpSpan = mMapView.getLatitudeSpan();// 当前纬线的跨度（从地图的上边缘到下边缘）int lrSpan = mMapView.getLongitudeSpan();// 当前经度的跨度（从地图的左边缘到右边缘）
+//                GeoPoint point = new GeoPoint(centerPoint.getLatitudeE6() - tpSpan / 2, centerPoint.getLongitudeE6() + lrSpan / 2);// 右上角
+//                GeoPoint point2 = new GeoPoint(centerPoint.getLatitudeE6() + tpSpan / 2, centerPoint.getLongitudeE6() - lrSpan / 2);// 左下角
+
+            //===========================
+            int b = mMapView.getBottom();
+            LogUtil.d("tag", "b:==============" + b);
+            int t = mMapView.getTop();
+            LogUtil.d("tag", "t:==============" + t);
+            int r = mMapView.getRight();
+            LogUtil.d("tag", "r:==============" + r);
+            int l = mMapView.getLeft();
+            LogUtil.d("tag", "lb:==============" + l);
+            LatLng ne = mBaiduMap.getProjection().fromScreenLocation(new Point(r, t));
+            LogUtil.d("tag", "ne:==============" + ne);
+            LatLng sw = mBaiduMap.getProjection().fromScreenLocation(new Point(l, b));
+            LogUtil.d("tag", "sw:==============" + sw);
+
+            String[] str = ne.toString().split(",");
+            String s = str[0].split(":")[1];
+            String ss = str[1].split(":")[1];
+            LogUtil.d("tag", "s:==============" + s + "ss:===========" + ss);
+            String[] string = sw.toString().split(",");
+            String sss = string[0].split(":")[1];
+            String ssss = string[1].split(":")[1];
+            LogUtil.d("tag", "sss:==============" + sss + "ssss:===========" + ssss);
+
+//            HttpUtil.ConstructionCoordinate(ssss, sss, ss, s, ConstructionCoordinateHandler);
+
+            //===========================
+            DisplayMetrics dm = new DisplayMetrics();
+            // 获取屏幕信息
+            getWindowManager().getDefaultDisplay().getMetrics(dm);
+            int screenWidth = dm.widthPixels;
+            LogUtil.d("tag", "screenWidth:==============" + screenWidth);
+            int screenHeigh = dm.heightPixels;
+            LogUtil.d("tag", "screenHeigh:==============" + screenHeigh);
+            int targetScreenX = mBaiduMap.getMapStatus().targetScreen.x;// 地图操作中心点在屏幕中的坐标x
+            LogUtil.d("tag", "targetScreenX:==============" + targetScreenX);
+            int targetScreenY = mBaiduMap.getMapStatus().targetScreen.y;// 地图操作中心点在屏幕中的坐标y
+            LogUtil.d("tag", "targetScreenY:==============" + targetScreenY);
+            int navHeight = screenHeigh - 2 * targetScreenY;// 导航条(除地图之外的部分)的高度
+            LogUtil.d("tag", "navHeight:==============" + navHeight);
+
+            Point rightup = new Point(screenWidth, navHeight);
+            Point leftdown = new Point(0, screenHeigh);
+
+            LatLng northeast = mBaiduMap.getProjection().fromScreenLocation(rightup);
+            LatLng southwest = mBaiduMap.getProjection().fromScreenLocation(leftdown);
+            LogUtil.d("tag", "northeast:==============" + northeast);
+            LogUtil.d("tag", "southwest:==============" + southwest);
+
+            //===========================
+            String[] strings = northeast.toString().split(",");
+            String st = strings[0].split(":")[1];
+            String stt = strings[1].split(":")[1];
+            LogUtil.d("tag", "st:==============" + st + "stt:===========" + stt);
+            String[] stringss = southwest.toString().split(",");
+            String sttt = stringss[0].split(":")[1];
+            String stttt = stringss[1].split(":")[1];
+            LogUtil.d("tag", "sttt:==============" + sttt + "stttt:===========" + stttt);
+
+//            HttpUtil.ConstructionCoordinate(stttt, sttt, stt, st, ConstructionCoordinateHandler);
+
+            //===========================
+            MapStatus mmapStatus = mBaiduMap.getMapStatus();
+            LatLng center = mmapStatus.target;
+            LogUtil.d("tag", "center:==============" + center);
+            String location = center.latitude + "," + center.longitude;
+            LogUtil.d("tag", "location:==============" + location);
+
+            //=============================
+            LatLng target = mBaiduMap.getMapStatus().target;
+            LogUtil.d("tag", "target:==============" + target);
+        }
+
+        @Override
+        public void onMapStatusChangeFinish(MapStatus mapStatus) {
+
+        }
+    };
 
     @Override
     public void doBusiness(Context mContext) {

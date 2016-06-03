@@ -5,6 +5,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Vibrator;
 import android.util.Log;
 
@@ -42,7 +44,7 @@ public class MApplication extends Application {
     private String now_district;// 当前定位到的区/县
     private String now_street;// 当前定位到的街道地址
 
-    public static boolean login = false;	//登录状态
+    public static boolean login = false;    //登录状态
 
     public static MApplication getApplication() {
         return application;
@@ -59,6 +61,7 @@ public class MApplication extends Application {
 
     /**
      * 用户是否登录
+     *
      * @return
      */
     public boolean isLogin() {
@@ -100,7 +103,7 @@ public class MApplication extends Application {
          * 初始化定位sdk，建议在Application中创建
          */
         locationService = new LocationService(getApplicationContext());
-        mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+        mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
         SDKInitializer.initialize(getApplicationContext());
 
 //        MApplication.application = this;
@@ -135,8 +138,8 @@ public class MApplication extends Application {
         Log.d(TAG, "[ExampleApplication] onCreate");
         super.onCreate();
 
-        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
-        JPushInterface.init(this);     		// 初始化 JPush
+        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);            // 初始化 JPush
     }
 
     public UserInfo getUserInfo() {
@@ -192,6 +195,17 @@ public class MApplication extends Application {
      */
     public static boolean isNetworkReady() {
         return ToolNetwork.getInstance(instance).isConnected();
+    }
+
+    /**
+     * 检测网络是否可用
+     *
+     * @return
+     */
+    public boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        return ni != null && ni.isConnectedOrConnecting();
     }
 
     public String getNow_province() {

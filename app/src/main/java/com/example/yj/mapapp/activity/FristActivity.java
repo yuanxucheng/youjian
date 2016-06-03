@@ -254,6 +254,10 @@ public class FristActivity extends BaseActivity {
     public void initView(View view) {
         ButterKnife.bind(this);
 
+        // 网络连接判断
+        if (!MApplication.getInstance().isNetworkConnected())
+            ToastUtil.shortT(this, getResources().getString(R.string.network_not_connected));
+
 //        getVersionMessage();
 
         isFrist();

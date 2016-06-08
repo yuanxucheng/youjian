@@ -363,4 +363,5 @@
 
     <!--expandablelistview-->
     <string name="no_data">没有找到符合条件的</string>
+    <string name="title_activity_shops_details">ShopsDetailsActivity</string>
 </resources>

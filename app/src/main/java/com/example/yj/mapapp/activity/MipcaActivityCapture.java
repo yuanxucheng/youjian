@@ -5,7 +5,9 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
@@ -29,6 +31,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.yj.mapapp.R;
+import com.example.yj.mapapp.net.handler.HttpUtil;
+import com.example.yj.mapapp.net.handler.ResponseHandler;
+import com.example.yj.mapapp.util.LogUtil;
+import com.example.yj.mapapp.util.ToastUtil;
 import com.example.yj.mapapp.zxing.CameraManager;
 import com.example.yj.mapapp.zxing.CaptureActivityHandler;
 import com.example.yj.mapapp.zxing.InactivityTimer;
@@ -43,7 +49,14 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
-public class MipcaActivityCapture extends Activity implements Callback , View.OnClickListener{
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class MipcaActivityCapture extends Activity implements Callback, View.OnClickListener {
+
+
+    private final static String tag = "MipcaActivityCapture-->";
 
     private CaptureActivityHandler handler;
     private ViewfinderView viewfinderView;
@@ -63,8 +76,11 @@ public class MipcaActivityCapture extends Activity implements Callback , View.On
     private ProgressDialog mProgress;
     private String photo_path;
     private Bitmap scanBitmap;
+    private AlertDialog noticeDialog;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +101,7 @@ public class MipcaActivityCapture extends Activity implements Callback , View.On
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.button_back:
                 this.finish();
                 break;
@@ -97,12 +113,12 @@ public class MipcaActivityCapture extends Activity implements Callback , View.On
 //                this.startActivityForResult(wrapperIntent, REQUEST_CODE);
 //                break;
 
-                startActivity(new Intent(MipcaActivityCapture.this,UnderConstructionActivity.class));
+                startActivity(new Intent(MipcaActivityCapture.this, UnderConstructionActivity.class));
         }
     }
 
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -112,10 +128,10 @@ public class MipcaActivityCapture extends Activity implements Callback , View.On
             switch (msg.what) {
                 case PARSE_BARCODE_SUC:
 //                    onResultHandler((String)msg.obj, scanBitmap);
-                    onJumpPageHandler((String)msg.obj);
+                    onJumpPageHandler((String) msg.obj);
                     break;
                 case PARSE_BARCODE_FAIL:
-                    Toast.makeText(MipcaActivityCapture.this, (String)msg.obj, Toast.LENGTH_LONG).show();
+                    Toast.makeText(MipcaActivityCapture.this, (String) msg.obj, Toast.LENGTH_LONG).show();
                     break;
 
             }
@@ -127,8 +143,8 @@ public class MipcaActivityCapture extends Activity implements Callback , View.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
-            switch(requestCode){
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case REQUEST_CODE:
                     //获取选中图片的路径
                     Cursor cursor = getContentResolver().query(data.getData(), null, null, null, null);
@@ -166,11 +182,12 @@ public class MipcaActivityCapture extends Activity implements Callback , View.On
 
     /**
      * 扫描二维码图片的方法
+     *
      * @param path
      * @return
      */
     public Result scanningImage(String path) {
-        if(TextUtils.isEmpty(path)){
+        if (TextUtils.isEmpty(path)) {
             return null;
         }
         Hashtable<DecodeHintType, String> hints = new Hashtable<DecodeHintType, String>();
@@ -244,40 +261,126 @@ public class MipcaActivityCapture extends Activity implements Callback , View.On
 
     /**
      * 跳转到指定的页面并显示返回的result值
+     *
      * @param resultString
      */
-    private void onJumpPageHandler(String resultString){
-        if(TextUtils.isEmpty(resultString)){
+    private void onJumpPageHandler(String resultString) {
+        if (TextUtils.isEmpty(resultString)) {
             Toast.makeText(MipcaActivityCapture.this, "Scan failed!", Toast.LENGTH_SHORT).show();
             return;
         }
-        Intent myIntent  = new Intent();
-        Bundle bundle = new Bundle();
-        bundle.putString("result", resultString);
-        myIntent.putExtras(bundle);
+//        Intent myIntent = new Intent();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("result", resultString);
+//        myIntent.putExtras(bundle);
+//
+//        myIntent.setClass(MipcaActivityCapture.this, ScanResultActivity.class);
+//        startActivity(myIntent);
+//
+//        MipcaActivityCapture.this.finish();
 
-        myIntent.setClass(MipcaActivityCapture.this, ScanResultActivity.class);
-        startActivity(myIntent);
+        LogUtil.d("tag", "resultString:======" + resultString);
+        //输出结果:
+        // http://www.51buyjc.com/shop/Company/964
+        String[] str = resultString.split("/");
+        LogUtil.d("tag", "str:======" + str[5]);
 
-        MipcaActivityCapture.this.finish();
+        HttpUtil.specifyEnterpriseInformation(Integer.valueOf(str[5]), specifyEnterpriseInformationHandler);
     }
+
+    private ResponseHandler specifyEnterpriseInformationHandler = new ResponseHandler() {
+        @Override
+        public void onCacheData(String content) {
+            LogUtil.w("========onCacheData=========" + content);
+        }
+
+        @Override
+        public void success(String data, String resCode, String info) {
+            if (resCode.equals("")) {
+                LogUtil.d("data===================" + data);
+                LogUtil.d("获取指定企业信息接口,成功==============");
+
+                try {
+                    JSONObject jsonObject = new JSONObject(data);
+                    int SI_Id = jsonObject.optInt("SI_Id");
+                    String imagesURL = jsonObject.optString("imagesURL");
+                    String SI_CompanyName = jsonObject.optString("SI_CompanyName");
+                    String SI_Address = jsonObject.optString("SI_Address");
+                    String SI_Contacts = jsonObject.optString("SI_Contacts");
+                    String SI_Phone = jsonObject.optString("SI_Phone");
+                    int SI_YJAuthentication = jsonObject.optInt("SI_YJAuthentication");
+
+                    Intent myIntent = new Intent();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("SI_CompanyName", SI_CompanyName);
+                    bundle.putString("SI_Address", SI_Address);
+                    bundle.putString("SI_Contacts", SI_Contacts);
+                    bundle.putString("SI_Phone", SI_Phone);
+
+                    myIntent.putExtras(bundle);
+
+                    myIntent.setClass(MipcaActivityCapture.this, ShopsDetailsActivity.class);
+                    startActivity(myIntent);
+
+                    MipcaActivityCapture.this.finish();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                ToastUtil.shortT(MipcaActivityCapture.this, getText(R.string.buildEnterprises_fail).toString());
+//                LogUtil.d("==============获取指定企业信息接口,失败");
+            }
+        }
+
+        @Override
+        public void onFail(int arg0, String arg2, Throwable arg3) {
+            ToastUtil.shortT(MipcaActivityCapture.this, getText(R.string.buildEnterprises_fail).toString());
+        }
+    };
 
     /**
      * 处理扫描结果
+     *
      * @param result
      */
     public void handleDecode(Result result) {
         inactivityTimer.onActivity();
         playBeepSoundAndVibrate();
-        String resultString = result.getText();
+        final String resultString = result.getText();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("选择");
+        builder.setMessage("请选择项目?");
+        builder.setPositiveButton("进入商铺网站", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                        Intent intent = new Intent();
+                intent.setAction("android.intent.action.VIEW");
+                Uri content_url = Uri.parse(resultString);
+                intent.setData(content_url);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("查看商铺详情", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                onJumpPageHandler(resultString);
+            }
+        });
+        noticeDialog = builder.create();
+        noticeDialog.show();
+
+        //跳转到商铺的详细
 //        onJumpPageHandler(resultString);
-
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.VIEW");
-        Uri content_url =Uri.parse(resultString);
-        intent.setData(content_url);
-        startActivity(intent);
-
+        //跳转到商铺的网站
+//        Intent intent = new Intent();
+//        intent.setAction("android.intent.action.VIEW");
+//        Uri content_url = Uri.parse(resultString);
+//        intent.setData(content_url);
+//        startActivity(intent);
     }
 
 //    public void handleDecode(Result result, Bitmap barcode) {

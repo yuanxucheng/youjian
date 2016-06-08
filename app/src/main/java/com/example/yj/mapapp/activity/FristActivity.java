@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -321,6 +324,22 @@ public class FristActivity extends BaseActivity {
         return oldVersionName;
     }
 
+    //获取当前版本号
+    private String getAppVersionName(Context context) {
+        String versionName = "";
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo("com.example.yj.mapapp", 0);
+            versionName = packageInfo.versionName;
+            if (TextUtils.isEmpty(versionName)) {
+                return "";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return versionName;
+    }
+
     private void getVersionMessage() {
         HTTPTool.getClient().post(HttpConfig.VERSION_NUMBER_URL, null, new AsyncHttpResponseHandler() {
 
@@ -353,11 +372,19 @@ public class FristActivity extends BaseActivity {
                             String desc = object.getString("desc");
                             LogUtil.d("versionName=" + versionName + "versionCode=" + versionCode + "packageName=" + packageName + "appId=" + appId + "appName=" + appName + "categoryId=" + categoryId + "categoryName=" + categoryName + "author=" + author + "publishTime=" + publishTime + "apkUrl=" + apkUrl + "downCount=" + downCount);
 
+//                            if (!isFirstRun) {
+//                                if (!readVersionMessage().equals(versionName)) {
+//                                    showNoticeDialog();
+//                                }
+//                            }
+
                             if (!isFirstRun) {
-                                if (!readVersionMessage().equals(versionName)) {
+                                LogUtil.d("tag", "versionName:===============" + getAppVersionName(FristActivity.this));
+                                if (!getAppVersionName(FristActivity.this).equals(versionName)) {
                                     showNoticeDialog();
                                 }
                             }
+
                             SharedPreferences sp = getSharedPreferences("version", MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
                             editor.putString("versionName", versionName);

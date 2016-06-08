@@ -331,6 +331,7 @@
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
 
+
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
@@ -482,6 +483,10 @@
             android:label="@string/title_activity_my_response"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.ShopsDetailsActivity"
+            android:label="@string/title_activity_shops_details"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

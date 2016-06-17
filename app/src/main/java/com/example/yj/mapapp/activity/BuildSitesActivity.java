@@ -3,6 +3,8 @@ package com.example.yj.mapapp.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,6 +56,7 @@ import com.example.yj.mapapp.manager.PoiOverlay;
 import com.example.yj.mapapp.model.Companys;
 import com.example.yj.mapapp.net.handler.HttpUtil;
 import com.example.yj.mapapp.net.handler.ResponseHandler;
+import com.example.yj.mapapp.util.BitmapUtil;
 import com.example.yj.mapapp.util.JsonParser;
 import com.example.yj.mapapp.util.LogUtil;
 import com.example.yj.mapapp.util.ToastUtil;
@@ -63,6 +66,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,6 +126,7 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
     @OnClick(R.id.id_back)
     public void back(View v) {
         finish();
+
     }
 
     Handler handler = new Handler() {
@@ -222,8 +227,16 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
 
         initOverlay();
 
-//        HttpUtil.ConstructionCoordinate("121", "31", "121.5", "31.5", ConstructionCoordinateHandler);
-        HttpUtil.ConstructionCoordinate("120", "30", "122", "32", ConstructionCoordinateHandler);
+//        HttpUtil.constructionCoordinate("121", "31", "121.5", "31.5", constructionCoordinateHandler);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Message msg = new Message();
+                msg.what = DISMISS;
+                handler.sendMessage(msg);
+            }
+        }, 3000);
 
         mBaiduMap.setOnMapStatusChangeListener(statusChangeListener);
 
@@ -276,7 +289,7 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
             String ssss = string[1].split(":")[1];
             LogUtil.d("tag", "sss:==============" + sss + "ssss:===========" + ssss);
 
-//            HttpUtil.ConstructionCoordinate(ssss, sss, ss, s, ConstructionCoordinateHandler);
+            HttpUtil.constructionCoordinate(ssss, sss, ss, s, constructionCoordinateHandler);
 
             //===========================
             DisplayMetrics dm = new DisplayMetrics();
@@ -311,7 +324,7 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
             String stttt = stringss[1].split(":")[1];
             LogUtil.d("tag", "sttt:==============" + sttt + "stttt:===========" + stttt);
 
-//            HttpUtil.ConstructionCoordinate(stttt, sttt, stt, st, ConstructionCoordinateHandler);
+//            HttpUtil.ConstructionCoordinate(stttt, sttt, stt, st, constructionCoordinateHandler);
 
             //===========================
             MapStatus mmapStatus = mBaiduMap.getMapStatus();
@@ -365,11 +378,13 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
         for (BitmapDescriptor bd : bdList) {
             bd.recycle();
         }
+
         // 退出时销毁定位
         mLocClient.stop();
         // 关闭定位图层
         mBaiduMap.setMyLocationEnabled(false);
         mMapView = null;
+        System.gc();  //提醒系统及时回收
     }
 
     /**
@@ -429,7 +444,7 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
         }
     };
 
-    private ResponseHandler ConstructionCoordinateHandler = new ResponseHandler() {
+    private ResponseHandler constructionCoordinateHandler = new ResponseHandler() {
         @Override
         public void onCacheData(String content) {
             LogUtil.w("========onCacheData=========" + content);
@@ -437,6 +452,9 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
 
         @Override
         public void success(String data, String resCode, String info) {
+
+            bdList.clear();
+
             if (resCode.equals("")) {
                 LogUtil.d("data===================" + data);
                 LogUtil.d("承建坐标点搜索接口,成功==============");
@@ -452,8 +470,21 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
                     LatLng ll = new LatLng(Double.parseDouble(c.getPointLat()), Double.parseDouble(c.getPointLong()));
                     Log.d("-------------", "" + Double.parseDouble(c.getPointLat()));
                     Log.d("-------------", "" + Double.parseDouble(c.getPointLong()));
+
+//                    InputStream is = getResources().openRawResource(R.mipmap.icon_gcoding);
+//                    BitmapFactory.Options options = new BitmapFactory.Options();
+//                    options.inJustDecodeBounds = false;
+//                    options.inSampleSize = 10;   // width，hight设为原来的十分一
+//                    Bitmap btp = BitmapFactory.decodeStream(is, null, options);
+//                    BitmapDescriptor bd = BitmapDescriptorFactory
+//                            .fromBitmap(btp);
+
+//                    BitmapDescriptor bd = BitmapDescriptorFactory
+//                            .fromResource(R.mipmap.icon_gcoding);
+
                     BitmapDescriptor bd = BitmapDescriptorFactory
-                            .fromResource(R.mipmap.icon_gcoding);
+                            .fromBitmap(BitmapUtil.readBitMap(BuildSitesActivity.this, R.mipmap.icon_gcoding));
+
                     bdList.add(bd);
                     Bundle bundle = new Bundle();
                     bundle.putInt("buildSites_id", c.getId());
@@ -469,9 +500,6 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
 //                    LogUtil.d("tag", "id:" + c.getId() + "========name:" + c.getName() + "==========pointLat:" + c.getPointLat() + "==========pointLong:" + c.getPointLong());
 //                }
 
-                Message msg = new Message();
-                msg.what = DISMISS;
-                handler.sendMessage(msg);
             } else {
                 ToastUtil.shortT(BuildSitesActivity.this, getText(R.string.buildSites_fail).toString());
                 LogUtil.d("==============承建坐标点搜索接口,失败");

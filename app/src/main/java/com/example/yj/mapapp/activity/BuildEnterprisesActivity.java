@@ -1,5 +1,6 @@
 package com.example.yj.mapapp.activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -65,6 +66,7 @@ import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
 import com.example.yj.mapapp.net.handler.HttpUtil;
 import com.example.yj.mapapp.net.handler.ResponseHandler;
+import com.example.yj.mapapp.util.BitmapUtil;
 import com.example.yj.mapapp.util.JsonParser;
 import com.example.yj.mapapp.util.JsonUtil;
 import com.example.yj.mapapp.util.LogUtil;
@@ -128,6 +130,11 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
     private ArrayList<View> mViewArray = new ArrayList<View>();
     private ViewLeft viewLeft;
 
+    //分类广告对话框
+    private LayoutInflater inflater;
+    private AlertDialog dialog;
+    private TextView tv;
+
 //    @Bind(R.id.id_dingwei)
 //    Button dingwei;
 //
@@ -143,6 +150,7 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
     @OnClick(R.id.id_back)
     public void back(View v) {
         finish();
+
     }
 
     Handler handler = new Handler() {
@@ -238,7 +246,18 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
         initOverlay();
 
 //        HttpUtil.enterpriseCoordinate("121", "31", "121.5", "31.5", enterpriseCoordinateHandler);
-        HttpUtil.enterpriseCoordinate("120", "30", "122", "32", enterpriseCoordinateHandler);
+//        HttpUtil.enterpriseCoordinate("120", "30", "122", "32", enterpriseCoordinateHandler);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Message msg = new Message();
+                msg.what = DISMISS;
+                handler.sendMessage(msg);
+            }
+        }, 3000);
+
+        mBaiduMap.setOnMapStatusChangeListener(statusChangeListener);
 
         mBaiduMap.setOnMarkerClickListener(markerClickListener);
 
@@ -248,6 +267,51 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
         initVaule();
         initListener();
     }
+
+    BaiduMap.OnMapStatusChangeListener statusChangeListener = new BaiduMap.OnMapStatusChangeListener() {
+        @Override
+        public void onMapStatusChangeStart(MapStatus mapStatus) {
+
+        }
+
+        @Override
+        public void onMapStatusChange(MapStatus mapStatus) {
+            LatLng pointLeft = mBaiduMap.getProjection().fromScreenLocation(new Point(0, 0));
+            LatLng pointRight = mBaiduMap.getProjection().fromScreenLocation(new Point(mMapView.getWidth(), mMapView.getHeight()));
+            LogUtil.d("tag", "pointLeft:=============" + pointLeft);
+            LogUtil.d("tag", "pointRight:==============" + pointRight);
+
+            int b = mMapView.getBottom();
+            LogUtil.d("tag", "b:==============" + b);
+            int t = mMapView.getTop();
+            LogUtil.d("tag", "t:==============" + t);
+            int r = mMapView.getRight();
+            LogUtil.d("tag", "r:==============" + r);
+            int l = mMapView.getLeft();
+            LogUtil.d("tag", "lb:==============" + l);
+            LatLng ne = mBaiduMap.getProjection().fromScreenLocation(new Point(r, t));
+            LogUtil.d("tag", "ne:==============" + ne);
+            LatLng sw = mBaiduMap.getProjection().fromScreenLocation(new Point(l, b));
+            LogUtil.d("tag", "sw:==============" + sw);
+
+            String[] str = ne.toString().split(",");
+            String s = str[0].split(":")[1];
+            String ss = str[1].split(":")[1];
+            LogUtil.d("tag", "s:==============" + s + "ss:===========" + ss);
+            String[] string = sw.toString().split(",");
+            String sss = string[0].split(":")[1];
+            String ssss = string[1].split(":")[1];
+            LogUtil.d("tag", "sss:==============" + sss + "ssss:===========" + ssss);
+
+            HttpUtil.constructionCoordinate(ssss, sss, ss, s, enterpriseCoordinateHandler);
+
+        }
+
+        @Override
+        public void onMapStatusChangeFinish(MapStatus mapStatus) {
+
+        }
+    };
 
     @Override
     public void doBusiness(Context mContext) {
@@ -290,6 +354,8 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
         // 关闭定位图层
         mBaiduMap.setMyLocationEnabled(false);
         mMapView = null;
+
+        System.gc();  //提醒系统及时回收
     }
 
     private void initView() {
@@ -338,11 +404,42 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
 //            getetEnterpriseMapPointByType("120", "30", "122", "32", Integer.valueOf(showText.getP_Id()));
             ToastUtil.shortT(BuildEnterprisesActivity.this, "全部");
         } else {
-            // 不延迟，直接发送
-            handler.sendEmptyMessage(SHOW);
-            getetEnterpriseMapPointByType("120", "30", "122", "32", Integer.valueOf(showText.getP_Id()));
+
+            classifyAdvertDialog();
+
+            getEnterpriseMapPointByType("120", "30", "122", "32", Integer.valueOf(showText.getP_Id()));
         }
     }
+
+    /**
+     * 分类广告对话框
+     */
+    private void classifyAdvertDialog() {
+        //开启线程
+        handler.post(run);
+
+        inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.advert_dialog, null);
+        dialog = new AlertDialog.Builder(this).setView(view).show();
+        tv = (TextView) view.findViewById(R.id.btn_cloese_dialog);
+    }
+
+    private Runnable run = new Runnable() {
+        int i = 0;
+
+        public void run() {
+            if (i < 6) {
+                tv.setText(i++ + "s");
+                //延迟一秒加载
+                handler.postDelayed(run, 1000);
+            } else {
+                dialog.dismiss();
+
+                // 不延迟，直接发送
+                handler.sendEmptyMessage(SHOW);
+            }
+        }
+    };
 
     private int getPositon(View tView) {
         for (int i = 0; i < mViewArray.size(); i++) {
@@ -427,7 +524,16 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
         }
     };
 
-    private void getetEnterpriseMapPointByType(String startLong, String startLat, String endLong, String endLat, int type) {
+    /**
+     * 获取分类气泡点
+     *
+     * @param startLong
+     * @param startLat
+     * @param endLong
+     * @param endLat
+     * @param type
+     */
+    private void getEnterpriseMapPointByType(String startLong, String startLat, String endLong, String endLat, int type) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("startLong", startLong);
@@ -469,8 +575,12 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
                             LatLng ll = new LatLng(Double.parseDouble(pointLat), Double.parseDouble(pointLong));
                             Log.d("tag-------------", "" + Double.parseDouble(pointLat));
                             Log.d("tag-------------", "" + Double.parseDouble(pointLong));
+
+//                            BitmapDescriptor bd = BitmapDescriptorFactory
+//                                    .fromResource(R.mipmap.icon_gcoding);
+
                             BitmapDescriptor bd = BitmapDescriptorFactory
-                                    .fromResource(R.mipmap.icon_gcoding);
+                                    .fromBitmap(BitmapUtil.readBitMap(BuildEnterprisesActivity.this, R.mipmap.icon_gcoding));
 
                             bdList.add(bd);
                             Log.d("size", bdList.size() + "==============");
@@ -485,7 +595,6 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
                         Message msg = new Message();
                         msg.what = DISMISS;
                         handler.sendMessage(msg);
-                        Log.d("sizesss", bdList.size() + "==============");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -512,6 +621,9 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
 
         @Override
         public void success(String data, String resCode, String info) {
+
+            bdList.clear();
+
             if (resCode.equals("")) {
                 LogUtil.d("data----------------" + data);
                 LogUtil.d("企业坐标点搜索接口,成功==============");
@@ -525,8 +637,12 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
                     LatLng ll = new LatLng(Double.parseDouble(c.getPointLat()), Double.parseDouble(c.getPointLong()));
                     Log.d("-------------", "" + Double.parseDouble(c.getPointLat()));
                     Log.d("-------------", "" + Double.parseDouble(c.getPointLong()));
+
+//                    BitmapDescriptor bd = BitmapDescriptorFactory
+//                            .fromResource(R.mipmap.icon_gcoding);
+
                     BitmapDescriptor bd = BitmapDescriptorFactory
-                            .fromResource(R.mipmap.icon_gcoding);
+                            .fromBitmap(BitmapUtil.readBitMap(BuildEnterprisesActivity.this, R.mipmap.icon_gcoding));
 
                     bdList.add(bd);
                     Log.d("sizes", bdList.size() + "==============");
@@ -539,10 +655,6 @@ public class BuildEnterprisesActivity extends BaseActivity implements OnGetPoiSe
 
                 }
 
-                Log.d("sizess", bdList.size() + "==============");
-                Message msg = new Message();
-                msg.what = DISMISS;
-                handler.sendMessage(msg);
             } else {
                 ToastUtil.shortT(BuildEnterprisesActivity.this, getText(R.string.buildEnterprises_fail).toString());
 //                LogUtil.d("==============企业坐标点搜索接口,失败");

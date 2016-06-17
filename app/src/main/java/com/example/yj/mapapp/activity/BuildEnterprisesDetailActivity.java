@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +42,8 @@ import butterknife.OnClick;
 
 public class BuildEnterprisesDetailActivity extends BaseActivity {
 
+    private Handler handler;
+
     @Bind(R.id.id_back)
     ImageView back;
 
@@ -70,6 +75,16 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
 
     @Bind(R.id.id_buildEnterprise_isShowPhone)
     TextView buildEnterprise_isShowPhone;
+
+    @Bind(R.id.shop_details_advert_layout)
+    FrameLayout shop_details_advert_layout;
+
+    @Bind(R.id.close_button)
+    ImageButton imageButton;
+
+    @Bind(R.id.view)
+    View view;
+
 
     /**
      * 轮播图
@@ -220,22 +235,56 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
     @Override
     public void initView(View view) {
         ButterKnife.bind(this);
+
+        handler = new Handler();
+
         //界面跳转带过来的数据
         int buildEnterprise_id = getIntent().getIntExtra("buildEnterprise_id", 0);
 
         HttpUtil.specifyEnterpriseInformation(buildEnterprise_id, specifyEnterpriseInformationHandler);
 
-        //px转sp
-        LogUtil.d("56==================" + DipUtil.pixelsToSp(56));
-        LogUtil.d("25==================" + DipUtil.pixelsToSp(25));
-        //px转dp
-        LogUtil.d("32-----" + DipUtil.pixelsToDip(32));
-        LogUtil.d("38-----" + DipUtil.pixelsToDip(38));
-
         //轮播图
         configImageLoader();
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //开启线程
+                handler.post(run);
+            }
+        }, 10000);
+
     }
+
+    private Runnable run = new Runnable() {
+        int i = 0;
+
+        public void run() {
+            if (i < 6) {
+                i++;
+                view.setBackgroundResource(R.mipmap.login_logo);
+                shop_details_advert_layout.setVisibility(View.VISIBLE);
+
+                shop_details_advert_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ToastUtil.shortT(BuildEnterprisesDetailActivity.this, "建设中,敬请期待...");
+                    }
+                });
+                imageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        shop_details_advert_layout.setVisibility(View.GONE);
+                        i = 6;
+                    }
+                });
+                //延迟加载
+                handler.postDelayed(run, 1000);
+            } else {
+                shop_details_advert_layout.setVisibility(View.GONE);
+            }
+        }
+    };
 
     private void initialize(String imageUrl) {
         cycleViewPager = (CycleViewPager) getFragmentManager()

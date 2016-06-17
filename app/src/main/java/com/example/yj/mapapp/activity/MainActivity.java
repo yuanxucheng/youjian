@@ -162,10 +162,10 @@ public class MainActivity extends BaseActivity implements Runnable {
             imageView.setImageResource(res[n++]);
             handler.postDelayed(this, 1000);
         } else {
-//            startActivity(new Intent(getApplicationContext(),
-//                    StartActivity.class));
             startActivity(new Intent(getApplicationContext(),
-                    FristActivity.class));
+                    StartActivity.class));
+//            startActivity(new Intent(getApplicationContext(),
+//                    FristActivity.class));
             finish();
         }
     }

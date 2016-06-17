@@ -92,7 +92,7 @@ public class HttpUtil {
      * @param endLat
      * @param responseHandler
      */
-    public static void ConstructionCoordinate(String startLong, String startLat, String endLong, String endLat, ResponseHandler responseHandler) {
+    public static void constructionCoordinate(String startLong, String startLat, String endLong, String endLat, ResponseHandler responseHandler) {
         String url = HttpConfig.REQUEST_URL + "/Map/GetConstructionMapPoint";
         Map<String, String> map = new HashMap<String, String>();
         map.put("startLong", startLong);

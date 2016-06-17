@@ -90,6 +90,7 @@
     <dimen name="buildEnterprises_imageView_marginRight">10dp</dimen>
     <dimen name="buildEnterprises_font__titleSize">22sp</dimen>
     <dimen name="buildEnterprises_font__size">18sp</dimen>
+    <dimen name="buildEnterprises_margin_bottom2">145dp</dimen>
     <dimen name="buildEnterprises_margin_bottom">19dp</dimen>
     <dimen name="buildEnterprises_margin_left">8dp</dimen>
     <dimen name="buildEnterprises_fragment_left">15dp</dimen>

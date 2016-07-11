@@ -185,12 +185,27 @@
         android:layout_marginRight="@dimen/buildEnterprises_margin_left" />
 
     <FrameLayout
-        android:id="@+id/shop_details_advert_layout"
+        android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone">
+        android:layout_alignParentBottom="true">
 
-        <include layout="@layout/shop_details_advert_dialog" />
+        <fragment
+            android:id="@+id/shop_details_advert_layout"
+            android:name="com.example.yj.mapapp.banner.CycleViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <include layout="@layout/enterprises_details_advert_dialog" />
+        </fragment>
     </FrameLayout>
+    <!--<FrameLayout-->
+    <!--android:id="@+id/shop_details_advert_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:visibility="gone">-->
+
+    <!--<include layout="@layout/shop_details_advert_dialog" />-->
+    <!--</FrameLayout>-->
 </RelativeLayout>

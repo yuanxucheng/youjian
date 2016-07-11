@@ -17,9 +17,9 @@ import com.example.yj.mapapp.model.LabourAgency;
 
 public class LabourAgencyAdapter extends BaseAdapter {
 
-    private List<LabourAgency> mData;
-    private Context context;
-    private LayoutInflater inflater;
+    private List<LabourAgency> mData;//劳务中介对象集合
+    private Context context;//上下文对象
+    private LayoutInflater inflater;//布局插入器(打气筒)
 
     public LabourAgencyAdapter(List<LabourAgency> mData, Context context) {
         this.mData = mData;
@@ -46,9 +46,12 @@ public class LabourAgencyAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder;//创建持有者对象
-        if (convertView == null) {
+        if (convertView == null) {//判断布局是否为null
+            //使用插入器插入布局
             convertView = inflater.inflate(R.layout.labour_agency_list_item, null);
+            //实例化ViewHolder对象
             holder = new ViewHolder();
+            //通过findViewById找到对应的布局的id
             holder.labour_agency_callPhone = (ImageView) convertView.findViewById(R.id.id_labour_agency_callPhone);
             holder.labour_agency_name = (TextView) convertView.findViewById(R.id.id_labour_agency_name);
             holder.labour_agency_area = (TextView) convertView.findViewById(R.id.id_labour_agency_area);

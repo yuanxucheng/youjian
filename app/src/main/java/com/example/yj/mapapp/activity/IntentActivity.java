@@ -39,16 +39,19 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 注册
+ */
 public class IntentActivity extends BaseActivity {
 
     private final static String tag = "IntentActivity-->";
 
-    private String user;
-    private String pwd;
-    private String surePwd;
-    private String contactPerson;
-    private String contactNumber;
-    private int type;
+    private String user;//用户名
+    private String pwd;//密码
+    private String surePwd;//确认密码
+    private String contactPerson;//联系人
+    private String contactNumber;//联系电话
+    private int type;//注册用户类型
 
     @Bind(R.id.id_register_user)
     EditText et_user;
@@ -92,6 +95,7 @@ public class IntentActivity extends BaseActivity {
         contactNumber = et_contactNumber.getText().toString().trim();
         LogUtil.d("contactNumber:===============" + contactNumber);
 
+        //访问后台接口
         register(user, pwd, contactPerson, contactNumber, type);
     }
 
@@ -100,8 +104,10 @@ public class IntentActivity extends BaseActivity {
 
     @OnClick(R.id.id_corporate_user)
     public void corporate_user() {
+        //设置背景颜色
         corporate_user.setBackgroundResource(R.color.white);
         construction_user.setBackgroundResource(R.color.register_btn_color_click);
+        //设置注册用户类型
         type = 11;
     }
 
@@ -139,6 +145,9 @@ public class IntentActivity extends BaseActivity {
 
         type = 11;
 
+        /**
+         * EditText控件获取焦点事件
+         */
         et_user.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

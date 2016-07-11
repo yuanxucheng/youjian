@@ -10,8 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author gao
- * @date 2015-4-21 4:46:20 PM 
  * 身份证校验工具
  */
 public class CardCheckUtil {
@@ -30,7 +28,7 @@ public class CardCheckUtil {
 
 	    /**
 	     * 功能：身份证的有效验证
-	     * 
+	     *
 	     * @param IDStr
 	     *            身份证号
 	     * @return 有效：返回"" 无效：返回String信息
@@ -124,7 +122,7 @@ public class CardCheckUtil {
 
 	    /**
 	     * 功能：设置地区编码
-	     * 
+	     *
 	     * @return Hashtable 对象
 	     */
 	    private static Map<String, String> GetAreaCode() {
@@ -169,7 +167,7 @@ public class CardCheckUtil {
 
 	    /**
 	     * 功能：判断字符串是否为数字
-	     * 
+	     *
 	     * @param str
 	     * @return
 	     */
@@ -185,7 +183,7 @@ public class CardCheckUtil {
 
 	    /**
 	     * 功能：判断字符串是否为日期格式
-	     * 
+	     *
 	     * @param str
 	     * @return
 	     */

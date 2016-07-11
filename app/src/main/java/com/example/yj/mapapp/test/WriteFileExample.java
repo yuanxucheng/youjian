@@ -13,7 +13,7 @@ public class WriteFileExample {
 
         try {
 
-            file = new File("c:/newfile.txt");
+            file = new File("c:/test.txt");
             fop = new FileOutputStream(file);
 
             // if file doesnt exists, then create it

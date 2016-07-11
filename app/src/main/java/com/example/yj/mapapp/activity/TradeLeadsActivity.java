@@ -40,10 +40,15 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 供求信息
+ */
 public class TradeLeadsActivity extends Activity implements View.OnClickListener {
-
+    //Fragment管理对象
     private FragmentManager fm;
+    //求购信息Fragment
     private BuyingLeadsFragment fBuyingLeads;
+    //供应信息Fragment
     private SupplyInformationFragment fSupplyInformation;
     private TextView layout_buying_leads;
     private TextView layout_supply_information;
@@ -69,51 +74,53 @@ public class TradeLeadsActivity extends Activity implements View.OnClickListener
         }
     };
 
-    public ProgressDialog getPb() {
-        return pb;
-
-    }
-
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_trade_leads);
 
-        initView();
-        initListener();
+        initView();//控件初始化
+        initListener();//事件初始化
 
+        //创建Fragment管理者对象
         fm = getFragmentManager();
 
+        //Fragment对象实例化
         fBuyingLeads = new BuyingLeadsFragment();
         fSupplyInformation = new SupplyInformationFragment();
 
+        //通过findViewById方法找到控件对象
         layout_buying_leads = (TextView) findViewById(R.id.layout_buying_leads);
         layout_supply_information = (TextView) findViewById(R.id.layout_supply_information);
 
+        //开启事务,添加Fragment对象
         fm.beginTransaction().add(R.id.container, fBuyingLeads)
                 .add(R.id.container, fSupplyInformation).hide(fBuyingLeads).commit();
 
+        //设置背景颜色
         layout_supply_information.setBackgroundResource(R.color.white);
         layout_supply_information.setTextColor(getResources().getColor(R.color.gray));
         layout_buying_leads.setTextColor(getResources().getColor(R.color.white));
 
+        //设置监听
         layout_buying_leads.setOnClickListener(this);
         layout_supply_information.setOnClickListener(this);
 
-        pb = new ProgressDialog(this);
-        pb.setMessage(getString(R.string.supply_loading));
+        pb = new ProgressDialog(this);//创建对话框对象
+        pb.setMessage(getString(R.string.supply_loading));//设置对话框信息
         // 不延迟，直接发送
         h.sendEmptyMessage(SHOW);
-
+        //线程
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                //关闭对话框
                 Message msg = new Message();
                 msg.what = DISMISS;
                 h.sendMessage(msg);
@@ -121,11 +128,17 @@ public class TradeLeadsActivity extends Activity implements View.OnClickListener
         }, 1000);
     }
 
+    /**
+     * 控件初始化
+     */
     private void initView() {
         back = (ImageView) this.findViewById(R.id.id_back);
         release_news = (TextView) this.findViewById(R.id.id_trade_leads_release_news);
     }
 
+    /**
+     * 事件初始化
+     */
     private void initListener() {
         back.setOnClickListener(this);
         release_news.setOnClickListener(this);
@@ -140,8 +153,10 @@ public class TradeLeadsActivity extends Activity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.layout_buying_leads:
+                //开启事务,显示和隐藏Fragment,并提交事务
                 fm.beginTransaction().show(fBuyingLeads).hide(fSupplyInformation)
                         .commit();
+                //设置背景颜色
                 layout_supply_information.setBackgroundResource(R.color.gray);
                 layout_buying_leads.setBackgroundResource(R.color.white);
                 layout_supply_information.setTextColor(getResources().getColor(R.color.white));
@@ -149,7 +164,7 @@ public class TradeLeadsActivity extends Activity implements View.OnClickListener
 
                 // 不延迟，直接发送
                 h.sendEmptyMessage(SHOW);
-
+                //线程
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -158,18 +173,19 @@ public class TradeLeadsActivity extends Activity implements View.OnClickListener
                         h.sendMessage(msg);
                     }
                 }, 1000);
-
                 break;
             case R.id.layout_supply_information:
+                //开启事务,显示和隐藏Fragment,并提交事务
                 fm.beginTransaction().show(fSupplyInformation).hide(fBuyingLeads)
                         .commit();
+                //设置背景颜色
                 layout_supply_information.setBackgroundResource(R.color.white);
                 layout_buying_leads.setBackgroundResource(R.color.gray);
                 layout_supply_information.setTextColor(getResources().getColor(R.color.gray));
                 layout_buying_leads.setTextColor(getResources().getColor(R.color.white));
                 // 不延迟，直接发送
                 h.sendEmptyMessage(SHOW);
-
+                //线程
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -183,6 +199,7 @@ public class TradeLeadsActivity extends Activity implements View.OnClickListener
                 finish();
                 break;
             case R.id.id_trade_leads_release_news:
+                //跳转界面
                 startActivity(new Intent(TradeLeadsActivity.this, ReleaseInformationActivity.class));
 //                startActivity(new Intent(TradeLeadsActivity.this, UnderConstructionActivity.class));
                 break;

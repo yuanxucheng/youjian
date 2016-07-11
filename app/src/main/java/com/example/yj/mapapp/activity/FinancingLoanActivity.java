@@ -12,6 +12,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 融资贷款
+ */
 public class FinancingLoanActivity extends BaseActivity {
 
     @Bind(R.id.id_back)

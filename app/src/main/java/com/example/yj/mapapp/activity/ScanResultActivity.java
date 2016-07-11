@@ -7,6 +7,9 @@ import com.example.yj.mapapp.R;
 import android.app.Activity;
 import android.widget.TextView;
 
+/**
+ * 二维码扫描
+ */
 public class ScanResultActivity extends Activity {
     private final static int SCANNIN_GREQUEST_CODE = 1;
     /**

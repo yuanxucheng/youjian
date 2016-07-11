@@ -10,10 +10,6 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-/**
- * @author yang
- * @date 2014-5-29 下午3:39:19
- */
 public class IPUtil {
 
 	/**

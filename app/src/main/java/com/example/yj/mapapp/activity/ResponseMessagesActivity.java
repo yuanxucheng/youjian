@@ -34,6 +34,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 响应信息
+ */
 public class ResponseMessagesActivity extends BaseActivity {
 
     private String contacts;
@@ -46,11 +49,6 @@ public class ResponseMessagesActivity extends BaseActivity {
 
     @Bind(R.id.id_back)
     ImageView back;
-
-    @OnClick(R.id.id_back)
-    public void back(View v) {
-        finish();
-    }
 
     @Bind(R.id.id_response_title)
     EditText response_title;
@@ -70,9 +68,14 @@ public class ResponseMessagesActivity extends BaseActivity {
     @Bind(R.id.id_now_response)
     Button response;
 
+
+    @OnClick(R.id.id_back)
+    public void back(View v) {
+        finish();
+    }
+
     @OnClick(R.id.id_now_response)
     public void response() {
-
         final ExitDialog myDialog = new ExitDialog(ResponseMessagesActivity.this,
                 getText(R.string.are_you_sure_response).toString(), getText(R.string.input_search_logout_cancle).toString(), getText(R.string.input_search_logout_ok).toString());
         myDialog.show();
@@ -176,7 +179,6 @@ public class ResponseMessagesActivity extends BaseActivity {
                                       byte[] responseBody) {
                     String response = new String(responseBody);
                     LogUtil.d("tag----------", response);
-
                     Log.d("response==============", response.toString());
                     String d = JsonUtil.getData(response.toString());
                     Log.d("d-------------", d);
@@ -184,7 +186,7 @@ public class ResponseMessagesActivity extends BaseActivity {
                     Log.d("s-------------", s);
                     String m = JsonUtil.getMessage(response.toString());
                     Log.d("m-------------", m);
-
+                    //判断响应状态
                     if (s.equals("1")) {
                         ToastUtil.longT(ResponseMessagesActivity.this, "响应成功!");
                         LogUtil.d("响应成功!===========");
@@ -192,6 +194,7 @@ public class ResponseMessagesActivity extends BaseActivity {
                         ToastUtil.longT(ResponseMessagesActivity.this, "响应失败!");
                         LogUtil.d("响应失败!===========");
                     }
+                    //界面跳转
                     toPage(TradeLeadsActivity.class);
                     finish();
                 }

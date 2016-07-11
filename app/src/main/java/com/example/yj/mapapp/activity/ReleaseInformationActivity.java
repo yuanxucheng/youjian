@@ -42,21 +42,62 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 发布信息
+ */
 public class ReleaseInformationActivity extends BaseActivity {
     private SharedPreferences spf;
     private String U_Id;
     private int sd_id;
 
+    private String title;//标题
+    private String contacts;//联系人
+    private String phone;//电话
+    private String content;//内容
+    private String address;//地址
+    private Boolean type;//类别
+    private int category;//类型
+
+    @Bind(R.id.id_release_information_title)
+    EditText release_information_title;
+
+    @Bind(R.id.id_release_information_contacts)
+    EditText release_information_contacts;
+
+    @Bind(R.id.id_release_information_contacts_phone)
+    EditText release_information_contacts_phone;
+
+    @Bind(R.id.id_release_information_content)
+    EditText release_information_content;
+
+    @Bind(R.id.id_release_information_address)
+    EditText release_information_address;
+
+    @Bind(R.id.id_supply_information)
+    Button supply_information;
+
     @Bind(R.id.id_back)
     ImageView back;
+
+    @Bind(R.id.id_buying_leads)
+    Button buying_leads;
+
+    @Bind(R.id.id_release_material)
+    Button material;
+
+    @Bind(R.id.id_release_appointed)
+    Button appointed;
+
+    @Bind(R.id.id_release_vacancy)
+    Button vacancy;
+
+    @Bind(R.id.id_now_release)
+    Button release;
 
     @OnClick(R.id.id_back)
     public void back(View v) {
         finish();
     }
-
-    @Bind(R.id.id_supply_information)
-    Button supply_information;
 
     @OnClick(R.id.id_supply_information)
     public void supply_information() {
@@ -65,18 +106,12 @@ public class ReleaseInformationActivity extends BaseActivity {
         buying_leads.setBackgroundResource(R.color.grays);
     }
 
-    @Bind(R.id.id_buying_leads)
-    Button buying_leads;
-
     @OnClick(R.id.id_buying_leads)
     public void buying_leads() {
         type = false;
         supply_information.setBackgroundResource(R.color.grays);
         buying_leads.setBackgroundResource(R.color.white);
     }
-
-    @Bind(R.id.id_release_material)
-    Button material;
 
     @OnClick(R.id.id_release_material)
     public void material() {
@@ -86,9 +121,6 @@ public class ReleaseInformationActivity extends BaseActivity {
         appointed.setBackgroundResource(R.color.grays);
     }
 
-    @Bind(R.id.id_release_appointed)
-    Button appointed;
-
     @OnClick(R.id.id_release_appointed)
     public void appointed() {
         category = 27;
@@ -96,9 +128,6 @@ public class ReleaseInformationActivity extends BaseActivity {
         vacancy.setBackgroundResource(R.color.grays);
         appointed.setBackgroundResource(R.color.white);
     }
-
-    @Bind(R.id.id_release_vacancy)
-    Button vacancy;
 
     @OnClick(R.id.id_release_vacancy)
     public void vacancy() {
@@ -108,13 +137,9 @@ public class ReleaseInformationActivity extends BaseActivity {
         appointed.setBackgroundResource(R.color.grays);
     }
 
-    @Bind(R.id.id_now_release)
-    Button release;
-
     @OnClick(R.id.id_now_release)
     public void release() {
-
-        ExitDialog myDialog = new ExitDialog(ReleaseInformationActivity.this,
+        final ExitDialog myDialog = new ExitDialog(ReleaseInformationActivity.this,
                 getText(R.string.are_you_sure_release).toString(), getText(R.string.input_search_logout_cancle).toString(), getText(R.string.input_search_logout_ok).toString());
         myDialog.show();
         myDialog.setDialogROnClickListener(new ExitDialog.MyDialogROnClickListener() {
@@ -138,32 +163,10 @@ public class ReleaseInformationActivity extends BaseActivity {
                 LogUtil.d("address:===============" + address);
 
                 release(title, category, type, contacts, phone, content, address, sd_id);
+                myDialog.dismiss();
             }
         });
     }
-
-    @Bind(R.id.id_release_information_title)
-    EditText release_information_title;
-
-    @Bind(R.id.id_release_information_contacts)
-    EditText release_information_contacts;
-
-    @Bind(R.id.id_release_information_contacts_phone)
-    EditText release_information_contacts_phone;
-
-    @Bind(R.id.id_release_information_content)
-    EditText release_information_content;
-
-    @Bind(R.id.id_release_information_address)
-    EditText release_information_address;
-
-    private String title;
-    private String contacts;
-    private String phone;
-    private String content;
-    private String address;
-    private Boolean type;//类别
-    private int category;//类型
 
     @Override
     public int bindLayout() {
@@ -202,6 +205,18 @@ public class ReleaseInformationActivity extends BaseActivity {
 
     }
 
+    /**
+     * 发布
+     *
+     * @param title
+     * @param category
+     * @param type
+     * @param contacts
+     * @param phone
+     * @param content
+     * @param address
+     * @param user_id
+     */
     private void release(String title, int category, Boolean type, String contacts, String phone, String content, String address, int user_id) {
         if (title.equals("") || content.equals("") || address.equals("") || contacts.equals("") || phone.equals("")) {
             ToastUtil.shortT(ReleaseInformationActivity.this, "所有信息不能为空!");
@@ -240,7 +255,6 @@ public class ReleaseInformationActivity extends BaseActivity {
                                       byte[] responseBody) {
                     String response = new String(responseBody);
                     LogUtil.d("tag----------", response);
-
                     Log.d("response==============", response.toString());
                     String d = JsonUtil.getData(response.toString());
                     Log.d("d-------------", d);
@@ -248,12 +262,13 @@ public class ReleaseInformationActivity extends BaseActivity {
                     Log.d("s-------------", s);
                     String m = JsonUtil.getMessage(response.toString());
                     Log.d("m-------------", m);
-
+                    //判断发布状态
                     if (s.equals("1")) {
                         ToastUtil.longT(ReleaseInformationActivity.this, "发布成功!");
                     } else if (s.equals("2")) {
                         ToastUtil.longT(ReleaseInformationActivity.this, "发布失败!");
                     }
+                    //界面跳转
                     toPage(TradeLeadsActivity.class);
                     finish();
                 }

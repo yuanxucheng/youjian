@@ -15,6 +15,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 法律咨询
+ */
 public class LegalAdviceActivity extends BaseActivity {
 
     @Bind(R.id.id_back)

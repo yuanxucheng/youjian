@@ -38,7 +38,4 @@ public class ReadFileExample {
 		return content;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(ReadTxtFile("c:/newfile.txt"));
-	}
 }

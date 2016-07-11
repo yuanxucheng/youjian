@@ -34,22 +34,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * 劳务中介
+ */
 public class LabourAgencyActivity extends Activity implements OnScrollListener, View.OnClickListener {
 
     //下拉刷新
-    private ImageView iv_back;
-    private List<LabourAgency> mData;
-    private MListView lv;
-    private LabourAgencyAdapter adapter;
+    private ImageView iv_back;//返回
+    private List<LabourAgency> mData;//劳务中介数据集合
+    private MListView lv;//自定义ListView控件
+    private LabourAgencyAdapter adapter;//适配器对象
     //下拉加载
-    private int visibleLastIndex = 0;   //最后的可视项索引
-    private int visibleItemCount;       // 当前窗口可见项总数
-    private View loadMoreView;
-    private Button loadMoreButton;
-    private Handler handler = new Handler();
-    private int totalItemCount;
-    private int pageIndex = 1;
-    private int pageSize = 10;
+    private int visibleLastIndex = 0;//最后的可视项索引
+    private int visibleItemCount;// 当前窗口可见项总数
+    private View loadMoreView;//加载更多视图
+    private Button loadMoreButton;//加载更多按钮
+    private Handler handler = new Handler();//实例化Handler对象
+    private int totalItemCount;//总的item数
+    private int pageIndex = 1;// 当前页数,
+    private int pageSize = 10;//每页个数
     private int length;//后台接口返回的数据的长度(分页访问)
 
     @Override
@@ -60,14 +63,18 @@ public class LabourAgencyActivity extends Activity implements OnScrollListener, 
 
         setContentView(R.layout.activity_labour_agency);
 
+        //通过findViewById方法找到控件对象并设置点击事件
         lv = (MListView) findViewById(R.id.lv);
         iv_back = (ImageView) findViewById(R.id.id_back);
         iv_back.setOnClickListener(this);
 
+        //初始化劳务中介对象集合
         mData = new ArrayList<LabourAgency>();
 
+        //访问后台接口
         getLabourAgencyInformation(pageIndex, pageSize, "");
 
+        //listView控件下拉刷新事件监听
         lv.setonRefreshListener(new MListView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -79,8 +86,9 @@ public class LabourAgencyActivity extends Activity implements OnScrollListener, 
 //                }
                 //下拉刷新时先清空在添加
                 LogUtil.d(mData.size() + "=============1");
-                mData.clear();
+                mData.clear();//清空集合
                 LogUtil.d(mData.size() + "=============2");
+                //访问后台接口
                 getLabourAgencyInformation(pageIndex, pageSize, "");
                 LogUtil.d(mData.size() + "=============3");
 //                adapter.notifyDataSetChanged();
@@ -90,6 +98,7 @@ public class LabourAgencyActivity extends Activity implements OnScrollListener, 
 
         //使用打气筒插入顶部试图:加载更多布局
         loadMoreView = getLayoutInflater().inflate(R.layout.lv_loadmore, null);
+        //通过findViewById方法找到控件对象
         loadMoreButton = (Button) loadMoreView.findViewById(R.id.loadMoreButton);
         //加载更多按钮点击事件的监听
         loadMoreButton.setOnClickListener(new View.OnClickListener() {
@@ -98,16 +107,14 @@ public class LabourAgencyActivity extends Activity implements OnScrollListener, 
             public void onClick(View v) {
                 loadMoreButton.setText("正在加载中...");   //设置按钮文字
                 pageIndex = pageIndex + 1;
+                //访问后台接口
                 getLabourAgencyInformation(pageIndex, pageSize, "");
             }
         });
-
         lv.addFooterView(loadMoreView);    //设置列表底部视图
-
-        adapter = new LabourAgencyAdapter(mData, this);
-
-        lv.setOnScrollListener(this);
-        lv.setAdapter(adapter);
+        adapter = new LabourAgencyAdapter(mData, this);//实例化适配器
+        lv.setOnScrollListener(this);//ListView控件滚动监听事件
+        lv.setAdapter(adapter);//为ListView设置适配器
     }
 
     private void getLabourAgencyInformation(int pageIndex, int pageSize, String search) {
@@ -182,6 +189,11 @@ public class LabourAgencyActivity extends Activity implements OnScrollListener, 
         }
     }
 
+    /**
+     * 滚动状态改变
+     * @param view
+     * @param scrollState
+     */
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         int itemsLastIndex = adapter.getCount() - 1;  //数据集最后一项的索引
@@ -192,7 +204,13 @@ public class LabourAgencyActivity extends Activity implements OnScrollListener, 
         }
     }
 
-
+    /**
+     * 滚动事件
+     * @param view
+     * @param firstVisibleItem
+     * @param visibleItemCount
+     * @param totalItemCount
+     */
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
@@ -211,6 +229,10 @@ public class LabourAgencyActivity extends Activity implements OnScrollListener, 
         }
     }
 
+    /**
+     * 点击事件
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

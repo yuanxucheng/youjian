@@ -14,9 +14,9 @@ import java.util.List;
 
 public class MyTradeLeadsAdapter extends BaseAdapter {
 
-    private List<MyTradeLeads> mData;
-    private Context context;
-    private LayoutInflater inflater;
+    private List<MyTradeLeads> mData;//我的供求对象集合
+    private Context context;//上下文对象
+    private LayoutInflater inflater;//布局插入器(打气筒)
 
     public MyTradeLeadsAdapter(List<MyTradeLeads> mData, Context context) {
         this.mData = mData;
@@ -43,9 +43,12 @@ public class MyTradeLeadsAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder;//创建持有者对象
-        if (convertView == null) {
+        if (convertView == null) {//判断布局是否为null
+            //使用插入器插入布局
             convertView = inflater.inflate(R.layout.my_trade_leads_listview, null);
+            //实例化ViewHolder对象
             holder = new ViewHolder();
+            //通过findViewById找到对应的布局的id
             holder.my_buying_leads_title = (TextView) convertView.findViewById(R.id.id_my_buying_leads_title);
             holder.my_buying_leads_category = (TextView) convertView.findViewById(R.id.id_my_buying_leads_category);
             holder.my_buying_leads_contacts = (TextView) convertView.findViewById(R.id.id_my_buying_leads_contacts);

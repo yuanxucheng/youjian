@@ -19,7 +19,6 @@ import com.example.yj.mapapp.base.BaseActivity;
 import com.example.yj.mapapp.net.handler.HttpConfig;
 import com.example.yj.mapapp.net.handler.HttpUtil;
 import com.example.yj.mapapp.net.handler.ResponseHandler;
-import com.example.yj.mapapp.util.DipUtil;
 import com.example.yj.mapapp.util.LogUtil;
 import com.example.yj.mapapp.util.ToastUtil;
 
@@ -40,7 +39,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 建材企业详情
+ */
 public class BuildEnterprisesDetailActivity extends BaseActivity {
+
+    private final static String tag = "BuildEnterprisesDetailActivity-->";
 
     private Handler handler;
 
@@ -85,13 +89,18 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
     @Bind(R.id.view)
     View view;
 
+    @Bind(R.id.frame_layout)
+    FrameLayout frame_layout;
 
     /**
      * 轮播图
      */
     private List<ImageView> views = new ArrayList<ImageView>();
+    private List<ImageView> views2 = new ArrayList<ImageView>();
     private List<ADInfo> infos = new ArrayList<ADInfo>();
+    private List<ADInfo> infos2 = new ArrayList<ADInfo>();
     private CycleViewPager cycleViewPager;
+    private CycleViewPager cycleViewPager2;
 
 //    private String[] imageUrls = {"http://www.51buyjc.com/Content/image/shopCommodity_1.jpg",
 //            "http://www.51buyjc.com/Content/image/shopCommodity_2.jpg",
@@ -145,6 +154,8 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
                     }
                     initialize(buffer.toString());
 
+                    initialize2(buffer.toString());
+
                     //截取电话号码
                     if (SI_Phone.contains("、")) {//判断是否包含两个号码
                         String[] s = SI_Phone.split("、");//使用split()方法截取
@@ -164,7 +175,7 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
                             Intent intent = new Intent();
                             intent.setAction(Intent.ACTION_CALL);//指定意图动作
                             intent.setData(Uri.parse("tel:" + build_enterprise_phone.getText()));//指定电话号码
-                            startActivity(intent);
+                            startActivity(intent);//跳转界面
                         }
                     });
                     if (SI_YJAuthentication == 0) {
@@ -176,7 +187,6 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
                         build_enterprise_YJAuthentication.setText("已认证");
                         build_enterprise_YJAuthentication.setTextColor(getResources().getColor(R.color.SI_YJAuthentication_red));
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -193,7 +203,7 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
     };
 
     /**
-     * JSON
+     * 解析JSON
      *
      * @param data
      */
@@ -236,60 +246,68 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
     public void initView(View view) {
         ButterKnife.bind(this);
 
+        //初始化Handler对象
         handler = new Handler();
 
         //界面跳转带过来的数据
         int buildEnterprise_id = getIntent().getIntExtra("buildEnterprise_id", 0);
 
+        //访问接口数据
         HttpUtil.specifyEnterpriseInformation(buildEnterprise_id, specifyEnterpriseInformationHandler);
 
         //轮播图
         configImageLoader();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //开启线程
-                handler.post(run);
-            }
-        }, 10000);
-
+        /*直推广告代码*/
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                //开启线程
+//                handler.post(run);
+//            }
+//        }, 10000);
+//
     }
 
-    private Runnable run = new Runnable() {
-        int i = 0;
+    /*直推广告代码*/
+//    private Runnable run = new Runnable() {
+//        int i = 0;
+//
+//        public void run() {
+//            if (i < 6) {
+//                i++;
+//                view.setBackgroundResource(R.mipmap.login_logo);
+//                shop_details_advert_layout.setVisibility(View.VISIBLE);
+//
+//                shop_details_advert_layout.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        ToastUtil.shortT(BuildEnterprisesDetailActivity.this, "建设中,敬请期待...");
+//                    }
+//                });
+//                imageButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        shop_details_advert_layout.setVisibility(View.GONE);
+//                        i = 6;
+//                    }
+//                });
+//                //延迟加载
+//                handler.postDelayed(run, 1000);
+//            } else {
+//                shop_details_advert_layout.setVisibility(View.GONE);
+//            }
+//        }
+//    };
 
-        public void run() {
-            if (i < 6) {
-                i++;
-                view.setBackgroundResource(R.mipmap.login_logo);
-                shop_details_advert_layout.setVisibility(View.VISIBLE);
-
-                shop_details_advert_layout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ToastUtil.shortT(BuildEnterprisesDetailActivity.this, "建设中,敬请期待...");
-                    }
-                });
-                imageButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        shop_details_advert_layout.setVisibility(View.GONE);
-                        i = 6;
-                    }
-                });
-                //延迟加载
-                handler.postDelayed(run, 1000);
-            } else {
-                shop_details_advert_layout.setVisibility(View.GONE);
-            }
-        }
-    };
-
+    /**
+     * 设置轮播图图片
+     * @param imageUrl
+     */
     private void initialize(String imageUrl) {
+        //获取CycleViewPager对象
         cycleViewPager = (CycleViewPager) getFragmentManager()
                 .findFragmentById(R.id.fragment_cycle_viewpager_content);
-
         String str1 = "";
         String str2 = "";
         String str3 = "";
@@ -302,9 +320,7 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
             LogUtil.d("str1----" + str1 + "==============");
             LogUtil.d("str2---" + str2 + "==============");
             LogUtil.d("str3---" + str3 + "==============");
-
         }
-
         LogUtil.d("-------" + str1 + "----------");
         LogUtil.d("-------" + str2 + "-------------");
         LogUtil.d("-------" + str3 + "---------------");
@@ -329,26 +345,27 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
 
         // 将最后一个ImageView添加进来
         views.add(ViewFactory.getImageView(this, infos.get(infos.size() - 1).getUrl()));
+        //循环添加ImageView
         for (int i = 0; i < infos.size(); i++) {
             views.add(ViewFactory.getImageView(this, infos.get(i).getUrl()));
         }
         // 将第一个ImageView添加进来
         views.add(ViewFactory.getImageView(this, infos.get(0).getUrl()));
-
         // 设置循环，在调用setData方法前调用
         cycleViewPager.setCycle(true);
-
         // 在加载数据前设置是否循环
         cycleViewPager.setData(views, infos, mAdCycleViewListener);
         //设置轮播
         cycleViewPager.setWheel(true);
-
         // 设置轮播时间，默认5000ms
         cycleViewPager.setTime(2000);
         //设置圆点指示图标组居中显示，默认靠右
         cycleViewPager.setIndicatorCenter();
     }
 
+    /**
+     * 轮播图点击事件监听
+     */
     private CycleViewPager.ImageCycleViewListener mAdCycleViewListener = new CycleViewPager.ImageCycleViewListener() {
 
         @Override
@@ -360,7 +377,6 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
                         .show();
             }
         }
-
     };
 
     /**
@@ -382,6 +398,82 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
                 .discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).build();
         ImageLoader.getInstance().init(config);
     }
+
+    private void initialize2(String imageUrl) {
+        cycleViewPager2 = (CycleViewPager) getFragmentManager()
+                .findFragmentById(R.id.shop_details_advert_layout);
+
+        String str1 = "";
+        String str2 = "";
+        String str3 = "";
+        LogUtil.d("imageUrl:" + imageUrl + "----------------");
+        String[] str = imageUrl.split(" ");
+        for (int i = 0; i < str.length; i++) {
+            str1 = str[1];
+            str2 = str[2];
+            str3 = str[3];
+            LogUtil.d("str1----" + str1 + "==============");
+            LogUtil.d("str2---" + str2 + "==============");
+            LogUtil.d("str3---" + str3 + "==============");
+        }
+
+        LogUtil.d("-------" + str1 + "----------");
+        LogUtil.d("-------" + str2 + "-------------");
+        LogUtil.d("-------" + str3 + "---------------");
+
+        String[] imageUrls = {HttpConfig.BUILD_BANNER_URL + "/" + str1, HttpConfig.BUILD_BANNER_URL + "/" + str2, HttpConfig.BUILD_BANNER_URL + "/" + str3};
+
+//         String[] imageUrls = {"http://www.51buyjc.com/Content/image/shopCommodity_1.jpg",
+//                "http://www.51buyjc.com/Content/image/shopCommodity_2.jpg",
+//                "http://www.51buyjc.com/Content/image/shopCommodity_3.jpg",};
+
+        for (int i = 0; i < imageUrls.length; i++) {
+            ADInfo info = new ADInfo();
+            info.setUrl(imageUrls[i]);
+            info.setContent("图片-->" + i);
+            infos2.add(info);
+        }
+
+//        ADInfo info = new ADInfo();
+//        info.setUrl(imageUrls);
+//        info.setContent("图片-->");
+//        infos.add(info);
+
+        // 将最后一个ImageView添加进来
+        views2.add(ViewFactory.getImageView(this, infos2.get(infos2.size() - 1).getUrl()));
+        for (int i = 0; i < infos2.size(); i++) {
+            views2.add(ViewFactory.getImageView(this, infos2.get(i).getUrl()));
+        }
+        // 将第一个ImageView添加进来
+        views2.add(ViewFactory.getImageView(this, infos2.get(0).getUrl()));
+
+        // 设置循环，在调用setData方法前调用
+        cycleViewPager2.setCycle(true);
+
+        // 在加载数据前设置是否循环
+        cycleViewPager2.setData(views2, infos2, mAdCycleViewListener2);
+        //设置轮播
+        cycleViewPager2.setWheel(true);
+
+        // 设置轮播时间，默认5000ms
+        cycleViewPager2.setTime(2000);
+        //设置圆点指示图标组居中显示，默认靠右
+        cycleViewPager2.setIndicatorCenter();
+    }
+
+    private CycleViewPager.ImageCycleViewListener mAdCycleViewListener2 = new CycleViewPager.ImageCycleViewListener() {
+
+        @Override
+        public void onImageClick(ADInfo info, int position, View imageView) {
+            if (cycleViewPager2.isCycle()) {
+                position = position - 1;
+                Toast.makeText(BuildEnterprisesDetailActivity.this,
+                        "position-->" + info.getContent(), Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+
+    };
 
     @Override
     public void doBusiness(Context mContext) {

@@ -33,4 +33,13 @@ public class HttpConfig {
 
     //应用宝版本
     public static String VERSION_NUMBER_URL = "http://a.app.qq.com/o/simple.jsp?pkgname=com.example.yj.mapapp";
+
+    //开始横坐标
+    public static String startLong = "120";
+    // 开始纵坐标,
+    public static String startLat = "30";
+    //结束横坐标,
+    public static String endLong = "122";
+    //结束纵坐标
+    public static String endLat = "32";
 }

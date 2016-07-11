@@ -19,6 +19,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 个人中心
+ */
 public class PersonalCenterActivity extends BaseActivity {
 
     private SharedPreferences spf;
@@ -73,11 +76,11 @@ public class PersonalCenterActivity extends BaseActivity {
 
     @OnClick(R.id.id_logged_on)
     public void logged_on(View v) {
+        //不是登录状态
         MApplication.login = false;
-
         //创建删除方法
         spf.edit().clear().commit();
-
+        //界面跳转
         toPage(FristActivity.class);
     }
 
@@ -134,6 +137,9 @@ public class PersonalCenterActivity extends BaseActivity {
 
     }
 
+    /**
+     * 初始化数据
+     */
     private void initData() {
         spf = getSharedPreferences("file", MODE_PRIVATE);
         String U_Name = spf.getString("U_Name", "null");

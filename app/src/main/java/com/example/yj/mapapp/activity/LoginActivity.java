@@ -30,6 +30,7 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.id_register)
     public void register() {
 //        toPage(CityListActivity.class);
+        //界面跳转
         toPage(IntentActivity.class);
 //        toPage(RegisterActivity.class);
 //        toPage(UnderConstructionActivity.class);

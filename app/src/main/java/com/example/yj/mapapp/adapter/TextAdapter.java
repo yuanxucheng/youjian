@@ -22,7 +22,7 @@ import com.example.yj.mapapp.view.ViewBaseAction;
 
 public class TextAdapter extends ArrayAdapter<IndustryClassification> implements ViewBaseAction {
 
-    private Context mContext;
+    private Context mContext;//上下文对象
     private List<IndustryClassification> mListData;
     //    private String[] mArrayData;
     private IndustryClassification[] mArrayData;
@@ -31,10 +31,10 @@ public class TextAdapter extends ArrayAdapter<IndustryClassification> implements
     private int normalDrawbleId;
     private Drawable selectedDrawble;
     private float textSize;
-    private OnClickListener onClickListener;
-    private OnItemClickListener mOnItemClickListener;
-    private ExpandTabView expandTabView;
-    private View view;
+    private OnClickListener onClickListener;//点击事件
+    private OnItemClickListener mOnItemClickListener;//item的点击事件
+    private ExpandTabView expandTabView;//二级列表对象
+    private View view;//视图对象
 
     public TextAdapter(Context context, List<IndustryClassification> listData, int sId, int nId) {
         super(context, R.string.no_data, listData);

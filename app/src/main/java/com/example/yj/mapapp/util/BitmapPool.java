@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 
 /**
- * @author
  * @date 图片缓存池,默认使用可用内存的1/8
  */
 public class BitmapPool {

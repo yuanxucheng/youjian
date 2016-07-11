@@ -26,9 +26,9 @@
     <!--android:layout_height="wrap_content" />-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:visibility="gone"
+        android:layout_height="48dp"
         android:background="@color/login_background"
-        android:layout_height="48dp">
+        android:visibility="gone">
 
         <Button
             android:id="@+id/back"
@@ -52,8 +52,8 @@
             android:name="com.buyjc.yj.banner.CycleViewPager"
             android:layout_width="match_parent"
             android:layout_height="180dip"
-            android:src="@mipmap/login_logo"
-            android:background="@color/login_background" />
+            android:background="@color/login_background"
+            android:src="@mipmap/login_logo" />
     </LinearLayout>
 
     <LinearLayout
@@ -71,11 +71,11 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:textColor="@color/phoneOrPwd"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/login_edittext_textsize"
                 android:layout_marginRight="@dimen/login_textview_marginRight"
-                android:text="@string/login_user_name" />
+                android:text="@string/login_user_name"
+                android:textColor="@color/phoneOrPwd"
+                android:textSize="@dimen/login_edittext_textsize" />
 
             <EditText
                 android:layout_width="@dimen/login_edittext_width_phone"
@@ -93,11 +93,11 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:textColor="@color/phoneOrPwd"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/login_edittext_textsize"
                 android:layout_marginRight="@dimen/login_textview_marginRight"
-                android:text="@string/login_password" />
+                android:text="@string/login_password"
+                android:textColor="@color/phoneOrPwd"
+                android:textSize="@dimen/login_edittext_textsize" />
 
             <EditText
                 android:layout_width="@dimen/login_edittext_width_pwd"
@@ -126,14 +126,14 @@
         <Button
             android:id="@+id/id_login"
             android:layout_width="@dimen/login_loginBtn_width"
-            android:background="@drawable/shape_login_red"
             android:layout_height="@dimen/login_loginBtn_height"
+            android:layout_gravity="center"
             android:layout_marginBottom="@dimen/login_loginBtn_marginBottom"
             android:layout_marginLeft="@dimen/login_loginBtn_marginLeft"
             android:layout_marginTop="@dimen/login_loginBtn_marginTop"
+            android:background="@drawable/shape_login_red"
             android:text="@string/login"
             android:textColor="@color/white"
-            android:layout_gravity="center"
             android:textSize="@dimen/login_loginBtn_textsize" />
 
         <LinearLayout
@@ -152,8 +152,8 @@
                 android:id="@+id/id_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/register"
                 android:text="@string/register_downLine"
+                android:textColor="@color/register"
                 android:textSize="@dimen/login_registe_textSize" />
         </LinearLayout>
     </LinearLayout>

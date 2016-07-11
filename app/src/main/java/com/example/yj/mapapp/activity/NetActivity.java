@@ -40,11 +40,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 登录
+ */
 public class NetActivity extends BaseActivity {
     private final static String tag = "NetActivity-->";
 
-    private String user;
-    private String pwd;
+    private String user;//用户名
+    private String pwd;//密码
 
     @Bind(R.id.id_login_user)
     EditText et_user;
@@ -76,7 +79,6 @@ public class NetActivity extends BaseActivity {
         pwd = et_pwd.getText().toString().trim();
         LogUtil.d("pwd:===============" + pwd);
 
-
         try {
 //          u=  URLDecoder.decode(user, "utf-8");
             //u = new String(user.getBytes("ISO8859-1"), "UTF-8");
@@ -86,6 +88,7 @@ public class NetActivity extends BaseActivity {
             e.printStackTrace();
         }
 
+        //访问后台接口
         login(u, pwd);
 
 //        login("曾斌", "123");
@@ -135,6 +138,11 @@ public class NetActivity extends BaseActivity {
 
     }
 
+    /**
+     * 登录
+     * @param Name
+     * @param Pwd
+     */
     private void login(String Name, String Pwd) {
         if (Name.equals("") && Pwd.equals("")) {
             ToastUtil.longT(NetActivity.this, "用户名和密码不能为空!");

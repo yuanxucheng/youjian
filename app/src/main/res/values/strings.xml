@@ -81,6 +81,7 @@
     <string name="buildEnterprises_contacts">联系人:</string>
     <string name="buildEnterprises_phone">联系电话:</string>
     <string name="buildEnterprises_YJAuthentication">优健网认证:</string>
+    <string name="shops_details">商铺详情</string>
 
     <!--五金超市-->
     <string name="hard_super_title">五金超市</string>
@@ -268,6 +269,7 @@
     <string name="title_activity_my_response">MyResponseActivity</string>
     <string name="title_activity_my_buying_leads">MyBuyingLeadsActivity</string>
     <string name="title_activity_buying_leads_detail">BuyingLeadsDetailActivity</string>
+    <string name="title_activity_shops_details">ShopsDetailsActivity</string>
 
     <!--jpushDemo-->
     <string name="hello">Hello World, JPush!</string>
@@ -361,7 +363,6 @@
     <string name="cancel">取消</string>
     <string name="no_call_phone">还不是意向响应不能拨打电话</string>
 
-    <!--expandablelistview-->
+    <!--expandablelistview二级列表-->
     <string name="no_data">没有找到符合条件的</string>
-    <string name="title_activity_shops_details">ShopsDetailsActivity</string>
 </resources>

@@ -12,6 +12,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 建设中,敬请期待
+ */
 public class UnderConstructionActivity extends BaseActivity {
 
     @Bind(R.id.id_back)

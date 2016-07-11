@@ -20,6 +20,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 建筑工地详情
+ */
 public class BuildSitesDetailActivity extends BaseActivity {
 
     private final static String tag = "BuildSitesDetailActivity-->";
@@ -138,7 +141,7 @@ public class BuildSitesDetailActivity extends BaseActivity {
     };
 
     /**
-     * JSON
+     * 解析JSON
      *
      * @param data
      */

@@ -7,8 +7,10 @@ import android.view.View;
 import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.base.BaseActivity;
 
+/**
+ * 添加模块
+ */
 public class AddModuleActivity extends BaseActivity {
-
 
     @Override
     public int bindLayout() {

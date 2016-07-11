@@ -33,8 +33,6 @@ import java.text.DecimalFormat;
 
 /**
  * 应用程序更新工具包
- * 
- * @author
  */
 public class UpdateManager {
 

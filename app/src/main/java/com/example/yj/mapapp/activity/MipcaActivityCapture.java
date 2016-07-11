@@ -1,7 +1,9 @@
 package com.example.yj.mapapp.activity;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Vector;
 
 import android.app.Activity;
@@ -31,6 +33,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.yj.mapapp.R;
+import com.example.yj.mapapp.banner.ADInfo;
+import com.example.yj.mapapp.banner.CycleViewPager;
+import com.example.yj.mapapp.banner.ViewFactory;
+import com.example.yj.mapapp.net.handler.HttpConfig;
 import com.example.yj.mapapp.net.handler.HttpUtil;
 import com.example.yj.mapapp.net.handler.ResponseHandler;
 import com.example.yj.mapapp.util.LogUtil;
@@ -53,8 +59,10 @@ import com.google.zxing.qrcode.QRCodeReader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * 扫一扫
+ */
 public class MipcaActivityCapture extends Activity implements Callback, View.OnClickListener {
-
 
     private final static String tag = "MipcaActivityCapture-->";
 
@@ -68,8 +76,6 @@ public class MipcaActivityCapture extends Activity implements Callback, View.OnC
     private boolean playBeep;
     private static final float BEEP_VOLUME = 0.10f;
     private boolean vibrate;
-
-
     private static final int REQUEST_CODE = 100;
     private static final int PARSE_BARCODE_SUC = 300;
     private static final int PARSE_BARCODE_FAIL = 303;
@@ -78,9 +84,6 @@ public class MipcaActivityCapture extends Activity implements Callback, View.OnC
     private Bitmap scanBitmap;
     private AlertDialog noticeDialog;
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,7 +136,6 @@ public class MipcaActivityCapture extends Activity implements Callback, View.OnC
                 case PARSE_BARCODE_FAIL:
                     Toast.makeText(MipcaActivityCapture.this, (String) msg.obj, Toast.LENGTH_LONG).show();
                     break;
-
             }
         }
 
@@ -316,6 +318,26 @@ public class MipcaActivityCapture extends Activity implements Callback, View.OnC
                     bundle.putString("SI_Address", SI_Address);
                     bundle.putString("SI_Contacts", SI_Contacts);
                     bundle.putString("SI_Phone", SI_Phone);
+                    bundle.putString("imagesURL", imagesURL);
+                    bundle.putInt("SI_Id", SI_Id);
+                    bundle.putInt("SI_YJAuthentication", SI_YJAuthentication);
+
+                    //截取URL地址
+                    int i = 0;
+                    String[] str = imagesURL.split("../../");
+                    StringBuffer buffer = new StringBuffer();
+                    for (i = 0; i < str.length; i++) {
+                        if (str[i].endsWith("|")) {
+                            String ss = str[i].substring(0, str[i].length() - 1);
+                            LogUtil.d(ss);
+                            buffer.append(ss + " ");
+                        } else {
+                            LogUtil.d(str[i]);
+                            buffer.append(str[i] + " ");
+                        }
+                    }
+
+                    bundle.putString("buffer", buffer.toString());
 
                     myIntent.putExtras(bundle);
 
@@ -349,32 +371,33 @@ public class MipcaActivityCapture extends Activity implements Callback, View.OnC
         playBeepSoundAndVibrate();
         final String resultString = result.getText();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("选择");
-        builder.setMessage("请选择项目?");
-        builder.setPositiveButton("进入商铺网站", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                        Intent intent = new Intent();
-                intent.setAction("android.intent.action.VIEW");
-                Uri content_url = Uri.parse(resultString);
-                intent.setData(content_url);
-                startActivity(intent);
-            }
-        });
-        builder.setNegativeButton("查看商铺详情", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                onJumpPageHandler(resultString);
-            }
-        });
-        noticeDialog = builder.create();
-        noticeDialog.show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("选择");
+//        builder.setMessage("请选择项目?");
+//        builder.setPositiveButton("进入商铺网站", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//                        Intent intent = new Intent();
+//                intent.setAction("android.intent.action.VIEW");
+//                Uri content_url = Uri.parse(resultString);
+//                intent.setData(content_url);
+//                startActivity(intent);
+//            }
+//        });
+//        builder.setNegativeButton("查看商铺详情", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//                onJumpPageHandler(resultString);
+//            }
+//        });
+//        noticeDialog = builder.create();
+//        noticeDialog.show();
 
         //跳转到商铺的详细
-//        onJumpPageHandler(resultString);
+        onJumpPageHandler(resultString);
+
         //跳转到商铺的网站
 //        Intent intent = new Intent();
 //        intent.setAction("android.intent.action.VIEW");
@@ -459,9 +482,6 @@ public class MipcaActivityCapture extends Activity implements Callback, View.OnC
 
     private void initBeepSound() {
         if (playBeep && mediaPlayer == null) {
-            // The volume on STREAM_SYSTEM is not adjustable, and users found it
-            // too loud,
-            // so we now play on the music stream.
             setVolumeControlStream(AudioManager.STREAM_MUSIC);
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -493,14 +513,9 @@ public class MipcaActivityCapture extends Activity implements Callback, View.OnC
         }
     }
 
-    /**
-     * When the beep has finished playing, rewind to queue up another one.
-     */
     private final OnCompletionListener beepListener = new OnCompletionListener() {
         public void onCompletion(MediaPlayer mediaPlayer) {
             mediaPlayer.seekTo(0);
         }
     };
-
-
 }

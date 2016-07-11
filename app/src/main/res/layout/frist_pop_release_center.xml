@@ -20,9 +20,9 @@
 
     <View
         android:layout_width="match_parent"
+        android:layout_height="@dimen/offset_1dp"
         android:layout_marginLeft="@dimen/offset_5dp"
         android:layout_marginRight="@dimen/offset_5dp"
-        android:layout_height="@dimen/offset_1dp"
         android:background="@color/black">
 
     </View>

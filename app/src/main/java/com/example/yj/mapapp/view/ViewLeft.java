@@ -109,14 +109,14 @@ public class ViewLeft extends LinearLayout implements ViewBaseAction {
                 }
             } else {
 //                ToastUtil.shortT(BuildEnterprisesActivity.this, "获取指定父类节点的所有类别失败");
-                LogUtil.d("==============获取指定父类节点的所有类别,失败");
+                LogUtil.d("获取指定父类节点的所有类别,失败");
             }
         }
 
         @Override
         public void onFail(int arg0, String arg2, Throwable arg3) {
 //            ToastUtil.shortT(BuildEnterprisesActivity.this, "获取指定父类节点的所有类别失败");
-            LogUtil.d("==============获取指定父类节点的所有类别,失败");
+            LogUtil.d("获取指定父类节点的所有类别,失败");
         }
     };
 
@@ -198,7 +198,7 @@ public class ViewLeft extends LinearLayout implements ViewBaseAction {
 
                             mOnSelectListener.getValue(classification);
                         }
-                        // 加气泡
+                        // 加气泡点代码写在这里
                     }
                 });
         if (tBlockPosition < childrenItem.size())

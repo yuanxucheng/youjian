@@ -46,9 +46,12 @@ public class RelatedCompaniesAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder;//创建持有者对象
-        if (convertView == null) {
+        if (convertView == null) {//判断布局是否为null
+            //使用插入器插入布局
             convertView = inflater.inflate(R.layout.related_companies_list_item, null);
+            //实例化ViewHolder对象
             holder = new ViewHolder();
+            //通过findViewById找到对应的布局的id
             holder.related_companies_callPhone = (ImageView) convertView.findViewById(R.id.id_related_companies_callPhone);
             holder.related_companies_name = (TextView) convertView.findViewById(R.id.id_related_companies_name);
             holder.related_companies_area = (TextView) convertView.findViewById(R.id.id_related_companies_area);

@@ -35,19 +35,23 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 我的供求
+ */
 public class MyTradeLeadsActivity extends Activity implements AbsListView.OnScrollListener, View.OnClickListener, AdapterView.OnItemClickListener {
 
     //下拉刷新
-    private ImageView iv_back;
-    private List<MyTradeLeads> mData;
-    private MListView lv;
-    private MyTradeLeadsAdapter adapter;
+    private ImageView iv_back;//返回
+    private List<MyTradeLeads> mData;//我的供求对象集合
+    private MListView lv;//自定义ListView对象
+    private MyTradeLeadsAdapter adapter;//我的供求适配器对象
+
     //下拉加载
-    private int visibleLastIndex = 0;   //最后的可视项索引
-    private int visibleItemCount;       // 当前窗口可见项总数
-    private View loadMoreView;
-    private Button loadMoreButton;
-    private Handler handler = new Handler();
+    private int visibleLastIndex = 0;//最后的可视项索引
+    private int visibleItemCount;// 当前窗口可见项总数
+    private View loadMoreView;//加载更多视图
+    private Button loadMoreButton;//加载更多按钮
+    private Handler handler = new Handler();//实例化Handler对象
 
     //接口参数
     private boolean SupplyOrDemand = false;//接口参数值:供（true）求（false）
@@ -58,23 +62,25 @@ public class MyTradeLeadsActivity extends Activity implements AbsListView.OnScro
     private String U_Id;
     private SharedPreferences spf;
     private int uId;//接口参数值:用户编号
-
     private int length;//后台接口返回的数据的长度(分页访问)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //去掉标题栏
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_my_trade_leads);
 
+        //通过findViewById方法找到控件对象并设置点击事件
         lv = (MListView) findViewById(R.id.lv);
         iv_back = (ImageView) findViewById(R.id.id_back);
         iv_back.setOnClickListener(this);
 
-        mData = new ArrayList<MyTradeLeads>();
+        mData = new ArrayList<MyTradeLeads>();//实例化我的供求对象集合
 
+        //创建SharedPreferences对象并保存数据
         spf = getSharedPreferences("file", MODE_PRIVATE);
         U_Id = spf.getString("U_Id", null);
         uId = Integer.valueOf(U_Id);
@@ -83,8 +89,9 @@ public class MyTradeLeadsActivity extends Activity implements AbsListView.OnScro
         //使用第三方网络框架请求后台接口数据
         getMyTradeLeadsInformation(uId, SupplyOrDemand, pageIndex, pageSize, search);
 
+        //设置ListView控件的item点击事件
         lv.setOnItemClickListener(this);
-
+        //设置ListView控件的刷新事件
         lv.setonRefreshListener(new MListView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -96,16 +103,18 @@ public class MyTradeLeadsActivity extends Activity implements AbsListView.OnScro
 //                }
                 //下拉刷新时先清空在添加
                 LogUtil.d(mData.size() + "=============1");
-                mData.clear();
+                mData.clear();//清空集合
                 LogUtil.d(mData.size() + "=============2");
+                //使用第三方网络框架请求后台接口数据
                 getMyTradeLeadsInformation(uId, SupplyOrDemand, pageIndex, pageSize, search);
                 LogUtil.d(mData.size() + "=============3");
 //                adapter.notifyDataSetChanged();
 //                lv.onRefreshComplete();
             }
         });
-
+        //使用打气筒插入顶部试图:加载更多布局
         loadMoreView = getLayoutInflater().inflate(R.layout.lv_loadmore, null);
+        //通过findViewById方法找到控件对象
         loadMoreButton = (Button) loadMoreView.findViewById(R.id.loadMoreButton);
         //加载更多按钮点击事件的监听
         loadMoreButton.setOnClickListener(new View.OnClickListener() {
@@ -114,16 +123,14 @@ public class MyTradeLeadsActivity extends Activity implements AbsListView.OnScro
             public void onClick(View v) {
                 loadMoreButton.setText("正在加载中...");   //设置按钮文字
                 pageIndex = pageIndex + 1;
+                //使用第三方网络框架请求后台接口数据
                 getMyTradeLeadsInformation(uId, SupplyOrDemand, pageIndex, pageSize, search);
             }
         });
-
         lv.addFooterView(loadMoreView);    //设置列表底部视图
-
-        adapter = new MyTradeLeadsAdapter(mData, this);
-
-        lv.setOnScrollListener(this);
-        lv.setAdapter(adapter);
+        adapter = new MyTradeLeadsAdapter(mData, this);//实例化适配器
+        lv.setOnScrollListener(this);//ListView控件滚动监听事件
+        lv.setAdapter(adapter);//为ListView设置适配器
     }
 
     /**
@@ -190,7 +197,6 @@ public class MyTradeLeadsActivity extends Activity implements AbsListView.OnScro
                             mtl.setCTIME(ctime);
                             //将对象添加到集合中
                             mData.add(mtl);
-
                         }
                         //设置适配器adapter
 //                        lv.setAdapter(adapter);
@@ -198,7 +204,6 @@ public class MyTradeLeadsActivity extends Activity implements AbsListView.OnScro
                         adapter.notifyDataSetChanged();
                         //ListView完成刷新动作
 //                        lv.onRefreshComplete();
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -218,6 +223,12 @@ public class MyTradeLeadsActivity extends Activity implements AbsListView.OnScro
         }
     }
 
+    /**
+     * 滚动状态改变
+     *
+     * @param view
+     * @param scrollState
+     */
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         int itemsLastIndex = adapter.getCount() - 1;  //数据集最后一项的索引
@@ -228,7 +239,14 @@ public class MyTradeLeadsActivity extends Activity implements AbsListView.OnScro
         }
     }
 
-
+    /**
+     * 滚动事件
+     *
+     * @param view
+     * @param firstVisibleItem
+     * @param visibleItemCount
+     * @param totalItemCount
+     */
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
@@ -246,6 +264,11 @@ public class MyTradeLeadsActivity extends Activity implements AbsListView.OnScro
         }
     }
 
+    /**
+     * 点击事件
+     *
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -255,6 +278,13 @@ public class MyTradeLeadsActivity extends Activity implements AbsListView.OnScro
         }
     }
 
+    /**
+     * item点击事件
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //        ToastUtil.shortT(MyTradeLeadsActivity.this, "position:" + position);

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.yj.mapapp.R;
+import com.example.yj.mapapp.adapter.LabourAgencyAdapter;
 import com.example.yj.mapapp.adapter.MyResponseAdapter;
 import com.example.yj.mapapp.base.MApplication;
 import com.example.yj.mapapp.model.MyResponse;
@@ -41,6 +42,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 供求信息详情
+ */
 public class TradeLeadsDetailActivity extends Activity implements View.OnClickListener, AbsListView.OnScrollListener, AdapterView.OnItemClickListener {
 
     private TextView buying_leads_btitle;
@@ -53,16 +57,17 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
     private TextView buying_leads_ctime;
 
     //下拉刷新
-    private ImageView iv_back;
-    private List<MyResponse> mData;
-    private MListView lv;
-    private MyResponseAdapter adapter;
+    private ImageView iv_back;//返回
+    private List<MyResponse> mData;//我的响应对象集合
+    private MListView lv;//自定义ListView控件
+    private MyResponseAdapter adapter;//我的响应适配器对象
+
     //下拉加载
-    private int visibleLastIndex = 0;   //最后的可视项索引
-    private int visibleItemCount;       // 当前窗口可见项总数
-    private View loadMoreView;
-    private Button loadMoreButton;
-    private Handler handler = new Handler();
+    private int visibleLastIndex = 0;//最后的可视项索引
+    private int visibleItemCount;//当前窗口可见项总数
+    private View loadMoreView;//加载更多视图
+    private Button loadMoreButton;//加载更多按钮
+    private Handler handler = new Handler();//Hander线程对象
 
     //接口参数
     private int sdId;//接口参数值:供求编号
@@ -80,23 +85,23 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_leads_detail);
-        initView();
-        initData();
 
+        initView();//初始化控件
+        initData();//初始化数据
+
+        //通过findViewById方法找到控件对象并设置点击事件
         lv = (MListView) findViewById(R.id.lv);
         iv_back = (ImageView) findViewById(R.id.id_back);
         iv_back.setOnClickListener(this);
 
+        //创建集合
         mData = new ArrayList<MyResponse>();
 
+        //创建sharedPreferences对象并保存数据
         spf = getSharedPreferences("file", MODE_PRIVATE);
-
         U_Id = spf.getString("U_Id", null);
-
         sdId = this.getIntent().getIntExtra("sd_id", -1);
-
         uId = Integer.valueOf(U_Id);
-
         LogUtil.d("sdId===============" + sdId);
         System.out.println("uId==============" + uId);
         System.out.println("sdId==============" + sdId);
@@ -104,8 +109,9 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
         //使用第三方网络框架请求后台接口数据
         getMyResponseInformation(uId, sdId, pageIndex, pageSize, search);
 
+        //设置ListView的item点击事件
         lv.setOnItemClickListener(this);
-
+        //设置ListView刷新事件
         lv.setonRefreshListener(new MListView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -117,37 +123,38 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
 //                }
                 //下拉刷新时先清空在添加
                 LogUtil.d(mData.size() + "=============1");
-                mData.clear();
+                mData.clear();//清空集合
                 LogUtil.d(mData.size() + "=============2");
+                //使用第三方网络框架请求后台接口数据
                 getMyResponseInformation(uId, sdId, pageIndex, pageSize, search);
                 LogUtil.d(mData.size() + "=============3");
 //                adapter.notifyDataSetChanged();
 //                lv.onRefreshComplete();
             }
         });
-
-
+        //使用打气筒插入顶部试图:加载更多布局
         loadMoreView = getLayoutInflater().inflate(R.layout.lv_loadmore, null);
+        //通过findViewById方法找到控件对象
         loadMoreButton = (Button) loadMoreView.findViewById(R.id.loadMoreButton);
         //加载更多按钮点击事件的监听
         loadMoreButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 loadMoreButton.setText("正在加载中...");   //设置按钮文字
                 pageIndex = pageIndex + 1;
+                //使用第三方网络框架请求后台接口数据
                 getMyResponseInformation(uId, sdId, pageIndex, pageSize, search);
             }
         });
-
         lv.addFooterView(loadMoreView);    //设置列表底部视图
-
-        adapter = new MyResponseAdapter(mData, this);
-
-        lv.setOnScrollListener(this);
-        lv.setAdapter(adapter);
+        adapter = new MyResponseAdapter(mData, this);//实例化适配器
+        lv.setOnScrollListener(this);//ListView控件滚动监听事件
+        lv.setAdapter(adapter);//为ListView设置适配器
     }
 
+    /**
+     * 控件初始化
+     */
     private void initView() {
         buying_leads_btitle = (TextView) findViewById(R.id.id_my_buying_leads_btitle);
         buying_leads_title = (TextView) findViewById(R.id.id_my_buying_leads_title);
@@ -159,6 +166,9 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
         buying_leads_ctime = (TextView) findViewById(R.id.id_my_buying_leads_ctime);
     }
 
+    /**
+     * 数据初始化
+     */
     private void initData() {
         int sd_id = this.getIntent().getIntExtra("sd_id", -1);
         String name = this.getIntent().getStringExtra("name");
@@ -253,7 +263,6 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
                             mr.setIsintention(intention);
                             //将对象添加到集合中
                             mData.add(mr);
-
                         }
                         //设置适配器adapter
 //                        lv.setAdapter(adapter);
@@ -261,7 +270,6 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
                         adapter.notifyDataSetChanged();
                         //ListView完成刷新动作
 //                        lv.onRefreshComplete();
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -281,6 +289,11 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
         }
     }
 
+    /**
+     * 滚动状态改变
+     * @param view
+     * @param scrollState
+     */
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         int itemsLastIndex = adapter.getCount() - 1;  //数据集最后一项的索引
@@ -291,7 +304,13 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
         }
     }
 
-
+    /**
+     * 滚动事件
+     * @param view
+     * @param firstVisibleItem
+     * @param visibleItemCount
+     * @param totalItemCount
+     */
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
@@ -309,6 +328,10 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
         }
     }
 
+    /**
+     * 点击事件
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -318,6 +341,10 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
         }
     }
 
+    /**
+     * item点击事件
+     * @param v
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, final long id) {
 //        ToastUtil.shortT(MyResponseActivity.this, "position:" + position);
@@ -343,6 +370,7 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
         LogUtil.d("intention===============" + intention);
 
         if (intention == true) {
+            //系统对话框
             final ExitDialog myDialog = new ExitDialog(TradeLeadsDetailActivity.this,
                     getText(R.string.whether_to_dial_telephone).toString(), getText(R.string.cancel).toString(), getText(R.string.ok).toString());
             myDialog.show();
@@ -350,6 +378,7 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
 
                 @Override
                 public void onClick(View v) {
+                    //拨打电话
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_CALL);//指定意图动作
                     intent.setData(Uri.parse("tel:" + phone));//指定电话号码
@@ -365,9 +394,7 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
 
                 @Override
                 public void onClick(View v) {
-
                     intention = true;
-
                     mData.get(position - 1).setIsintention(true);
                     mData.get(position - 1).setPhone(phone);
 
@@ -384,6 +411,10 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
         }
     }
 
+    /**
+     * 确认为意向响应
+     * @param prId
+     */
     private void sureIntention(int prId) {
         String url = HttpConfig.REQUEST_URL + "/Response/intentionResponse";
         // 创建请求参数
@@ -397,7 +428,6 @@ public class TradeLeadsDetailActivity extends Activity implements View.OnClickLi
                                   byte[] responseBody) {
                 String response = new String(responseBody);
                 LogUtil.d("tag----------", response);
-
                 Log.d("response==============", response.toString());
                 String d = JsonUtil.getData(response.toString());
                 Log.d("d-------------", d);

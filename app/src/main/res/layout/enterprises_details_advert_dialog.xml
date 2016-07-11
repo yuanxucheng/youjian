@@ -23,6 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@id/layout"
         android:layout_alignTop="@id/layout"
-        android:background="@drawable/login_close_button" />
-    <!--android:visibility="gone" -->
+        android:background="@drawable/login_close_button"
+        android:visibility="gone" />
 </RelativeLayout>

@@ -32,6 +32,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 五金超市
+ */
 public class HardSuperActivity extends Activity implements AbsListView.OnScrollListener, View.OnClickListener {
 
     //下拉刷新
@@ -44,11 +47,10 @@ public class HardSuperActivity extends Activity implements AbsListView.OnScrollL
     private int visibleItemCount;// 当前窗口可见项总数
     private View loadMoreView;//加载更多视图
     private Button loadMoreButton;//加载更多按钮
-    private Handler handler = new Handler();
+    private Handler handler = new Handler();//实例化handler对象
     private int parentId = 0;//接口参数值:父节点编号
     private int pageIndex = 1;//接口参数值:当前页数
     private int pageSize = 10;//接口参数值:每页个数
-
     private int length;//后台接口返回的数据的长度(分页访问)
 
     @Override
@@ -60,11 +62,12 @@ public class HardSuperActivity extends Activity implements AbsListView.OnScrollL
 
         setContentView(R.layout.activity_hard_super);
 
+        //通过findViewById方法找到控件对象并设置点击事件
         lv = (MListView) findViewById(R.id.lv);
         iv_back = (ImageView) findViewById(R.id.id_back);
         iv_back.setOnClickListener(this);
 
-        mData = new ArrayList<HardSuper>();
+        mData = new ArrayList<HardSuper>();//初始化集合对象
 
         //使用第三方网络框架请求后台接口数据
         getLabourAgencyInformation(parentId, pageIndex, pageSize, "");
@@ -83,6 +86,7 @@ public class HardSuperActivity extends Activity implements AbsListView.OnScrollL
                 LogUtil.d(mData.size() + "=============1");
                 mData.clear();
                 LogUtil.d(mData.size() + "=============2");
+                //使用第三方网络框架请求后台接口数据
                 getLabourAgencyInformation(parentId, pageIndex, pageSize, "");
                 LogUtil.d(mData.size() + "=============3");
 //                adapter.notifyDataSetChanged();
@@ -91,6 +95,7 @@ public class HardSuperActivity extends Activity implements AbsListView.OnScrollL
         });
         //使用打气筒插入顶部试图:加载更多布局
         loadMoreView = getLayoutInflater().inflate(R.layout.lv_loadmore, null);
+        //通过findViewById方法找到控件对象
         loadMoreButton = (Button) loadMoreView.findViewById(R.id.loadMoreButton);
         //加载更多按钮点击事件的监听
         loadMoreButton.setOnClickListener(new View.OnClickListener() {
@@ -99,14 +104,12 @@ public class HardSuperActivity extends Activity implements AbsListView.OnScrollL
             public void onClick(View v) {
                 loadMoreButton.setText("正在加载中...");   //设置按钮文字
                 pageIndex = pageIndex + 1;
+                //使用第三方网络框架请求后台接口数据
                 getLabourAgencyInformation(parentId, pageIndex, pageSize, "");
             }
         });
-
         lv.addFooterView(loadMoreView);    //设置列表底部视图
-
         adapter = new HardSuperAdapter(mData, this);//适配器实例化
-
         lv.setOnScrollListener(this);//ListView的滚动事件监听
         lv.setAdapter(adapter);//为ListView设置适配器
     }
@@ -170,7 +173,6 @@ public class HardSuperActivity extends Activity implements AbsListView.OnScrollL
                             hs.setAddress(address);
                             //将对象添加到集合中
                             mData.add(hs);
-
                         }
                         //设置适配器adapter
 //                        lv.setAdapter(adapter);

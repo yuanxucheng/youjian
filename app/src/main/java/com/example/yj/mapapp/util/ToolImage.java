@@ -21,9 +21,6 @@ import java.io.File;
 
 /**
  * 图片加载工具类
- *
- * @author
- * @version 1.0
  */
 public abstract class ToolImage {
 
@@ -46,7 +43,7 @@ public abstract class ToolImage {
                 .threadPoolSize(3)// 线程池内加载的数量
                 .threadPriority(Thread.NORM_PRIORITY - 2)// 线程优先级
         /*
-		 * When you display an image in a small ImageView and later you
+         * When you display an image in a small ImageView and later you
 		 * try to display this image (from identical URI) in a larger
 		 * ImageView so decoded image of bigger size will be cached in
 		 * memory as a previous decoded image of smaller size. So the

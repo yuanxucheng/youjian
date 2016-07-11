@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 引导页
+ */
 public class StartActivity extends BaseActivity {
 
     private ArrayList<View> list = new ArrayList<>();
@@ -60,7 +63,7 @@ public class StartActivity extends BaseActivity {
 //        andriod:theme:"@android:style/Theme.Black.NoTileBar.FullScreen"
         //去标题栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        //创建SharedPreferences对象
         SharedPreferences preferences = getSharedPreferences("", Context.MODE_PRIVATE);
         boolean flag = preferences.getBoolean("login", false);
         if (!flag) {
@@ -73,6 +76,7 @@ public class StartActivity extends BaseActivity {
             startActivity(intent);
             finish();
         }
+        //插入布局
         LayoutInflater inflater = LayoutInflater.from(this);
 
         View view1 = inflater.inflate(R.layout.pager_item, null);
@@ -90,12 +94,13 @@ public class StartActivity extends BaseActivity {
         layout3.setBackgroundResource(R.mipmap.shop_commodity_3);
         list.add(view3);
 
+        //设置适配器
         viewPager.setAdapter(new MPagerAdapter(this, list));
-
+        //设置背景图片
         imageView1.setBackgroundResource(R.mipmap.icon_point_pre);
         imageView2.setBackgroundResource(R.mipmap.icon_point);
         imageView3.setBackgroundResource(R.mipmap.icon_point);
-
+        //ViewPager控件左右滑动事件
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override

@@ -17,25 +17,23 @@ import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
 import com.example.yj.mapapp.util.JsonUtil;
 import com.example.yj.mapapp.util.LogUtil;
-import com.example.yj.mapapp.util.ToastUtil;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
-
 import cn.jpush.android.api.JPushInterface;
 
+/**
+ * 启动页
+ */
 public class MainActivity extends BaseActivity implements Runnable {
-    private int res[] = {R.mipmap.main, R.mipmap.main, R.mipmap.main};
 
+    private int res[] = {R.mipmap.main, R.mipmap.main, R.mipmap.main};
     private Handler handler;
     private ImageView imageView;
-    private int n;
-
+    private int n;//图片计数器
     private SharedPreferences spf;
 
     @Override
@@ -57,12 +55,12 @@ public class MainActivity extends BaseActivity implements Runnable {
     public void initView(View view) {
         //去标题栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        //通过findViewById方法找到ImageView控件对象
         imageView = (ImageView) findViewById(R.id.id_imageView);
-
+        //创建Handler对象并开启线程
         handler = new Handler();
         handler.post(this);
-
+        //创建SharedPreferences对象并保存数据
         spf = getSharedPreferences("file", MODE_PRIVATE);
         String U_Name = spf.getString("U_Name", "null");
         String U_Password = spf.getString("U_Password", "null");
@@ -70,9 +68,15 @@ public class MainActivity extends BaseActivity implements Runnable {
         System.out.println("U_Name==============" + U_Name);
         System.out.println("U_Password:==============" + U_Password);
 
+        //访问后台接口
         login(U_Name, U_Password);
     }
 
+    /**
+     * 登录
+     * @param Name
+     * @param Pwd
+     */
     private void login(String Name, String Pwd) {
         if (Name.equals("") && Pwd.equals("")) {
             LogUtil.d("tag", "用户名和密码不能为空!");
@@ -156,20 +160,30 @@ public class MainActivity extends BaseActivity implements Runnable {
         }
     }
 
+    /**
+     * 图片切换
+     */
     @Override
     public void run() {
         if (n < 3) {
+            //设置图片资源
             imageView.setImageResource(res[n++]);
+            //延迟线程
             handler.postDelayed(this, 1000);
         } else {
+            //跳转界面
             startActivity(new Intent(getApplicationContext(),
                     StartActivity.class));
 //            startActivity(new Intent(getApplicationContext(),
 //                    FristActivity.class));
+            //关闭Activity
             finish();
         }
     }
 
+    /**
+     * 返回键
+     */
     @Override
     public void onBackPressed() {
 

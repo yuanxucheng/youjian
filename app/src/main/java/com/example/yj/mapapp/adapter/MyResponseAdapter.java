@@ -16,13 +16,14 @@ import java.util.List;
 
 public class MyResponseAdapter extends BaseAdapter {
 
-    private List<MyResponse> mData;
-    private Context context;
-    private LayoutInflater inflater;
+    private List<MyResponse> mData;//我的响应对象集合
+    private Context context;//上下文对象
+    private LayoutInflater inflater;//布局插入器(打气筒)
 
     public MyResponseAdapter(List<MyResponse> mData, Context context) {
         this.mData = mData;
         this.context = context;
+        //实例化打气筒
         inflater = LayoutInflater.from(context);
     }
 
@@ -49,9 +50,12 @@ public class MyResponseAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder;//创建持有者对象
-        if (convertView == null) {
+        if (convertView == null) {//判断布局是否为null
+            //使用插入器插入布局
             convertView = inflater.inflate(R.layout.my_response_listview, null);
+            //实例化ViewHolder对象
             holder = new ViewHolder();
+            //通过findViewById找到对应的布局的id
             holder.my_response_title = (TextView) convertView.findViewById(R.id.id_my_response_title);
             holder.my_response_intention = (TextView) convertView.findViewById(R.id.id_my_response_intention);
             holder.my_response_contacts = (TextView) convertView.findViewById(R.id.id_my_response_contacts);

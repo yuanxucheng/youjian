@@ -62,7 +62,7 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <!--expandablelistview-->
+    <!--expandablelistview二级列表-->
     <style name="PopupWindowAnimation">
         <item name="android:windowEnterAnimation">@anim/popshow_anim</item>
         <item name="android:windowExitAnimation">@anim/pophidden_anim</item>

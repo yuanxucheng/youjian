@@ -36,6 +36,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.Projection;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.CityInfo;
 import com.baidu.mapapi.search.core.PoiInfo;
@@ -75,26 +76,30 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * poi搜索功能
+ * 建筑工地
  */
-public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchResultListener, OnGetSuggestionResultListener {
+public class BuildSitesActivity extends BaseActivity {
+    //implements OnGetPoiSearchResultListener, OnGetSuggestionResultListener
 
-    private PoiSearch mPoiSearch = null;
-    private SuggestionSearch mSuggestionSearch = null;
-    private List<String> suggest;
+//    private PoiSearch mPoiSearch = null;
+//    private SuggestionSearch mSuggestionSearch = null;
+//    private List<String> suggest;
 
     //进度对话框
     private ProgressDialog pb;
+    //显示对话框
     private static final int SHOW = 1;
+    //隐藏对话框
     private static final int DISMISS = 2;
+    //第几次进入该界面
     private int count = 0;
 
     /**
      * 搜索关键字输入窗口
      */
 //    private AutoCompleteTextView keyWorldsView = null;
-    private ArrayAdapter<String> sugAdapter = null;
-    private int loadIndex = 0;
+//    private ArrayAdapter<String> sugAdapter = null;
+//    private int loadIndex = 0;
 
     /**
      * MapView 是地图主控件
@@ -102,12 +107,14 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
     private MapView mMapView;
     private BaiduMap mBaiduMap;
 
-    private InfoWindow mInfoWindow;
+    private InfoWindow mInfoWindow;//地图气泡点窗口
 
+    //地图覆盖物集合对象
     private List<BitmapDescriptor> bdList = new ArrayList<>();
 
     // 定位相关
     LocationClient mLocClient;
+    //实例化定位监听对象
     public MyLocationListenner myListener = new MyLocationListenner();
     boolean isFirstLoc = true; // 是否首次定位
 
@@ -126,7 +133,6 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
     @OnClick(R.id.id_back)
     public void back(View v) {
         finish();
-
     }
 
     Handler handler = new Handler() {
@@ -166,20 +172,20 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
     @Override
     public void initView(View view) {
         ButterKnife.bind(this);
-
+        //创建对话框对象
         pb = new ProgressDialog(this);
         pb.setMessage(getString(R.string.buildEnterprises_loadMap));
         pb.setCancelable(true);//设置进度条是否可以按退回键取消
         pb.setCanceledOnTouchOutside(true); //设置点击进度对话框外的区域对话框消失
 
         // 初始化搜索模块，注册搜索事件监听
-        mPoiSearch = PoiSearch.newInstance();
-        mPoiSearch.setOnGetPoiSearchResultListener(this);
-        mSuggestionSearch = SuggestionSearch.newInstance();
-        mSuggestionSearch.setOnGetSuggestionResultListener(this);
+//        mPoiSearch = PoiSearch.newInstance();
+//        mPoiSearch.setOnGetPoiSearchResultListener(this);
+//        mSuggestionSearch = SuggestionSearch.newInstance();
+//        mSuggestionSearch.setOnGetSuggestionResultListener(this);
 //        keyWorldsView = (AutoCompleteTextView) findViewById(R.id.build_site_search_key);
-        sugAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line);
+//        sugAdapter = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_dropdown_item_1line);
 //        keyWorldsView.setAdapter(sugAdapter);
 //        keyWorldsView.setThreshold(1);
 
@@ -202,16 +208,17 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
         MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
         //改变地图状态
         mBaiduMap.setMapStatus(mMapStatusUpdate);
-
         // 开启定位图层
         mBaiduMap.setMyLocationEnabled(true);
         // 定位初始化
         mLocClient = new LocationClient(this);
+        //注册监听
         mLocClient.registerLocationListener(myListener);
+        //创建LocationClientOption对象
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(1000);
+        option.setScanSpan(1000);//设置定时定位的时间间隔
         mLocClient.setLocOption(option);
 
         /**
@@ -229,6 +236,9 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
 
 //        HttpUtil.constructionCoordinate("121", "31", "121.5", "31.5", constructionCoordinateHandler);
 
+        /**
+         * 发送空消息显示对话框
+         */
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -238,14 +248,19 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
             }
         }, 3000);
 
+        //地图状态变化事件监听
         mBaiduMap.setOnMapStatusChangeListener(statusChangeListener);
-
+        //地图气泡点点击事件监听
         mBaiduMap.setOnMarkerClickListener(markerClickListener);
-
+        //开启百度定位
         mLocClient.start();
 
+//        HttpUtil.constructionCoordinate(initPoint().get(3), initPoint().get(2), initPoint().get(1), initPoint().get(0), constructionCoordinateHandler);
     }
 
+    /**
+     * 地图状态改变监听
+     */
     BaiduMap.OnMapStatusChangeListener statusChangeListener = new BaiduMap.OnMapStatusChangeListener() {
         @Override
         public void onMapStatusChangeStart(MapStatus mapStatus) {
@@ -254,19 +269,11 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
 
         @Override
         public void onMapStatusChange(MapStatus mapStatus) {
-            //===========================
             LatLng pointLeft = mBaiduMap.getProjection().fromScreenLocation(new Point(0, 0));
             LatLng pointRight = mBaiduMap.getProjection().fromScreenLocation(new Point(mMapView.getWidth(), mMapView.getHeight()));
             LogUtil.d("tag", "pointLeft:=============" + pointLeft);
             LogUtil.d("tag", "pointRight:==============" + pointRight);
 
-            //===========================
-//                GeoPoint centerPoint = mMapView.getMapCenter();// 地图中心坐标点
-//                int tpSpan = mMapView.getLatitudeSpan();// 当前纬线的跨度（从地图的上边缘到下边缘）int lrSpan = mMapView.getLongitudeSpan();// 当前经度的跨度（从地图的左边缘到右边缘）
-//                GeoPoint point = new GeoPoint(centerPoint.getLatitudeE6() - tpSpan / 2, centerPoint.getLongitudeE6() + lrSpan / 2);// 右上角
-//                GeoPoint point2 = new GeoPoint(centerPoint.getLatitudeE6() + tpSpan / 2, centerPoint.getLongitudeE6() - lrSpan / 2);// 左下角
-
-            //===========================
             int b = mMapView.getBottom();
             LogUtil.d("tag", "b:==============" + b);
             int t = mMapView.getTop();
@@ -289,7 +296,14 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
             String ssss = string[1].split(":")[1];
             LogUtil.d("tag", "sss:==============" + sss + "ssss:===========" + ssss);
 
-            HttpUtil.constructionCoordinate(ssss, sss, ss, s, constructionCoordinateHandler);
+            //===========================
+//                GeoPoint centerPoint = mMapView.getMapCenter();// 地图中心坐标点
+//                int tpSpan = mMapView.getLatitudeSpan();// 当前纬线的跨度（从地图的上边缘到下边缘）int lrSpan = mMapView.getLongitudeSpan();// 当前经度的跨度（从地图的左边缘到右边缘）
+//                GeoPoint point = new GeoPoint(centerPoint.getLatitudeE6() - tpSpan / 2, centerPoint.getLongitudeE6() + lrSpan / 2);// 右上角
+//                GeoPoint point2 = new GeoPoint(centerPoint.getLatitudeE6() + tpSpan / 2, centerPoint.getLongitudeE6() - lrSpan / 2);// 左下角
+
+//            HttpUtil.constructionCoordinate(ssss, sss, ss, s, constructionCoordinateHandler);
+            HttpUtil.constructionCoordinate(initPoint().get(3), initPoint().get(2), initPoint().get(1), initPoint().get(0), constructionCoordinateHandler);
 
             //===========================
             DisplayMetrics dm = new DisplayMetrics();
@@ -344,6 +358,46 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
         }
     };
 
+    /**
+     * 获取百度地图手机屏幕的四个坐标点
+     *
+     * @return List<String>
+     */
+    private List<String> initPoint() {
+        List<String> list = new ArrayList<>();
+        LatLng pointLeft = mBaiduMap.getProjection().fromScreenLocation(new Point(0, 0));
+        LatLng pointRight = mBaiduMap.getProjection().fromScreenLocation(new Point(mMapView.getWidth(), mMapView.getHeight()));
+        LogUtil.d("tag", "pointLeft:=============" + pointLeft);
+        LogUtil.d("tag", "pointRight:==============" + pointRight);
+
+        int b = mMapView.getBottom();
+        LogUtil.d("tag", "b:==============" + b);
+        int t = mMapView.getTop();
+        LogUtil.d("tag", "t:==============" + t);
+        int r = mMapView.getRight();
+        LogUtil.d("tag", "r:==============" + r);
+        int l = mMapView.getLeft();
+        LogUtil.d("tag", "lb:==============" + l);
+        LatLng ne = mBaiduMap.getProjection().fromScreenLocation(new Point(r, t));
+        LogUtil.d("tag", "ne:==============" + ne);
+        LatLng sw = mBaiduMap.getProjection().fromScreenLocation(new Point(l, b));
+        LogUtil.d("tag", "sw:==============" + sw);
+
+        String[] str = ne.toString().split(",");
+        String s = str[0].split(":")[1];
+        String ss = str[1].split(":")[1];
+        LogUtil.d("tag", "s:==============" + s + "ss:===========" + ss);
+        list.add(s);
+        list.add(ss);
+        String[] string = sw.toString().split(",");
+        String sss = string[0].split(":")[1];
+        String ssss = string[1].split(":")[1];
+        LogUtil.d("tag", "sss:==============" + sss + "ssss:===========" + ssss);
+        list.add(sss);
+        list.add(ssss);
+        return list;
+    }
+
     @Override
     public void doBusiness(Context mContext) {
 
@@ -369,8 +423,8 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
 
     @Override
     public void destroy() {
-        mPoiSearch.destroy();
-        mSuggestionSearch.destroy();
+//        mPoiSearch.destroy();
+//        mSuggestionSearch.destroy();
         // MapView的生命周期与Activity同步，当activity销毁时需调用MapView.destroy()
 //        mMapView.onDestroy();
 //        super.onDestroy();
@@ -378,11 +432,11 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
         for (BitmapDescriptor bd : bdList) {
             bd.recycle();
         }
-
         // 退出时销毁定位
         mLocClient.stop();
         // 关闭定位图层
         mBaiduMap.setMyLocationEnabled(false);
+        //清空mMapView对象
         mMapView = null;
         System.gc();  //提醒系统及时回收
     }
@@ -398,18 +452,23 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
             if (location == null || mMapView == null) {
                 return;
             }
+            //创建MyLocationData对象
             MyLocationData locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())
                             // 此处设置开发者获取到的方向信息，顺时针0-360
                     .direction(100).latitude(location.getLatitude())
                     .longitude(location.getLongitude()).build();
+            //为百度地图设置定位
             mBaiduMap.setMyLocationData(locData);
             if (isFirstLoc) {
-                isFirstLoc = false;
+                isFirstLoc = false;//将isFirstLoc变量设置成false
+                //创建LatLng对象
                 LatLng ll = new LatLng(location.getLatitude(),
                         location.getLongitude());
+                //实例化Builder对象
                 MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(ll).zoom(18.0f);
+                builder.target(ll).zoom(18.0f);//设置地图信息
+                //设置地图状态
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
             }
         }
@@ -418,28 +477,36 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
         }
     }
 
+    /**
+     * 地图气泡点点击事件监听
+     */
     private BaiduMap.OnMarkerClickListener markerClickListener = new BaiduMap.OnMarkerClickListener() {
         public boolean onMarkerClick(final Marker marker) {
+            //创建按钮对象
             Button button = new Button(getApplicationContext());
+            //设置按钮背景图片
             button.setBackgroundResource(R.mipmap.pop);
             InfoWindow.OnInfoWindowClickListener listener = null;
+            //获取气泡点中的基本信息
             final Bundle extro = marker.getExtraInfo();
 //            button.setText(marker.getTitle());
+            //获得气泡点的标题并设置给按钮显示内容
             button.setText(extro.getString("title"));
+            //设置按钮的字体颜色
             button.setTextColor(getResources().getColor(R.color.black));
-
+            //按钮点击事件
             button.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    //跳转到显示建材企业详情界面
+                    //跳转到显示建筑工地详情界面
                     Intent intent = new Intent();
                     intent.setClass(BuildSitesActivity.this, BuildSitesDetailActivity.class);
                     intent.putExtra("buildSites_id", extro.getInt("buildSites_id"));
                     startActivity(intent);
                 }
             });
-            LatLng ll = marker.getPosition();
-            mInfoWindow = new InfoWindow(button, ll, -47);
-            mBaiduMap.showInfoWindow(mInfoWindow);
+            LatLng ll = marker.getPosition();//获得气泡点位置的LatLng对象
+            mInfoWindow = new InfoWindow(button, ll, -47);//实例化InfoWindow对象
+            mBaiduMap.showInfoWindow(mInfoWindow);//地图上显示窗口信息
             return true;
         }
     };
@@ -453,7 +520,7 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
         @Override
         public void success(String data, String resCode, String info) {
 
-            bdList.clear();
+            bdList.clear();//清空集合
 
             if (resCode.equals("")) {
                 LogUtil.d("data===================" + data);
@@ -482,15 +549,18 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
 //                    BitmapDescriptor bd = BitmapDescriptorFactory
 //                            .fromResource(R.mipmap.icon_gcoding);
 
+                    //对图片进行压缩处理,在给地图设置压缩后的图片
                     BitmapDescriptor bd = BitmapDescriptorFactory
                             .fromBitmap(BitmapUtil.readBitMap(BuildSitesActivity.this, R.mipmap.icon_gcoding));
-
+                    //给集合添加数据
                     bdList.add(bd);
                     Bundle bundle = new Bundle();
                     bundle.putInt("buildSites_id", c.getId());
                     bundle.putString("title", c.getName());
+                    //设置气泡点信息,包括图片以及文字内容等
                     MarkerOptions oo = new MarkerOptions().position(ll).icon(bd)
                             .zIndex(5).extraInfo(bundle);
+                    //给地图添加气泡点
                     Marker mMarker = (Marker) (mBaiduMap.addOverlay(oo));
                 }
 
@@ -513,7 +583,7 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
     };
 
     /**
-     * JSON
+     * 解析JSON
      *
      * @param data
      */
@@ -586,74 +656,74 @@ public class BuildSitesActivity extends BaseActivity implements OnGetPoiSearchRe
 //                .pageNum(loadIndex));
 //    }
 
-    public void onGetPoiResult(PoiResult result) {
-        if (result == null
-                || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
-            Toast.makeText(BuildSitesActivity.this, "未找到结果", Toast.LENGTH_LONG)
-                    .show();
-            return;
-        }
-        if (result.error == SearchResult.ERRORNO.NO_ERROR) {
-            mBaiduMap.clear();
-            PoiOverlay overlay = new MyPoiOverlay(mBaiduMap);
-            mBaiduMap.setOnMarkerClickListener(overlay);
-            overlay.setData(result);
-            overlay.addToMap();
-            overlay.zoomToSpan();
-            return;
-        }
-        if (result.error == SearchResult.ERRORNO.AMBIGUOUS_KEYWORD) {
+//    public void onGetPoiResult(PoiResult result) {
+//        if (result == null
+//                || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
+//            Toast.makeText(BuildSitesActivity.this, "未找到结果", Toast.LENGTH_LONG)
+//                    .show();
+//            return;
+//        }
+//        if (result.error == SearchResult.ERRORNO.NO_ERROR) {
+//            mBaiduMap.clear();
+//            PoiOverlay overlay = new MyPoiOverlay(mBaiduMap);
+//            mBaiduMap.setOnMarkerClickListener(overlay);
+//            overlay.setData(result);
+//            overlay.addToMap();
+//            overlay.zoomToSpan();
+//            return;
+//        }
+//        if (result.error == SearchResult.ERRORNO.AMBIGUOUS_KEYWORD) {
+//
+//            // 当输入关键字在本市没有找到，但在其他城市找到时，返回包含该关键字信息的城市列表
+//            String strInfo = "在";
+//            for (CityInfo cityInfo : result.getSuggestCityList()) {
+//                strInfo += cityInfo.city;
+//                strInfo += ",";
+//            }
+//            strInfo += "找到结果";
+//            Toast.makeText(BuildSitesActivity.this, strInfo, Toast.LENGTH_LONG)
+//                    .show();
+//        }
+//    }
 
-            // 当输入关键字在本市没有找到，但在其他城市找到时，返回包含该关键字信息的城市列表
-            String strInfo = "在";
-            for (CityInfo cityInfo : result.getSuggestCityList()) {
-                strInfo += cityInfo.city;
-                strInfo += ",";
-            }
-            strInfo += "找到结果";
-            Toast.makeText(BuildSitesActivity.this, strInfo, Toast.LENGTH_LONG)
-                    .show();
-        }
-    }
+//    public void onGetPoiDetailResult(PoiDetailResult result) {
+//        if (result.error != SearchResult.ERRORNO.NO_ERROR) {
+//            Toast.makeText(BuildSitesActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT)
+//                    .show();
+//        }
+//    }
 
-    public void onGetPoiDetailResult(PoiDetailResult result) {
-        if (result.error != SearchResult.ERRORNO.NO_ERROR) {
-            Toast.makeText(BuildSitesActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT)
-                    .show();
-        }
-    }
+//    @Override
+//    public void onGetSuggestionResult(SuggestionResult res) {
+//        if (res == null || res.getAllSuggestions() == null) {
+//            return;
+//        }
+//        suggest = new ArrayList<String>();
+//        for (SuggestionResult.SuggestionInfo info : res.getAllSuggestions()) {
+//            if (info.key != null) {
+//                suggest.add(info.key);
+//            }
+//        }
+//        sugAdapter = new ArrayAdapter<String>(BuildSitesActivity.this, android.R.layout.simple_dropdown_item_1line, suggest);
+////        keyWorldsView.setAdapter(sugAdapter);
+//        sugAdapter.notifyDataSetChanged();
+//    }
 
-    @Override
-    public void onGetSuggestionResult(SuggestionResult res) {
-        if (res == null || res.getAllSuggestions() == null) {
-            return;
-        }
-        suggest = new ArrayList<String>();
-        for (SuggestionResult.SuggestionInfo info : res.getAllSuggestions()) {
-            if (info.key != null) {
-                suggest.add(info.key);
-            }
-        }
-        sugAdapter = new ArrayAdapter<String>(BuildSitesActivity.this, android.R.layout.simple_dropdown_item_1line, suggest);
-//        keyWorldsView.setAdapter(sugAdapter);
-        sugAdapter.notifyDataSetChanged();
-    }
-
-    private class MyPoiOverlay extends PoiOverlay {
-
-        public MyPoiOverlay(BaiduMap baiduMap) {
-            super(baiduMap);
-        }
-
-        @Override
-        public boolean onPoiClick(int index) {
-            super.onPoiClick(index);
-            PoiInfo poi = getPoiResult().getAllPoi().get(index);
-            // if (poi.hasCaterDetails) {
-            mPoiSearch.searchPoiDetail((new PoiDetailSearchOption())
-                    .poiUid(poi.uid));
-            // }
-            return true;
-        }
-    }
+//    private class MyPoiOverlay extends PoiOverlay {
+//
+//        public MyPoiOverlay(BaiduMap baiduMap) {
+//            super(baiduMap);
+//        }
+//
+//        @Override
+//        public boolean onPoiClick(int index) {
+//            super.onPoiClick(index);
+//            PoiInfo poi = getPoiResult().getAllPoi().get(index);
+//            // if (poi.hasCaterDetails) {
+//            mPoiSearch.searchPoiDetail((new PoiDetailSearchOption())
+//                    .poiUid(poi.uid));
+//            // }
+//            return true;
+//        }
+//    }
 }

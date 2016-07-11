@@ -60,17 +60,25 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 主界面
+ */
 public class FristActivity extends BaseActivity {
 
     private final static String tag = "FristActivity-->";
-
+    //ImageView视图对象集合
     private List<ImageView> views = new ArrayList<ImageView>();
+    //广告信息对象集合
     private List<ADInfo> infos = new ArrayList<ADInfo>();
+    //轮播对象
     private CycleViewPager cycleViewPager;
+    //泡泡窗口对象
     private MPopwindow popwindow;
+    //定位服务对象
     private LocationService locationService;
+    //对话框对象
     private AlertDialog noticeDialog;
-
+    //是否是第一次运行/启动
     private boolean isFirstRun;
 
 //    private String[] imageUrls = {"http://img3.imgtn.bdimg.com/it/u=2329946235,696526590&fm=21&gp=0.jpg",
@@ -142,6 +150,7 @@ public class FristActivity extends BaseActivity {
 
     @OnClick(R.id.id_home_wjcs)
     public void HardwareSupermarket() {
+        //跳转界面
         toPage(HardSuperActivity.class);
 //        toPage(UnderConstructionActivity.class);
     }
@@ -203,6 +212,7 @@ public class FristActivity extends BaseActivity {
     //扫一扫
     @OnClick(R.id.id_first_sweep)
     public void sweep(View view) {
+        //跳转到指定界面
         Intent intent = new Intent();
         intent.setClass(FristActivity.this, MipcaActivityCapture.class);
         startActivity(intent);
@@ -210,7 +220,7 @@ public class FristActivity extends BaseActivity {
 
     @OnClick(R.id.id_first_one_hundreds)
     public void one_hundreds() {
-        if (MApplication.login == true) {
+        if (MApplication.login == true) {//判断是否是登录状态
             toPage(TradeLeadsActivity.class);
         } else {
             toPage(NetActivity.class);
@@ -270,10 +280,15 @@ public class FristActivity extends BaseActivity {
         HttpUtil.homeCarousel(homeCarouselHandler);
 
         configImageLoader();
+
+        //创建泡泡窗口对象
         popwindow = new MPopwindow(this);
-//        testDp();
+
     }
 
+    /**
+     * 判断是否第一次执行
+     */
     private void isFrist() {
         SharedPreferences sharedPreferences = this.getSharedPreferences("share", MODE_PRIVATE);
         isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
@@ -317,6 +332,11 @@ public class FristActivity extends BaseActivity {
         noticeDialog.show();
     }
 
+    /**
+     * 读取SharedPreferences数据内容
+     *
+     * @return
+     */
     private String readVersionMessage() {
         SharedPreferences sp = this.getSharedPreferences("version", MODE_PRIVATE);
         String oldVersionName = sp.getString("versionName", "");
@@ -340,6 +360,9 @@ public class FristActivity extends BaseActivity {
         return versionName;
     }
 
+    /**
+     * 获取版本信息
+     */
     private void getVersionMessage() {
         HTTPTool.getClient().post(HttpConfig.VERSION_NUMBER_URL, null, new AsyncHttpResponseHandler() {
 
@@ -461,6 +484,9 @@ public class FristActivity extends BaseActivity {
         super.onStop();
     }
 
+    /**
+     * Start location service
+     */
     @Override
     protected void onStart() {
         // TODO Auto-generated method stub
@@ -591,17 +617,9 @@ public class FristActivity extends BaseActivity {
 
         @Override
         public void onFail(int arg0, String arg2, Throwable arg3) {
-            ToastUtil.shortT(FristActivity.this, getText(R.string.first_homeCarouse_fail).toString());
+//            ToastUtil.shortT(FristActivity.this, getText(R.string.first_homeCarouse_fail).toString());
         }
     };
-
-    private void testDp() {
-        //px转sp
-        LogUtil.d("34==================" + DipUtil.pixelsToSp(34));
-        LogUtil.d("31==================" + DipUtil.pixelsToSp(31));
-        //px转dp
-        LogUtil.d("156-----" + DipUtil.pixelsToDip(156));
-    }
 
     @Override
     public void doBusiness(Context mContext) {
@@ -624,6 +642,13 @@ public class FristActivity extends BaseActivity {
 ////        super.onBackPressed();
 //    }
 
+    /**
+     * 监听返回键
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -644,8 +669,13 @@ public class FristActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    /**
+     * 初始化轮播图
+     *
+     * @param imaUrl
+     */
     private void initialize(String imaUrl) {
-
+        //获取CycleViewPager对象
         cycleViewPager = (CycleViewPager) getFragmentManager()
                 .findFragmentById(R.id.fragment_cycle_viewpager_content);
 
@@ -669,26 +699,27 @@ public class FristActivity extends BaseActivity {
 
         // 将最后一个ImageView添加进来
         views.add(ViewFactory.getImageView(this, infos.get(infos.size() - 1).getUrl()));
+        //循环添加ImageView
         for (int i = 0; i < infos.size(); i++) {
             views.add(ViewFactory.getImageView(this, infos.get(i).getUrl()));
         }
         // 将第一个ImageView添加进来
         views.add(ViewFactory.getImageView(this, infos.get(0).getUrl()));
-
         // 设置循环，在调用setData方法前调用
         cycleViewPager.setCycle(true);
-
         // 在加载数据前设置是否循环
         cycleViewPager.setData(views, infos, mAdCycleViewListener);
         //设置轮播
         cycleViewPager.setWheel(true);
-
         // 设置轮播时间，默认5000ms
         cycleViewPager.setTime(2000);
         //设置圆点指示图标组居中显示，默认靠右
         cycleViewPager.setIndicatorCenter();
     }
 
+    /**
+     * 轮播图点击事件监听
+     */
     private CycleViewPager.ImageCycleViewListener mAdCycleViewListener = new CycleViewPager.ImageCycleViewListener() {
 
         @Override

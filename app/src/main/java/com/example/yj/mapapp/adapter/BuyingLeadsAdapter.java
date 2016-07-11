@@ -1,18 +1,14 @@
 package com.example.yj.mapapp.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.model.BuyingLeads;
-import com.example.yj.mapapp.model.HardSuper;
 import com.example.yj.mapapp.util.LogUtil;
 
 import java.util.List;
@@ -80,7 +76,7 @@ public class BuyingLeadsAdapter extends BaseAdapter {
         //处理电话号码显示的样式
         String mobile = mData.get(position).getPHONE();
         String maskNumber = mobile.substring(0, 3) + "****" + mobile.substring(7, mobile.length());
-
+        //设置数据内容
         holder.buying_leads_phone.setText(maskNumber);
 
         holder.buying_leads_content.setText(mData.get(position).getCONTENT());

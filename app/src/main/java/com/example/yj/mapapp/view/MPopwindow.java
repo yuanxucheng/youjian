@@ -77,7 +77,6 @@ public class MPopwindow {
                 R.drawable.popwindow));
 
         // 设置好参数之后再show
-        LogUtil.d("defaultWidth-----------------" + defaultWidth);
 //        popupWindow.showAsDropDown(v);
 
 //        View view = mInflater.inflate(R.layout.layout_popupwindow, null);

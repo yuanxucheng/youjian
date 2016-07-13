@@ -172,10 +172,10 @@ public class MainActivity extends BaseActivity implements Runnable {
             handler.postDelayed(this, 1000);
         } else {
             //跳转界面
-            startActivity(new Intent(getApplicationContext(),
-                    StartActivity.class));
 //            startActivity(new Intent(getApplicationContext(),
-//                    FristActivity.class));
+//                    StartActivity.class));
+            startActivity(new Intent(getApplicationContext(),
+                    FristActivity.class));
             //关闭Activity
             finish();
         }

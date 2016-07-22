@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.adapter.HardSuperAdapter;
+import com.example.yj.mapapp.base.MApplication;
 import com.example.yj.mapapp.model.HardSuper;
 import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
@@ -69,8 +70,13 @@ public class HardSuperActivity extends Activity implements AbsListView.OnScrollL
 
         mData = new ArrayList<HardSuper>();//初始化集合对象
 
-        //使用第三方网络框架请求后台接口数据
-        getLabourAgencyInformation(parentId, pageIndex, pageSize, "");
+        if (MApplication.getInstance().isNetworkConnected()) {
+            //使用第三方网络框架请求后台接口数据
+            getLabourAgencyInformation(parentId, pageIndex, pageSize, "");
+        } else {
+            ToastUtil.shortT(this, getResources().getString(R.string.network_not_connected));
+            return;
+        }
 
         //下拉刷新监听事件
         lv.setonRefreshListener(new MListView.OnRefreshListener() {

@@ -1,21 +1,30 @@
 package com.example.yj.mapapp.base;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
+import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.listener.MyLocationListener;
 import com.example.yj.mapapp.exception.CrashHandlers;
 import com.example.yj.mapapp.location.LocationService;
 import com.example.yj.mapapp.model.UserInfo;
+import com.example.yj.mapapp.util.ToastUtil;
 import com.example.yj.mapapp.util.ToolNetwork;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -207,6 +216,107 @@ public class MApplication extends Application {
         NetworkInfo ni = cm.getActiveNetworkInfo();
         return ni != null && ni.isConnectedOrConnecting();
     }
+
+    /**
+     * Wifi是否可用
+     *
+     * @return
+     */
+    public boolean isWifiEnable() {
+        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        return wifiManager.isWifiEnabled();
+    }
+
+    /**
+     * Gps是否可用
+     *
+     * @return
+     */
+    public boolean isGpsEnable() {
+        LocationManager locationManager = ((LocationManager) getSystemService(Context.LOCATION_SERVICE));
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    /**
+     *
+     */
+    public void checkOnPosBtn(final Context context) {
+        if (!isNetworkConnected()) {
+            showNoNetWorkDlg(context);
+        } else {
+            // TODO Login logic
+            ToastUtil.shortT(context, context.getResources().getString(R.string.network_connected));
+        }
+    }
+
+    /**
+     * 当判断当前手机没有网络时选择是否打开网络设置
+     *
+     * @param context
+     */
+    public static void showNoNetWorkDlg(final Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setIcon(R.mipmap.desktop_icon)
+                .setTitle(R.string.app_name)
+                .setMessage("当前无网络").setPositiveButton("设置", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // 跳转到系统的网络设置界面
+                Intent intent = null;
+                // 先判断当前系统版本
+                if (android.os.Build.VERSION.SDK_INT > 10) {  // 3.0以上
+                    intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
+                } else {
+                    intent = new Intent();
+                    intent.setClassName("com.android.settings", "com.android.settings.WirelessSettings");
+                }
+                context.startActivity(intent);
+            }
+        }).setNegativeButton("知道了", null).show();
+    }
+
+    /**
+     * 监听GPS
+     */
+    public static void initGPS(final Context context) {
+        LocationManager locationManager = (LocationManager) context
+                .getSystemService(Context.LOCATION_SERVICE);
+        // 判断GPS模块是否开启，如果没有则开启
+        if (!locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+//            Toast.makeText(context, "请打开GPS", Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+            dialog.setMessage("请打开GPS");
+            dialog.setPositiveButton("确定",
+                    new android.content.DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+
+                            // 转到手机设置界面，用户设置GPS
+                            Intent intent = new Intent(
+                                    Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            context.startActivity(intent); // 设置完成后返回到原来的界面
+                        }
+                    });
+            dialog.setNeutralButton("取消", new android.content.DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    arg0.dismiss();
+                }
+            });
+            dialog.show();
+        } else {
+            // 弹出Toast
+            Toast.makeText(context, "GPS已开启",
+                    Toast.LENGTH_LONG).show();
+            // 弹出对话框
+//            new AlertDialog.Builder(this).setMessage("GPS已开启")
+//                    .setPositiveButton("确定", null).show();
+        }
+    }
+
 
     public String getNow_province() {
         return now_province;

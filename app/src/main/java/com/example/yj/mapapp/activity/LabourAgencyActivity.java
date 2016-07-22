@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.adapter.LabourAgencyAdapter;
+import com.example.yj.mapapp.base.MApplication;
 import com.example.yj.mapapp.model.LabourAgency;
 import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
@@ -71,8 +72,13 @@ public class LabourAgencyActivity extends Activity implements OnScrollListener, 
         //初始化劳务中介对象集合
         mData = new ArrayList<LabourAgency>();
 
-        //访问后台接口
-        getLabourAgencyInformation(pageIndex, pageSize, "");
+        if (MApplication.getInstance().isNetworkConnected()) {
+            //访问后台接口
+            getLabourAgencyInformation(pageIndex, pageSize, "");
+        } else {
+            ToastUtil.shortT(this, getResources().getString(R.string.network_not_connected));
+            return;
+        }
 
         //listView控件下拉刷新事件监听
         lv.setonRefreshListener(new MListView.OnRefreshListener() {
@@ -191,6 +197,7 @@ public class LabourAgencyActivity extends Activity implements OnScrollListener, 
 
     /**
      * 滚动状态改变
+     *
      * @param view
      * @param scrollState
      */
@@ -206,6 +213,7 @@ public class LabourAgencyActivity extends Activity implements OnScrollListener, 
 
     /**
      * 滚动事件
+     *
      * @param view
      * @param firstVisibleItem
      * @param visibleItemCount
@@ -231,6 +239,7 @@ public class LabourAgencyActivity extends Activity implements OnScrollListener, 
 
     /**
      * 点击事件
+     *
      * @param v
      */
     @Override

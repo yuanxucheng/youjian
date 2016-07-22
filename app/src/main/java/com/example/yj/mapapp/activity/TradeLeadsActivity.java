@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.adapter.BuyingLeadsAdapter;
+import com.example.yj.mapapp.base.MApplication;
 import com.example.yj.mapapp.fragment.BuyingLeadsFragment;
 import com.example.yj.mapapp.fragment.SupplyInformationFragment;
 import com.example.yj.mapapp.model.BuyingLeads;
@@ -120,10 +121,19 @@ public class TradeLeadsActivity extends Activity implements View.OnClickListener
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //关闭对话框
-                Message msg = new Message();
-                msg.what = DISMISS;
-                h.sendMessage(msg);
+                if (MApplication.getInstance().isNetworkConnected()) {
+                    //关闭对话框
+                    Message msg = new Message();
+                    msg.what = DISMISS;
+                    h.sendMessage(msg);
+                } else {
+                    ToastUtil.shortT(TradeLeadsActivity.this, getResources().getString(R.string.network_not_connected));
+                    //关闭对话框
+                    Message msg = new Message();
+                    msg.what = DISMISS;
+                    h.sendMessage(msg);
+                    return;
+                }
             }
         }, 1000);
     }
@@ -168,9 +178,17 @@ public class TradeLeadsActivity extends Activity implements View.OnClickListener
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Message msg = new Message();
-                        msg.what = DISMISS;
-                        h.sendMessage(msg);
+                        if (MApplication.getInstance().isNetworkConnected()) {
+                            Message msg = new Message();
+                            msg.what = DISMISS;
+                            h.sendMessage(msg);
+                        } else {
+                            ToastUtil.shortT(TradeLeadsActivity.this, getResources().getString(R.string.network_not_connected));
+                            Message msg = new Message();
+                            msg.what = DISMISS;
+                            h.sendMessage(msg);
+                            return;
+                        }
                     }
                 }, 1000);
                 break;
@@ -189,9 +207,17 @@ public class TradeLeadsActivity extends Activity implements View.OnClickListener
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Message msg = new Message();
-                        msg.what = DISMISS;
-                        h.sendMessage(msg);
+                        if (MApplication.getInstance().isNetworkConnected()) {
+                            Message msg = new Message();
+                            msg.what = DISMISS;
+                            h.sendMessage(msg);
+                        } else {
+                            ToastUtil.shortT(TradeLeadsActivity.this, getResources().getString(R.string.network_not_connected));
+                            Message msg = new Message();
+                            msg.what = DISMISS;
+                            h.sendMessage(msg);
+                            return;
+                        }
                     }
                 }, 1000);
                 break;

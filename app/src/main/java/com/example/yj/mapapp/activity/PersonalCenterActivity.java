@@ -76,12 +76,22 @@ public class PersonalCenterActivity extends BaseActivity {
 
     @OnClick(R.id.id_logged_on)
     public void logged_on(View v) {
-        //不是登录状态
-        MApplication.login = false;
-        //创建删除方法
-        spf.edit().clear().commit();
-        //界面跳转
-        toPage(FristActivity.class);
+        final ExitDialog myDialog = new ExitDialog(PersonalCenterActivity.this,
+                getText(R.string.exit_logout_title).toString(), getText(R.string.input_search_logout_cancle).toString(), getText(R.string.input_search_logout_ok).toString());
+        myDialog.show();
+        myDialog.setDialogROnClickListener(new ExitDialog.MyDialogROnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //不是登录状态
+                MApplication.login = false;
+                //创建删除方法
+                spf.edit().clear().commit();
+                //界面跳转
+                toPage(FristActivity.class);
+                myDialog.dismiss();
+            }
+        });
     }
 
     @Bind(R.id.id_back)

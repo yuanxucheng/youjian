@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="@dimen/progress_dialog_layout_width"
+    android:layout_height="@dimen/progress_dialog_layout_height"
+    android:layout_gravity="center"
+    android:background="@drawable/progress_dialog_shape"
+    android:orientation="horizontal">
 
+    <ImageView
+        android:layout_width="@dimen/progress_dialog_image_width"
+        android:layout_height="@dimen/progress_dialog_image_height"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/progress_dialog_layout_marginLeft2"
+        android:src="@mipmap/desktop_icon" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/progress_dialog_layout_marginLeft1"
+        android:gravity="center_vertical"
+        android:text="@string/load_data"
+        android:textColor="@color/black"
+        android:textSize="@dimen/progress_dialog_textSize" />
 </LinearLayout>

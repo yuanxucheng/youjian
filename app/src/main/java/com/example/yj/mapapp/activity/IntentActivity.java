@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.base.BaseActivity;
+import com.example.yj.mapapp.base.MApplication;
 import com.example.yj.mapapp.model.HardSuper;
 import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
@@ -84,19 +85,25 @@ public class IntentActivity extends BaseActivity {
 //        ToastUtil.longT(this, "建设中,敬请期待...");
 //        register("test1", "111", "aaa", "12345678909", 11);
 
-        user = et_user.getText().toString().trim();
-        LogUtil.d("user:===============" + user);
-        pwd = et_pwd.getText().toString().trim();
-        LogUtil.d("pwd:===============" + pwd);
-        surePwd = et_surePwd.getText().toString().trim();
-        LogUtil.d("surePwd:===============" + surePwd);
-        contactPerson = et_contactPerson.getText().toString().trim();
-        LogUtil.d("contactPerson:===============" + contactPerson);
-        contactNumber = et_contactNumber.getText().toString().trim();
-        LogUtil.d("contactNumber:===============" + contactNumber);
+        if (MApplication.getInstance().isNetworkConnected()) {
+            user = et_user.getText().toString().trim();
+            LogUtil.d("user:===============" + user);
+            pwd = et_pwd.getText().toString().trim();
+            LogUtil.d("pwd:===============" + pwd);
+            surePwd = et_surePwd.getText().toString().trim();
+            LogUtil.d("surePwd:===============" + surePwd);
+            contactPerson = et_contactPerson.getText().toString().trim();
+            LogUtil.d("contactPerson:===============" + contactPerson);
+            contactNumber = et_contactNumber.getText().toString().trim();
+            LogUtil.d("contactNumber:===============" + contactNumber);
 
-        //访问后台接口
-        register(user, pwd, contactPerson, contactNumber, type);
+            //访问后台接口
+            register(user, pwd, contactPerson, contactNumber, type);
+        } else {
+            ToastUtil.shortT(this, getResources().getString(R.string.network_not_connected));
+            return;
+        }
+
     }
 
     @Bind(R.id.id_corporate_user)

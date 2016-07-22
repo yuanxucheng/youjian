@@ -12,6 +12,7 @@
     <string name="input_search_logout_ok">确定</string>
     <string name="input_search_logout_cancle">取消</string>
     <string name="input_search_logout_title">是否确定退出客户端？</string>
+    <string name="exit_logout_title">是否确定退出登录？</string>
     <string name="main_logout_all">确认退出？</string>
     <string name="main_logout_clear_all">是否清除账号?</string>
 
@@ -43,6 +44,10 @@
     <string name="main_location">正在定位中...</string>
 
     <string name="network_not_connected">网络连接失败，请检查网络设置</string>
+    <string name="gps_not_connected">手机GPS未打开,无法进行定位</string>
+    <string name="wifi_not_connected">手机无线wifi不可用</string>
+    <string name="network_connected">当前网络可用</string>
+    <string name="network_connected_fail">网络连接失败</string>
 
     <!--关联企业-->
     <string name="related_companies_title">关联企业</string>
@@ -365,4 +370,8 @@
 
     <!--expandablelistview二级列表-->
     <string name="no_data">没有找到符合条件的</string>
+
+    <!--自定义进度对话框-->
+    <string name="load_data">正在加载数据,请耐心等待...</string>
+
 </resources>

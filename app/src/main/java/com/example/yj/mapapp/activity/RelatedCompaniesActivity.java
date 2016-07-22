@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.adapter.MyTradeLeadsAdapter;
 import com.example.yj.mapapp.adapter.RelatedCompaniesAdapter;
+import com.example.yj.mapapp.base.MApplication;
 import com.example.yj.mapapp.model.RelatedCompanies;
 import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
@@ -64,6 +65,7 @@ public class RelatedCompaniesActivity extends Activity implements OnScrollListen
 
         setContentView(R.layout.activity_related_companies);
 
+
         //通过findViewById方法找到控件对象并设置点击事件
         lv = (MListView) findViewById(R.id.lv);
         iv_back = (ImageView) findViewById(R.id.id_back);
@@ -71,8 +73,13 @@ public class RelatedCompaniesActivity extends Activity implements OnScrollListen
 
         mData = new ArrayList<RelatedCompanies>();//实例化关联企业对象集合
 
-        //使用第三方网络框架请求后台接口数据
-        getRelatedCompaniesInformation(pageIndex, pageSize, "");
+        if (MApplication.getInstance().isNetworkConnected()) {
+            //使用第三方网络框架请求后台接口数据
+            getRelatedCompaniesInformation(pageIndex, pageSize, "");
+        } else {
+            ToastUtil.shortT(this, getResources().getString(R.string.network_not_connected));
+            return;
+        }
 
         //ListView控件刷新事件
         lv.setonRefreshListener(new MListView.OnRefreshListener() {

@@ -74,25 +74,28 @@ public class NetActivity extends BaseActivity {
 //        ToastUtil.longT(this, "建设中,敬请期待...");
 //        login("test1", "111");
 
-        user = et_user.getText().toString().trim();
-        LogUtil.d("user:===============" + user);
-        pwd = et_pwd.getText().toString().trim();
-        LogUtil.d("pwd:===============" + pwd);
+        if (MApplication.getInstance().isNetworkConnected()) {
+            user = et_user.getText().toString().trim();
+            LogUtil.d("user:===============" + user);
+            pwd = et_pwd.getText().toString().trim();
+            LogUtil.d("pwd:===============" + pwd);
 
-        try {
-//          u=  URLDecoder.decode(user, "utf-8");
-            //u = new String(user.getBytes("ISO8859-1"), "UTF-8");
-            //u= URLEncoder.encode(URLEncoder.encode(user,"UTF-8"),"UTF-8");
-            u = user;
-        } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                //u = URLDecoder.decode(user, "utf-8");
+                //u = new String(user.getBytes("ISO8859-1"), "UTF-8");
+                //u= URLEncoder.encode(URLEncoder.encode(user,"UTF-8"),"UTF-8");
+                u = user;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //访问后台接口
+            login(u, pwd);
+        } else {
+            ToastUtil.shortT(this, getResources().getString(R.string.network_not_connected));
+            return;
         }
 
-        //访问后台接口
-        login(u, pwd);
-
-//        login("曾斌", "123");
-//        login("test1", "111");
     }
 
     @Bind(R.id.id_register)
@@ -140,6 +143,7 @@ public class NetActivity extends BaseActivity {
 
     /**
      * 登录
+     *
      * @param Name
      * @param Pwd
      */

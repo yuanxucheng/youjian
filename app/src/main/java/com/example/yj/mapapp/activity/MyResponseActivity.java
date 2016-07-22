@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.adapter.MyResponseAdapter;
+import com.example.yj.mapapp.base.MApplication;
 import com.example.yj.mapapp.model.MyResponse;
 import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
@@ -94,8 +95,13 @@ public class MyResponseActivity extends Activity implements AbsListView.OnScroll
         uId = Integer.valueOf(U_Id);
         System.out.println("uId==============" + uId);
 
-        //使用第三方网络框架请求后台接口数据
-        getMyResponseInformation(uId, sdId, pageIndex, pageSize, search);
+        if (MApplication.getInstance().isNetworkConnected()) {
+            //使用第三方网络框架请求后台接口数据
+            getMyResponseInformation(uId, sdId, pageIndex, pageSize, search);
+        } else {
+            ToastUtil.shortT(this, getResources().getString(R.string.network_not_connected));
+            return;
+        }
 
         //ListView控件点击事件
         lv.setOnItemClickListener(this);
@@ -291,6 +297,7 @@ public class MyResponseActivity extends Activity implements AbsListView.OnScroll
 
     /**
      * item点击事件
+     *
      * @param parent
      * @param view
      * @param position

@@ -55,12 +55,14 @@ import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.base.BaseActivity;
 import com.example.yj.mapapp.manager.PoiOverlay;
 import com.example.yj.mapapp.model.Companys;
+import com.example.yj.mapapp.net.handler.HttpConfig;
 import com.example.yj.mapapp.net.handler.HttpUtil;
 import com.example.yj.mapapp.net.handler.ResponseHandler;
 import com.example.yj.mapapp.util.BitmapUtil;
 import com.example.yj.mapapp.util.JsonParser;
 import com.example.yj.mapapp.util.LogUtil;
 import com.example.yj.mapapp.util.ToastUtil;
+import com.example.yj.mapapp.view.MProgressDialog;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -85,8 +87,8 @@ public class BuildSitesActivity extends BaseActivity {
 //    private SuggestionSearch mSuggestionSearch = null;
 //    private List<String> suggest;
 
-    //进度对话框
-    private ProgressDialog pb;
+    //自定义进度对话框
+    private MProgressDialog pb;
     //显示对话框
     private static final int SHOW = 1;
     //隐藏对话框
@@ -106,6 +108,10 @@ public class BuildSitesActivity extends BaseActivity {
      */
     private MapView mMapView;
     private BaiduMap mBaiduMap;
+    private LatLng cenpt;
+    private MapStatus mMapStatus;
+    private MapStatusUpdate mMapStatusUpdate;
+    private LocationClientOption option;
 
     private InfoWindow mInfoWindow;//地图气泡点窗口
 
@@ -173,8 +179,8 @@ public class BuildSitesActivity extends BaseActivity {
     public void initView(View view) {
         ButterKnife.bind(this);
         //创建对话框对象
-        pb = new ProgressDialog(this);
-        pb.setMessage(getString(R.string.buildEnterprises_loadMap));
+        pb = new MProgressDialog(this);
+//        pb.setMessage(getString(R.string.buildEnterprises_loadMap));
         pb.setCancelable(true);//设置进度条是否可以按退回键取消
         pb.setCanceledOnTouchOutside(true); //设置点击进度对话框外的区域对话框消失
 
@@ -198,14 +204,14 @@ public class BuildSitesActivity extends BaseActivity {
         //设定中心点坐标
 //        LatLng cenpt = new LatLng(31.083397,121.525437);//北京
 //        LatLng cenpt = new LatLng(31.14, 121.29);//上海市的经纬度
-        LatLng cenpt = new LatLng(31.5, 121.5);//上海市的经纬度
+        cenpt = new LatLng(31.5, 121.5);//上海市的经纬度
         //定义地图状态
-        MapStatus mMapStatus = new MapStatus.Builder()
+        mMapStatus = new MapStatus.Builder()
                 .target(cenpt)
                 .zoom(11.5f)
                 .build();
         //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
-        MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+        mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
         //改变地图状态
         mBaiduMap.setMapStatus(mMapStatusUpdate);
         // 开启定位图层
@@ -215,7 +221,7 @@ public class BuildSitesActivity extends BaseActivity {
         //注册监听
         mLocClient.registerLocationListener(myListener);
         //创建LocationClientOption对象
-        LocationClientOption option = new LocationClientOption();
+        option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
         option.setScanSpan(1000);//设置定时定位的时间间隔
@@ -236,20 +242,9 @@ public class BuildSitesActivity extends BaseActivity {
 
 //        HttpUtil.constructionCoordinate("121", "31", "121.5", "31.5", constructionCoordinateHandler);
 
-        /**
-         * 发送空消息显示对话框
-         */
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Message msg = new Message();
-                msg.what = DISMISS;
-                handler.sendMessage(msg);
-            }
-        }, 3000);
-
+        HttpUtil.constructionCoordinate(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, constructionCoordinateHandler);
         //地图状态变化事件监听
-        mBaiduMap.setOnMapStatusChangeListener(statusChangeListener);
+//        mBaiduMap.setOnMapStatusChangeListener(statusChangeListener);
         //地图气泡点点击事件监听
         mBaiduMap.setOnMarkerClickListener(markerClickListener);
         //开启百度定位
@@ -269,32 +264,32 @@ public class BuildSitesActivity extends BaseActivity {
 
         @Override
         public void onMapStatusChange(MapStatus mapStatus) {
-            LatLng pointLeft = mBaiduMap.getProjection().fromScreenLocation(new Point(0, 0));
-            LatLng pointRight = mBaiduMap.getProjection().fromScreenLocation(new Point(mMapView.getWidth(), mMapView.getHeight()));
-            LogUtil.d("tag", "pointLeft:=============" + pointLeft);
-            LogUtil.d("tag", "pointRight:==============" + pointRight);
-
-            int b = mMapView.getBottom();
-            LogUtil.d("tag", "b:==============" + b);
-            int t = mMapView.getTop();
-            LogUtil.d("tag", "t:==============" + t);
-            int r = mMapView.getRight();
-            LogUtil.d("tag", "r:==============" + r);
-            int l = mMapView.getLeft();
-            LogUtil.d("tag", "lb:==============" + l);
-            LatLng ne = mBaiduMap.getProjection().fromScreenLocation(new Point(r, t));
-            LogUtil.d("tag", "ne:==============" + ne);
-            LatLng sw = mBaiduMap.getProjection().fromScreenLocation(new Point(l, b));
-            LogUtil.d("tag", "sw:==============" + sw);
-
-            String[] str = ne.toString().split(",");
-            String s = str[0].split(":")[1];
-            String ss = str[1].split(":")[1];
-            LogUtil.d("tag", "s:==============" + s + "ss:===========" + ss);
-            String[] string = sw.toString().split(",");
-            String sss = string[0].split(":")[1];
-            String ssss = string[1].split(":")[1];
-            LogUtil.d("tag", "sss:==============" + sss + "ssss:===========" + ssss);
+//            LatLng pointLeft = mBaiduMap.getProjection().fromScreenLocation(new Point(0, 0));
+//            LatLng pointRight = mBaiduMap.getProjection().fromScreenLocation(new Point(mMapView.getWidth(), mMapView.getHeight()));
+//            LogUtil.d("tag", "pointLeft:=============" + pointLeft);
+//            LogUtil.d("tag", "pointRight:==============" + pointRight);
+//
+//            int b = mMapView.getBottom();
+//            LogUtil.d("tag", "b:==============" + b);
+//            int t = mMapView.getTop();
+//            LogUtil.d("tag", "t:==============" + t);
+//            int r = mMapView.getRight();
+//            LogUtil.d("tag", "r:==============" + r);
+//            int l = mMapView.getLeft();
+//            LogUtil.d("tag", "lb:==============" + l);
+//            LatLng ne = mBaiduMap.getProjection().fromScreenLocation(new Point(r, t));
+//            LogUtil.d("tag", "ne:==============" + ne);
+//            LatLng sw = mBaiduMap.getProjection().fromScreenLocation(new Point(l, b));
+//            LogUtil.d("tag", "sw:==============" + sw);
+//
+//            String[] str = ne.toString().split(",");
+//            String s = str[0].split(":")[1];
+//            String ss = str[1].split(":")[1];
+//            LogUtil.d("tag", "s:==============" + s + "ss:===========" + ss);
+//            String[] string = sw.toString().split(",");
+//            String sss = string[0].split(":")[1];
+//            String ssss = string[1].split(":")[1];
+//            LogUtil.d("tag", "sss:==============" + sss + "ssss:===========" + ssss);
 
             //===========================
 //                GeoPoint centerPoint = mMapView.getMapCenter();// 地图中心坐标点
@@ -303,58 +298,58 @@ public class BuildSitesActivity extends BaseActivity {
 //                GeoPoint point2 = new GeoPoint(centerPoint.getLatitudeE6() + tpSpan / 2, centerPoint.getLongitudeE6() - lrSpan / 2);// 左下角
 
 //            HttpUtil.constructionCoordinate(ssss, sss, ss, s, constructionCoordinateHandler);
-            HttpUtil.constructionCoordinate(initPoint().get(3), initPoint().get(2), initPoint().get(1), initPoint().get(0), constructionCoordinateHandler);
+
 
             //===========================
-            DisplayMetrics dm = new DisplayMetrics();
-            // 获取屏幕信息
-            getWindowManager().getDefaultDisplay().getMetrics(dm);
-            int screenWidth = dm.widthPixels;
-            LogUtil.d("tag", "screenWidth:==============" + screenWidth);
-            int screenHeigh = dm.heightPixels;
-            LogUtil.d("tag", "screenHeigh:==============" + screenHeigh);
-            int targetScreenX = mBaiduMap.getMapStatus().targetScreen.x;// 地图操作中心点在屏幕中的坐标x
-            LogUtil.d("tag", "targetScreenX:==============" + targetScreenX);
-            int targetScreenY = mBaiduMap.getMapStatus().targetScreen.y;// 地图操作中心点在屏幕中的坐标y
-            LogUtil.d("tag", "targetScreenY:==============" + targetScreenY);
-            int navHeight = screenHeigh - 2 * targetScreenY;// 导航条(除地图之外的部分)的高度
-            LogUtil.d("tag", "navHeight:==============" + navHeight);
+//            DisplayMetrics dm = new DisplayMetrics();
+//            // 获取屏幕信息
+//            getWindowManager().getDefaultDisplay().getMetrics(dm);
+//            int screenWidth = dm.widthPixels;
+//            LogUtil.d("tag", "screenWidth:==============" + screenWidth);
+//            int screenHeigh = dm.heightPixels;
+//            LogUtil.d("tag", "screenHeigh:==============" + screenHeigh);
+//            int targetScreenX = mBaiduMap.getMapStatus().targetScreen.x;// 地图操作中心点在屏幕中的坐标x
+//            LogUtil.d("tag", "targetScreenX:==============" + targetScreenX);
+//            int targetScreenY = mBaiduMap.getMapStatus().targetScreen.y;// 地图操作中心点在屏幕中的坐标y
+//            LogUtil.d("tag", "targetScreenY:==============" + targetScreenY);
+//            int navHeight = screenHeigh - 2 * targetScreenY;// 导航条(除地图之外的部分)的高度
+//            LogUtil.d("tag", "navHeight:==============" + navHeight);
+//
+//            Point rightup = new Point(screenWidth, navHeight);
+//            Point leftdown = new Point(0, screenHeigh);
+//
+//            LatLng northeast = mBaiduMap.getProjection().fromScreenLocation(rightup);
+//            LatLng southwest = mBaiduMap.getProjection().fromScreenLocation(leftdown);
+//            LogUtil.d("tag", "northeast:==============" + northeast);
+//            LogUtil.d("tag", "southwest:==============" + southwest);
 
-            Point rightup = new Point(screenWidth, navHeight);
-            Point leftdown = new Point(0, screenHeigh);
-
-            LatLng northeast = mBaiduMap.getProjection().fromScreenLocation(rightup);
-            LatLng southwest = mBaiduMap.getProjection().fromScreenLocation(leftdown);
-            LogUtil.d("tag", "northeast:==============" + northeast);
-            LogUtil.d("tag", "southwest:==============" + southwest);
-
-            //===========================
-            String[] strings = northeast.toString().split(",");
-            String st = strings[0].split(":")[1];
-            String stt = strings[1].split(":")[1];
-            LogUtil.d("tag", "st:==============" + st + "stt:===========" + stt);
-            String[] stringss = southwest.toString().split(",");
-            String sttt = stringss[0].split(":")[1];
-            String stttt = stringss[1].split(":")[1];
-            LogUtil.d("tag", "sttt:==============" + sttt + "stttt:===========" + stttt);
+//            //===========================
+//            String[] strings = northeast.toString().split(",");
+//            String st = strings[0].split(":")[1];
+//            String stt = strings[1].split(":")[1];
+//            LogUtil.d("tag", "st:==============" + st + "stt:===========" + stt);
+//            String[] stringss = southwest.toString().split(",");
+//            String sttt = stringss[0].split(":")[1];
+//            String stttt = stringss[1].split(":")[1];
+//            LogUtil.d("tag", "sttt:==============" + sttt + "stttt:===========" + stttt);
 
 //            HttpUtil.ConstructionCoordinate(stttt, sttt, stt, st, constructionCoordinateHandler);
 
             //===========================
-            MapStatus mmapStatus = mBaiduMap.getMapStatus();
-            LatLng center = mmapStatus.target;
-            LogUtil.d("tag", "center:==============" + center);
-            String location = center.latitude + "," + center.longitude;
-            LogUtil.d("tag", "location:==============" + location);
+//            MapStatus mmapStatus = mBaiduMap.getMapStatus();
+//            LatLng center = mmapStatus.target;
+//            LogUtil.d("tag", "center:==============" + center);
+//            String location = center.latitude + "," + center.longitude;
+//            LogUtil.d("tag", "location:==============" + location);
 
             //=============================
-            LatLng target = mBaiduMap.getMapStatus().target;
-            LogUtil.d("tag", "target:==============" + target);
+//            LatLng target = mBaiduMap.getMapStatus().target;
+//            LogUtil.d("tag", "target:==============" + target);
         }
 
         @Override
         public void onMapStatusChangeFinish(MapStatus mapStatus) {
-
+            HttpUtil.constructionCoordinate(initPoint().get(3), initPoint().get(2), initPoint().get(1), initPoint().get(0), constructionCoordinateHandler);
         }
     };
 
@@ -428,16 +423,25 @@ public class BuildSitesActivity extends BaseActivity {
         // MapView的生命周期与Activity同步，当activity销毁时需调用MapView.destroy()
 //        mMapView.onDestroy();
 //        super.onDestroy();
+
+        // 退出时销毁定位
+        mLocClient.stop();
+        mLocClient = null;
+        // 关闭定位图层
+        mBaiduMap.setMyLocationEnabled(false);
+        mBaiduMap.clear();
+        mBaiduMap = null;
         // 回收 bitmap 资源
         for (BitmapDescriptor bd : bdList) {
             bd.recycle();
         }
-        // 退出时销毁定位
-        mLocClient.stop();
-        // 关闭定位图层
-        mBaiduMap.setMyLocationEnabled(false);
         //清空mMapView对象
         mMapView = null;
+        pb = null;
+        cenpt = null;
+        mMapStatus = null;
+        mMapStatusUpdate = null;
+        option = null;
         System.gc();  //提醒系统及时回收
     }
 
@@ -562,6 +566,21 @@ public class BuildSitesActivity extends BaseActivity {
                             .zIndex(5).extraInfo(bundle);
                     //给地图添加气泡点
                     Marker mMarker = (Marker) (mBaiduMap.addOverlay(oo));
+
+                    //发送消息提示关闭对话框
+                    Message msg = new Message();
+                    msg.what = DISMISS;
+                    handler.sendMessage(msg);
+                    // 回收资源
+                    for (BitmapDescriptor bitmap : bdList) {
+                        bitmap.recycle();
+                        bitmap = null;
+                    }
+                    companies = null;
+                    bundle = null;
+                    oo = null;
+                    msg = null;
+                    mMarker = null;
                 }
 
                 //后台返回的数据进行过处理的,使用GSON解析

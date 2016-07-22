@@ -79,6 +79,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.yj.mapapp.view.ExpandTabView;
+import com.example.yj.mapapp.view.MProgressDialog;
 import com.example.yj.mapapp.view.ViewLeft;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -97,8 +98,8 @@ public class BuildEnterprisesActivity extends BaseActivity {
     private SuggestionSearch mSuggestionSearch = null;
     private List<String> suggest;
 
-    //进度对话框
-    private ProgressDialog pb;
+    //自定义进度对话框
+    private MProgressDialog pb;
     //显示对话框
     private static final int SHOW = 1;
     //关闭对话框
@@ -118,11 +119,14 @@ public class BuildEnterprisesActivity extends BaseActivity {
      */
     private MapView mMapView;
     private BaiduMap mBaiduMap;
+    private LatLng cenpt;
+    private MapStatus mMapStatus;
+    private MapStatusUpdate mMapStatusUpdate;
+    private LocationClientOption option;
 
     private InfoWindow mInfoWindow;
 
     private List<BitmapDescriptor> bdList = new ArrayList<>();
-    private List<BitmapDescriptor> testList = new ArrayList<>();
 
     // 定位相关
     private LocationClient mLocClient;
@@ -198,7 +202,7 @@ public class BuildEnterprisesActivity extends BaseActivity {
 
         isLoadType = false;//设置初始化值
 
-        pb = new ProgressDialog(this);//实例化进度对话框对象
+        pb = new MProgressDialog(this);//实例化进度对话框对象
         pb.setMessage(getString(R.string.buildSites_loadMap));//设置对话框信息
         pb.setCancelable(true);//设置进度条是否可以按退回键取消
         pb.setCanceledOnTouchOutside(true); //设置点击进度对话框外的区域对话框消失
@@ -223,14 +227,14 @@ public class BuildEnterprisesActivity extends BaseActivity {
         //设定中心点坐标
 //        LatLng cenpt = new LatLng(31.083397,121.525437);//北京
 //        LatLng cenpt = new LatLng(31.14, 121.29);//上海市的经纬度
-        LatLng cenpt = new LatLng(31.5, 121.5);//上海市的经纬度
+        cenpt = new LatLng(31.5, 121.5);//上海市的经纬度
         //定义地图状态
-        MapStatus mMapStatus = new MapStatus.Builder()
+        mMapStatus = new MapStatus.Builder()
                 .target(cenpt)
                 .zoom(11.5f)
                 .build();
         //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
-        MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+        mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
         //改变地图状态
         mBaiduMap.setMapStatus(mMapStatusUpdate);
         // 开启定位图层
@@ -240,7 +244,7 @@ public class BuildEnterprisesActivity extends BaseActivity {
         //注册监听
         mLocClient.registerLocationListener(myListener);
         //创建LocationClientOption对象
-        LocationClientOption option = new LocationClientOption();
+        option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
         option.setScanSpan(1000);//设置定时定位的时间间隔
@@ -263,17 +267,9 @@ public class BuildEnterprisesActivity extends BaseActivity {
 //        HttpUtil.enterpriseCoordinate("121", "31", "121.5", "31.5", enterpriseCoordinateHandler);
 //        HttpUtil.enterpriseCoordinate("120", "30", "122", "32", enterpriseCoordinateHandler);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Message msg = new Message();
-                msg.what = DISMISS;
-                handler.sendMessage(msg);
-            }
-        }, 3000);
-
+        HttpUtil.enterpriseCoordinate(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, enterpriseCoordinateHandler);
         //地图状态变化事件监听
-        mBaiduMap.setOnMapStatusChangeListener(statusChangeListener);
+//        mBaiduMap.setOnMapStatusChangeListener(statusChangeListener);
         //地图气泡点点击事件监听
         mBaiduMap.setOnMarkerClickListener(markerClickListener);
         //开启百度定位
@@ -296,14 +292,14 @@ public class BuildEnterprisesActivity extends BaseActivity {
         @Override
         public void onMapStatusChange(MapStatus mapStatus) {
 
-            if (isLoadType == false) {//如果isLoadType等于false,则加载企业坐标点搜索接口
-                HttpUtil.enterpriseCoordinate(initPoint().get(3), initPoint().get(2), initPoint().get(1), initPoint().get(0), enterpriseCoordinateHandler);
-            }
+
         }
 
         @Override
         public void onMapStatusChangeFinish(MapStatus mapStatus) {
-
+            if (isLoadType == false) {//如果isLoadType等于false,则加载企业坐标点搜索接口
+                HttpUtil.enterpriseCoordinate(initPoint().get(3), initPoint().get(2), initPoint().get(1), initPoint().get(0), enterpriseCoordinateHandler);
+            }
         }
     };
 
@@ -376,18 +372,25 @@ public class BuildEnterprisesActivity extends BaseActivity {
         // MapView的生命周期与Activity同步，当activity销毁时需调用MapView.destroy()
 //        mMapView.onDestroy();
 //        super.onDestroy();
+
+        // 退出时销毁定位
+        mLocClient.stop();
+        mLocClient = null;
+        // 关闭定位图层
+        mBaiduMap.setMyLocationEnabled(false);
+        mBaiduMap.clear();
+        mBaiduMap = null;
         // 回收 bitmap 资源
         for (BitmapDescriptor bd : bdList) {
             bd.recycle();
         }
-        for (BitmapDescriptor test : testList) {
-            test.recycle();
-        }
-        // 退出时销毁定位
-        mLocClient.stop();
-        // 关闭定位图层
-        mBaiduMap.setMyLocationEnabled(false);
-        mMapView = null;//清空对象
+        //清空mMapView对象
+        mMapView = null;
+        pb = null;
+        cenpt = null;
+        mMapStatus = null;
+        mMapStatusUpdate = null;
+        option = null;
         System.gc();  //提醒系统及时回收
     }
 
@@ -656,11 +659,13 @@ public class BuildEnterprisesActivity extends BaseActivity {
                                     .zIndex(5).extraInfo(bundle);
                             //给地图添加气泡点
                             Marker mMarker = (Marker) (mBaiduMap.addOverlay(oo));
+
+                            //发送消息提示关闭对话框
+                            Message msg = new Message();
+                            msg.what = DISMISS;
+                            handler.sendMessage(msg);
                         }
-                        //发送消息提示关闭对话框
-                        Message msg = new Message();
-                        msg.what = DISMISS;
-                        handler.sendMessage(msg);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -721,6 +726,21 @@ public class BuildEnterprisesActivity extends BaseActivity {
                             .zIndex(5).extraInfo(bundle);
                     //给地图添加气泡点
                     Marker mMarker = (Marker) (mBaiduMap.addOverlay(oo));
+
+                    //发送消息提示关闭对话框
+                    Message msg = new Message();
+                    msg.what = DISMISS;
+                    handler.sendMessage(msg);
+                    // 回收资源
+                    for (BitmapDescriptor bitmap : bdList) {
+                        bitmap.recycle();
+                        bitmap = null;
+                    }
+                    companies = null;
+                    bundle = null;
+                    oo = null;
+                    msg = null;
+                    mMarker = null;
                 }
             } else {
                 ToastUtil.shortT(BuildEnterprisesActivity.this, getText(R.string.buildEnterprises_fail).toString());

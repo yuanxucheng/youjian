@@ -1,14 +1,17 @@
 package com.example.yj.mapapp.activity;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -267,9 +271,35 @@ public class FristActivity extends BaseActivity {
     public void initView(View view) {
         ButterKnife.bind(this);
 
-        // 网络连接判断
-        if (!MApplication.getInstance().isNetworkConnected())
-            ToastUtil.shortT(this, getResources().getString(R.string.network_not_connected));
+        //网络连接判断
+        MApplication.getInstance().checkOnPosBtn(this);
+
+        //判断网络是否可用
+//        if (!MApplication.getInstance().isNetworkConnected()) {
+//            ToastUtil.shortT(this, getResources().getString(R.string.network_not_connected));
+//            MApplication.showNoNetWorkDlg(this);
+//        }
+
+        //监听GPS是否打开并跳转到设置GPS
+        MApplication.initGPS(this);
+
+        //Gps是否可用
+//        if (!MApplication.getInstance().isGpsEnable()) {
+//            ToastUtil.shortT(this, getResources().getString(R.string.gps_not_connected));
+//            //进入GPS设置页面:
+//            Intent intent = new Intent();
+//            intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            try {
+//                startActivity(intent);
+//            } catch (ActivityNotFoundException ex) {
+//                intent.setAction(Settings.ACTION_SETTINGS);
+//                try {
+//                    startActivity(intent);
+//                } catch (Exception e) {
+//                }
+//            }
+//        }
 
 //        getVersionMessage();
 

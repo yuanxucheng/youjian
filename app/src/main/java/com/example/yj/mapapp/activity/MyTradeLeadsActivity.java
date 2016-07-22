@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.adapter.MyTradeLeadsAdapter;
+import com.example.yj.mapapp.base.MApplication;
 import com.example.yj.mapapp.model.MyTradeLeads;
 import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
@@ -86,8 +87,13 @@ public class MyTradeLeadsActivity extends Activity implements AbsListView.OnScro
         uId = Integer.valueOf(U_Id);
         System.out.println("uId==============" + uId);
 
-        //使用第三方网络框架请求后台接口数据
-        getMyTradeLeadsInformation(uId, SupplyOrDemand, pageIndex, pageSize, search);
+        if (MApplication.getInstance().isNetworkConnected()) {
+            //使用第三方网络框架请求后台接口数据
+            getMyTradeLeadsInformation(uId, SupplyOrDemand, pageIndex, pageSize, search);
+        } else {
+            ToastUtil.shortT(this, getResources().getString(R.string.network_not_connected));
+            return;
+        }
 
         //设置ListView控件的item点击事件
         lv.setOnItemClickListener(this);

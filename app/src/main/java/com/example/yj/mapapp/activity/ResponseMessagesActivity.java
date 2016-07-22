@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.base.BaseActivity;
+import com.example.yj.mapapp.base.MApplication;
 import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
 import com.example.yj.mapapp.test.ClassPathResource;
@@ -76,29 +77,35 @@ public class ResponseMessagesActivity extends BaseActivity {
 
     @OnClick(R.id.id_now_response)
     public void response() {
-        final ExitDialog myDialog = new ExitDialog(ResponseMessagesActivity.this,
-                getText(R.string.are_you_sure_response).toString(), getText(R.string.input_search_logout_cancle).toString(), getText(R.string.input_search_logout_ok).toString());
-        myDialog.show();
-        myDialog.setDialogROnClickListener(new ExitDialog.MyDialogROnClickListener() {
+        if (MApplication.getInstance().isNetworkConnected()) {
+            final ExitDialog myDialog = new ExitDialog(ResponseMessagesActivity.this,
+                    getText(R.string.are_you_sure_response).toString(), getText(R.string.input_search_logout_cancle).toString(), getText(R.string.input_search_logout_ok).toString());
+            myDialog.show();
+            myDialog.setDialogROnClickListener(new ExitDialog.MyDialogROnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                spf = getSharedPreferences("file", MODE_PRIVATE);
-                U_Id = spf.getString("U_Id", null);
-                user_id = Integer.valueOf(U_Id);
-                System.out.println("user_id==============" + user_id);
+                @Override
+                public void onClick(View v) {
+                    spf = getSharedPreferences("file", MODE_PRIVATE);
+                    U_Id = spf.getString("U_Id", null);
+                    user_id = Integer.valueOf(U_Id);
+                    System.out.println("user_id==============" + user_id);
 
-                contacts = response_contacts.getText().toString().trim();
-                LogUtil.d("contacts:===============" + contacts);
-                phone = response_phone.getText().toString().trim();
-                LogUtil.d("phone:===============" + phone);
-                content = response_content.getText().toString().trim();
-                LogUtil.d("content:===============" + content);
+                    contacts = response_contacts.getText().toString().trim();
+                    LogUtil.d("contacts:===============" + contacts);
+                    phone = response_phone.getText().toString().trim();
+                    LogUtil.d("phone:===============" + phone);
+                    content = response_content.getText().toString().trim();
+                    LogUtil.d("content:===============" + content);
 
-                response(sd_id, contacts, phone, content, user_id);
-                myDialog.dismiss();
-            }
-        });
+                    response(sd_id, contacts, phone, content, user_id);
+                    myDialog.dismiss();
+                }
+            });
+        } else {
+            ToastUtil.shortT(this, getResources().getString(R.string.network_not_connected));
+            return;
+        }
+
     }
 
     @Override

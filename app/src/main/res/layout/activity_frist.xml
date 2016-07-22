@@ -17,10 +17,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text=""
+            android:text="上海市"
             android:textColor="@color/white"
-            android:textSize="@dimen/frist_font__size2"
-            android:visibility="invisible" />
+            android:textSize="@dimen/frist_font__size2" />
         <!--  android:drawableRight="@mipmap/down"-->
 
         <TextView

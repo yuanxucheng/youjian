@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.activity.ResponseMessagesActivity;
 import com.example.yj.mapapp.adapter.BuyingLeadsAdapter;
+import com.example.yj.mapapp.base.MApplication;
 import com.example.yj.mapapp.model.BuyingLeads;
 import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
@@ -114,9 +115,14 @@ public class BuyingLeadsFragment extends Fragment implements AbsListView.OnScrol
 
             @Override
             public void onClick(View v) {
-                loadMoreButton.setText("正在加载中...");   //设置按钮文字
-                pageIndex = pageIndex + 1;
-                getBuyingLeadsInformation(uId, SupplyOrDemand, pageIndex, pageSize, search);
+                if (MApplication.getInstance().isNetworkConnected()) {
+                    loadMoreButton.setText("正在加载中...");   //设置按钮文字
+                    pageIndex = pageIndex + 1;
+                    getBuyingLeadsInformation(uId, SupplyOrDemand, pageIndex, pageSize, search);
+                } else {
+                    loadMoreButton.setText("数据加载失败");
+                    return;
+                }
             }
         });
 

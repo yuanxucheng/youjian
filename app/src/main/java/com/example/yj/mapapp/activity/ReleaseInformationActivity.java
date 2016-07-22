@@ -139,33 +139,39 @@ public class ReleaseInformationActivity extends BaseActivity {
 
     @OnClick(R.id.id_now_release)
     public void release() {
-        final ExitDialog myDialog = new ExitDialog(ReleaseInformationActivity.this,
-                getText(R.string.are_you_sure_release).toString(), getText(R.string.input_search_logout_cancle).toString(), getText(R.string.input_search_logout_ok).toString());
-        myDialog.show();
-        myDialog.setDialogROnClickListener(new ExitDialog.MyDialogROnClickListener() {
+        if (MApplication.getInstance().isNetworkConnected()) {
+            final ExitDialog myDialog = new ExitDialog(ReleaseInformationActivity.this,
+                    getText(R.string.are_you_sure_release).toString(), getText(R.string.input_search_logout_cancle).toString(), getText(R.string.input_search_logout_ok).toString());
+            myDialog.show();
+            myDialog.setDialogROnClickListener(new ExitDialog.MyDialogROnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                spf = getSharedPreferences("file", MODE_PRIVATE);
-                U_Id = spf.getString("U_Id", null);
-                sd_id = Integer.valueOf(U_Id);
-                System.out.println("id==============" + sd_id);
+                @Override
+                public void onClick(View v) {
+                    spf = getSharedPreferences("file", MODE_PRIVATE);
+                    U_Id = spf.getString("U_Id", null);
+                    sd_id = Integer.valueOf(U_Id);
+                    System.out.println("id==============" + sd_id);
 
-                title = release_information_title.getText().toString().trim();
-                LogUtil.d("title:===============" + title);
-                contacts = release_information_contacts.getText().toString().trim();
-                LogUtil.d("contacts:===============" + contacts);
-                phone = release_information_contacts_phone.getText().toString().trim();
-                LogUtil.d("phone:===============" + phone);
-                content = release_information_content.getText().toString().trim();
-                LogUtil.d("content:===============" + content);
-                address = release_information_address.getText().toString().trim();
-                LogUtil.d("address:===============" + address);
+                    title = release_information_title.getText().toString().trim();
+                    LogUtil.d("title:===============" + title);
+                    contacts = release_information_contacts.getText().toString().trim();
+                    LogUtil.d("contacts:===============" + contacts);
+                    phone = release_information_contacts_phone.getText().toString().trim();
+                    LogUtil.d("phone:===============" + phone);
+                    content = release_information_content.getText().toString().trim();
+                    LogUtil.d("content:===============" + content);
+                    address = release_information_address.getText().toString().trim();
+                    LogUtil.d("address:===============" + address);
 
-                release(title, category, type, contacts, phone, content, address, sd_id);
-                myDialog.dismiss();
-            }
-        });
+                    release(title, category, type, contacts, phone, content, address, sd_id);
+                    myDialog.dismiss();
+                }
+            });
+        } else {
+            ToastUtil.shortT(this, getResources().getString(R.string.network_not_connected));
+            return;
+        }
+
     }
 
     @Override

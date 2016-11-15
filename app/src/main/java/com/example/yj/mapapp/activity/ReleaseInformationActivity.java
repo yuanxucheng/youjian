@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -194,6 +195,8 @@ public class ReleaseInformationActivity extends BaseActivity {
         ButterKnife.bind(this);
         category = 26;
         type = true;
+
+        release_information_contacts_phone.setInputType(EditorInfo.TYPE_CLASS_PHONE);
     }
 
     @Override

@@ -100,7 +100,7 @@
                             android:layout_height="@dimen/frist_btn_height"
                             android:layout_marginRight="@dimen/frist_margin_buttonright"
                             android:layout_weight="1"
-                            android:background="@mipmap/icon_home_sbqy" />
+                            android:background="@mipmap/icon_home_glqy" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -108,14 +108,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/frist_margin_top"
                         android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/frist_btn_enterprise_certification"
-                            android:layout_width="@dimen/frist_btn_width"
-                            android:layout_height="@dimen/frist_btn_height"
-                            android:layout_marginRight="@dimen/frist_margin_buttonright"
-                            android:layout_weight="1"
-                            android:background="@mipmap/icon_home_zfjd" />
 
                         <Button
                             android:id="@+id/id_home_wjcs"
@@ -133,6 +125,13 @@
                             android:layout_weight="1"
                             android:background="@mipmap/icon_home_lwzj" />
 
+                        <Button
+                            android:id="@+id/id_frist_btn_search"
+                            android:layout_width="@dimen/frist_btn_width"
+                            android:layout_height="@dimen/frist_btn_height"
+                            android:layout_marginRight="@dimen/frist_margin_buttonright"
+                            android:layout_weight="1"
+                            android:background="@mipmap/search_firm" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -142,43 +141,20 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/id_home_esxx"
+                            android:id="@+id/id_frist_btn_add"
                             android:layout_width="@dimen/frist_btn_width"
                             android:layout_height="@dimen/frist_btn_height"
                             android:layout_marginRight="@dimen/frist_margin_buttonright"
                             android:layout_weight="1"
-                            android:background="@mipmap/icon_home_esxx" />
+                            android:background="@mipmap/icon_add2" />
 
                         <Button
-                            android:id="@+id/frist_btn_financing_loan"
+                            android:id="@+id/find"
                             android:layout_width="@dimen/frist_btn_width"
                             android:layout_height="@dimen/frist_btn_height"
                             android:layout_marginRight="@dimen/frist_margin_buttonright"
                             android:layout_weight="1"
-                            android:background="@mipmap/icon_home_rzdk" />
-
-                        <Button
-                            android:id="@+id/frist_btn_legal_advice"
-                            android:layout_width="@dimen/frist_btn_width"
-                            android:layout_height="@dimen/frist_btn_height"
-                            android:layout_marginRight="@dimen/frist_margin_buttonright"
-                            android:layout_weight="1"
-                            android:background="@mipmap/icon_home_flzx" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/frist_margin_top"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/frist_btn_gqxx"
-                            android:layout_width="@dimen/frist_btn_width"
-                            android:layout_height="@dimen/frist_btn_height"
-                            android:layout_marginRight="@dimen/frist_margin_buttonright"
-                            android:layout_weight="1"
-                            android:background="@mipmap/icon_home_bf"
+                            android:background="@mipmap/icon_home_lwzj"
                             android:visibility="invisible" />
 
                         <Button
@@ -186,17 +162,8 @@
                             android:layout_height="@dimen/frist_btn_height"
                             android:layout_marginRight="@dimen/frist_margin_buttonright"
                             android:layout_weight="1"
-                            android:background="@mipmap/icon_home_bf"
+                            android:background="@mipmap/icon_add2"
                             android:visibility="invisible" />
-
-                        <Button
-                            android:layout_width="@dimen/frist_btn_width"
-                            android:layout_height="@dimen/frist_btn_height"
-                            android:layout_marginRight="@dimen/frist_margin_buttonright"
-                            android:layout_weight="1"
-                            android:background="@mipmap/icon_home_bf"
-                            android:visibility="invisible" />
-
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

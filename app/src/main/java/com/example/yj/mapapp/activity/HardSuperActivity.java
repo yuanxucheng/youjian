@@ -1,14 +1,17 @@
 package com.example.yj.mapapp.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.adapter.HardSuperAdapter;
@@ -36,7 +39,7 @@ import java.util.List;
 /**
  * 五金超市
  */
-public class HardSuperActivity extends Activity implements AbsListView.OnScrollListener, View.OnClickListener {
+public class HardSuperActivity extends Activity implements AbsListView.OnScrollListener, View.OnClickListener, AdapterView.OnItemClickListener {
 
     //下拉刷新
     private ImageView iv_back;//返回
@@ -118,6 +121,7 @@ public class HardSuperActivity extends Activity implements AbsListView.OnScrollL
         adapter = new HardSuperAdapter(mData, this);//适配器实例化
         lv.setOnScrollListener(this);//ListView的滚动事件监听
         lv.setAdapter(adapter);//为ListView设置适配器
+        lv.setOnItemClickListener(this);
     }
 
     /**
@@ -171,6 +175,7 @@ public class HardSuperActivity extends Activity implements AbsListView.OnScrollL
 
                             //创建五金超市对象并设置属性值
                             HardSuper hs = new HardSuper();
+                            hs.setId(id);
                             hs.setName(name);
                             hs.setArea(area);
                             hs.setCategory(category);
@@ -258,5 +263,18 @@ public class HardSuperActivity extends Activity implements AbsListView.OnScrollL
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(this, "item", Toast.LENGTH_LONG).show();
+        int parentId = mData.get(position - 1).getId();
+        String name = mData.get(position - 1).getName();
+
+        Intent intent = new Intent();
+        intent.setClass(HardSuperActivity.this, HardSuperDetailActivity.class);
+        intent.putExtra("parentId", parentId);
+        intent.putExtra("name", name);
+        startActivity(intent);
     }
 }

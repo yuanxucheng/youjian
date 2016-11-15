@@ -56,11 +56,18 @@
     <color name="listview_item_pressed">#d4d4d4</color>
 
     <!--建材企业详情页-->
-    <color name="SI_YJAuthentication_blue">#121BBE</color>
+    <color name="SI_YJAuthentication_green">#029D4D</color>
     <color name="SI_YJAuthentication_red">#BE123D</color>
 
     <!--expandablelistview二级列表-->
     <color name="popup_main_background">#b0000000</color>
     <color name="choose_eara_item_press_color">#f4f4f4</color>
     <color name="no_color">#00000000</color>
+
+    <!--企业搜索-->
+    <color name="myred">#eb4f38</color>
+    <color name="darkgray">#cccc</color>
+    <color name="color_white">#ffffff</color>
+    <color name="btn_press_color">#5677fc</color>
+    <color name="btn_pressed_color">#3ca0ec</color>
 </resources>

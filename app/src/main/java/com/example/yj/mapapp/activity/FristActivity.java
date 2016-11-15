@@ -1,17 +1,14 @@
 package com.example.yj.mapapp.activity;
 
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -38,7 +35,6 @@ import com.example.yj.mapapp.net.handler.HttpConfig;
 import com.example.yj.mapapp.net.handler.HttpUtil;
 import com.example.yj.mapapp.net.handler.ResponseHandler;
 import com.example.yj.mapapp.util.AppManager;
-import com.example.yj.mapapp.util.DipUtil;
 import com.example.yj.mapapp.util.JsonParser;
 import com.example.yj.mapapp.util.LogUtil;
 import com.example.yj.mapapp.util.ToastUtil;
@@ -84,14 +80,8 @@ public class FristActivity extends BaseActivity {
     private AlertDialog noticeDialog;
     //是否是第一次运行/启动
     private boolean isFirstRun;
-
-//    private String[] imageUrls = {"http://img3.imgtn.bdimg.com/it/u=2329946235,696526590&fm=21&gp=0.jpg",
-//            "http://img4.imgtn.bdimg.com/it/u=1233057038,2443583978&fm=21&gp=0.jpg",
-//            "http://img4.imgtn.bdimg.com/it/u=3938755445,2824571223&fm=21&gp=0.jpg",
-//            "http://img3.imgtn.bdimg.com/it/u=2037590579,3347768072&fm=21&gp=0.jpg",
-//            "http://img1.imgtn.bdimg.com/it/u=2460458394,395581867&fm=21&gp=0.jpg"};
-
-    private String imageUrls = "http://api.51buyjc.com/Content/UploadImage/icon_home_bg.png";
+    //轮播图集合
+    private List<String> imageUrls;
 
     //    @Bind(R.id.frist_btn_release_center)
 //    Button btn_release_center;
@@ -115,20 +105,8 @@ public class FristActivity extends BaseActivity {
     @Bind(R.id.id_home_lwzj)
     Button frist_btn_lwzj;
 
-    @Bind(R.id.frist_btn_gqxx)
-    Button frist_btn_gqxx;
-
-    @Bind(R.id.frist_btn_enterprise_certification)
-    Button frist_btn_enterprise_certification;
-
-    @Bind(R.id.frist_btn_legal_advice)
-    Button frist_btn_legal_advice;
-
-    @Bind(R.id.frist_btn_financing_loan)
-    Button frist_btn_financing_loan;
-
-    @Bind(R.id.id_home_esxx)
-    Button secondHandInformation;
+    @Bind(R.id.id_frist_btn_add)
+    Button frist_btn_add_module;
 
     @Bind(R.id.id_frist_menu)
     ImageView frist_iv_menu;
@@ -141,6 +119,23 @@ public class FristActivity extends BaseActivity {
 
     @Bind(R.id.id_first_one_hundreds)
     ImageView first_one_hundreds;
+
+    @Bind(R.id.id_frist_btn_search)
+    Button frist_btn_search;
+
+    @Bind(R.id.find)
+    Button find;
+
+    @OnClick(R.id.find)
+    public void find() {
+        toPage(FindFirmActivity.class);
+    }
+
+    @OnClick(R.id.id_frist_btn_search)
+    public void search() {
+        toPage(FindFirmActivity.class);
+//        toPage(SearchFirmActivity.class);
+    }
 
     @OnClick(R.id.id_frist_menu)
     public void menu(View v) {
@@ -169,24 +164,9 @@ public class FristActivity extends BaseActivity {
 //        toPage(UnderConstructionActivity.class);
     }
 
-    @OnClick(R.id.id_home_esxx)
-    public void secondHandInformation() {
-        toPage(UnderConstructionActivity.class);
-    }
-
-    @OnClick(R.id.frist_btn_enterprise_certification)
-    public void enterpriseCertification() {
-        toPage(UnderConstructionActivity.class);
-    }
-
-    @OnClick(R.id.frist_btn_legal_advice)
-    public void legalAdvice() {
-        toPage(LegalAdviceActivity.class);
-    }
-
-    @OnClick(R.id.frist_btn_financing_loan)
-    public void financingLoan() {
-        toPage(FinancingLoanActivity.class);
+    @OnClick(R.id.id_frist_btn_add)
+    public void addModule() {
+        toPage(AddModuleActivity.class);
     }
 
     @OnClick(R.id.frist_btn_build_site)
@@ -634,11 +614,14 @@ public class FristActivity extends BaseActivity {
                 //后台返回的数据进行过处理的,使用GSON解析
                 List<Banner> banner = JsonParser.deserializeFromJson(data, new TypeToken<List<Banner>>() {
                 }.getType());
+                imageUrls = new ArrayList<>();
                 for (Banner b : banner) {
                     String imaUrl = b.getImgUrl();
                     LogUtil.d("tag", "imgUrl========" + imaUrl);
-                    initialize(imaUrl);
+                    imageUrls.add(imaUrl);
                 }
+                LogUtil.d("tag", "imageUrls========" + imageUrls.size() + "==========");
+                initialize(imageUrls);
             } else {
                 ToastUtil.shortT(FristActivity.this, getText(R.string.first_homeCarouse_fail).toString());
 //                LogUtil.d("==============获取首页图片轮播接口,失败");
@@ -647,7 +630,8 @@ public class FristActivity extends BaseActivity {
 
         @Override
         public void onFail(int arg0, String arg2, Throwable arg3) {
-//            ToastUtil.shortT(FristActivity.this, getText(R.string.first_homeCarouse_fail).toString());
+            ToastUtil.shortT(FristActivity.this, getText(R.string.first_homeCarouse_fail).toString());
+            LogUtil.d("==============获取首页图片轮播接口,失败");
         }
     };
 
@@ -702,30 +686,26 @@ public class FristActivity extends BaseActivity {
     /**
      * 初始化轮播图
      *
-     * @param imaUrl
+     * @param imageUrls
      */
-    private void initialize(String imaUrl) {
+    private void initialize(List<String> imageUrls) {
+
+        String[] newUrls = new String[imageUrls.size()];//新建一个int类型数组
+        for (int i = 0; i < imageUrls.size(); i++) {
+            newUrls[i] = HttpConfig.FRIST_BANNER_URL + imageUrls.get(i);
+        }
+        LogUtil.d("tag", "newUrls========" + newUrls.length + "==========");
+
         //获取CycleViewPager对象
         cycleViewPager = (CycleViewPager) getFragmentManager()
                 .findFragmentById(R.id.fragment_cycle_viewpager_content);
 
-//        for (int i = 0; i < imageUrls.length; i++) {
-//            ADInfo info = new ADInfo();
-//            info.setUrl(imageUrls[i]);
-//            info.setContent("图片-->" + i);
-//            infos.add(info);
-//        }
-
-//        String imageUrls = HttpConfig.BANNER_URL + "/Content/UploadImage/icon_home_bg.png";
-
-        String imageUrls = HttpConfig.FRIST_BANNER_URL + imaUrl;
-
-        LogUtil.d(imageUrls + "============imageUrls");
-
-        ADInfo info = new ADInfo();
-        info.setUrl(imageUrls);
-        info.setContent("图片-->");
-        infos.add(info);
+        for (int i = 0; i < newUrls.length; i++) {
+            ADInfo info = new ADInfo();
+            info.setUrl(newUrls[i]);
+            info.setContent("图片-->" + i);
+            infos.add(info);
+        }
 
         // 将最后一个ImageView添加进来
         views.add(ViewFactory.getImageView(this, infos.get(infos.size() - 1).getUrl()));
@@ -755,14 +735,18 @@ public class FristActivity extends BaseActivity {
         @Override
         public void onImageClick(ADInfo info, int position, View imageView) {
             if (cycleViewPager.isCycle()) {
-                position = position - 1;
-//                Toast.makeText(FristActivity.this,
-//                        "position-->" + info.getContent(), Toast.LENGTH_SHORT)
-//                        .show();
+                if (position == 2) {
+                    Uri uri = Uri.parse("http://www.51buyjc.com/Shop/Index/1258");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                } else if (position == 1) {
+                    Uri uri = Uri.parse("http://www.51buyjc.com/");
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
+                }
                 LogUtil.d(tag, "click picture!!");
             }
         }
-
     };
 
     /**

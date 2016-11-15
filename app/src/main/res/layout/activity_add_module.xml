@@ -1,21 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/back_home"
+    android:background="@mipmap/theme"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp">
+        android:layout_height="@dimen/add_module_layout_height"
+        android:background="@color/frist_toolbar_background">
+
+        <ImageView
+            android:id="@+id/id_back"
+            android:layout_width="@dimen/buildEnterprises_imageView_width"
+            android:layout_height="@dimen/buildEnterprises_imageView_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/buildEnterprises_imageView_marginRight"
+            android:src="@mipmap/icon_back" />
 
         <TextView
+            android:id="@+id/chat_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/first_website"
+            android:text="添加模块"
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="@dimen/add_module_font__size" />
 
     </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/add_module_margin_left">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/add_module_margin_top"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/add_module_btn_jzgd"
+                            android:layout_width="@dimen/add_module_btn_width"
+                            android:layout_height="@dimen/add_module_btn_height"
+                            android:layout_marginRight="@dimen/add_module_buttonright"
+                            android:layout_weight="1"
+                            android:background="@mipmap/icon_home_jzgd" />
+
+                        <Button
+                            android:id="@+id/add_module_btn_jcqy"
+                            android:layout_width="@dimen/add_module_btn_width"
+                            android:layout_height="@dimen/add_module_btn_height"
+                            android:layout_marginRight="@dimen/add_module_buttonright"
+                            android:layout_weight="1"
+                            android:background="@mipmap/icon_home_jcqy" />
+
+                        <Button
+                            android:id="@+id/add_module_btn_glqy"
+                            android:layout_width="@dimen/add_module_btn_width"
+                            android:layout_height="@dimen/add_module_btn_height"
+                            android:layout_marginRight="@dimen/add_module_buttonright"
+                            android:layout_weight="1"
+                            android:background="@mipmap/icon_home_glqy" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/add_module_margin_top"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/add_module_btn_wjcs"
+                            android:layout_width="@dimen/add_module_btn_width"
+                            android:layout_height="@dimen/add_module_btn_height"
+                            android:layout_marginRight="@dimen/add_module_buttonright"
+                            android:layout_weight="1"
+                            android:background="@mipmap/icon_home_wjcs" />
+
+                        <Button
+                            android:id="@+id/add_module_btn_lwzj"
+                            android:layout_width="@dimen/add_module_btn_width"
+                            android:layout_height="@dimen/add_module_btn_height"
+                            android:layout_marginRight="@dimen/add_module_buttonright"
+                            android:layout_weight="1"
+                            android:background="@mipmap/icon_home_lwzj" />
+
+                        <Button
+                            android:layout_width="@dimen/add_module_btn_width"
+                            android:layout_height="@dimen/add_module_btn_height"
+                            android:layout_marginRight="@dimen/add_module_buttonright"
+                            android:layout_weight="1"
+                            android:visibility="invisible" />
+
+                    </LinearLayout>
+
+                    <GridView
+                        android:id="@+id/add_module_grid"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/add_module_margin_top"
+                        android:horizontalSpacing="10dp"
+                        android:numColumns="3"
+                        android:stretchMode="columnWidth"
+                        android:verticalSpacing="10dp"
+                        android:visibility="gone"></GridView>
+
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

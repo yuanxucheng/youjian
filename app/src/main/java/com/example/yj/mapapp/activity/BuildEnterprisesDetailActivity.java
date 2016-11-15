@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -16,22 +19,35 @@ import com.example.yj.mapapp.banner.ADInfo;
 import com.example.yj.mapapp.banner.CycleViewPager;
 import com.example.yj.mapapp.banner.ViewFactory;
 import com.example.yj.mapapp.base.BaseActivity;
+import com.example.yj.mapapp.model.Goods;
+import com.example.yj.mapapp.model.LabourAgency;
+import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
 import com.example.yj.mapapp.net.handler.HttpUtil;
+import com.example.yj.mapapp.net.handler.MxgsaTagHandler;
 import com.example.yj.mapapp.net.handler.ResponseHandler;
+import com.example.yj.mapapp.util.JsonUtil;
 import com.example.yj.mapapp.util.LogUtil;
 import com.example.yj.mapapp.util.ToastUtil;
 
+import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.yj.mapapp.R;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +62,9 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
 
     private final static String tag = "BuildEnterprisesDetailActivity-->";
 
-    private Handler handler;
+    private List<Goods> list = new ArrayList<>();
+    private List<Goods> mList = new ArrayList<>();
+    private Goods good;
 
     @Bind(R.id.id_back)
     ImageView back;
@@ -77,8 +95,42 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
     @Bind(R.id.id_buildEnterprise_isShowYJAuthentication)
     TextView buildEnterprise_isShowYJAuthentication;
 
-    @Bind(R.id.id_buildEnterprise_isShowPhone)
-    TextView buildEnterprise_isShowPhone;
+    @Bind(R.id.tv_build_enterprise_companyIntroduction)
+    TextView companyIntroduction;
+
+    @OnClick(R.id.tv_build_enterprise_companyIntroduction)
+    public void companyIntroduction(View v) {
+        if (!mShopContent.equals("")) {
+            Intent intent = new Intent();
+            intent.setClass(BuildEnterprisesDetailActivity.this, CompanyIntroductionActivity.class);
+            intent.putExtra("content", mShopContent);
+            startActivity(intent);
+        } else {
+            ToastUtil.shortT(BuildEnterprisesDetailActivity.this, "没有数据！");
+        }
+    }
+
+    @Bind(R.id.tv_build_enterprise_shopIntroduction)
+    TextView shopIntroduction;
+
+    @OnClick(R.id.tv_build_enterprise_shopIntroduction)
+    public void shopIntroduction(View v) {
+        if (good != null) {
+            mList = list;
+            LogUtil.d(tag, "mList--------------" + mList.size());
+            Intent intent = new Intent();
+            intent.setClass(BuildEnterprisesDetailActivity.this, ShopIntroductionActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("list", (Serializable) list);//序列化,要注意转化(Serializable)
+            intent.putExtras(bundle);//发送数据
+            startActivity(intent);//启动intent
+        } else {
+            ToastUtil.shortT(BuildEnterprisesDetailActivity.this, "没有数据！");
+        }
+    }
+
+//    @Bind(R.id.id_buildEnterprise_isShowPhone)
+//    TextView buildEnterprise_isShowPhone;
 
     @Bind(R.id.shop_details_advert_layout)
     FrameLayout shop_details_advert_layout;
@@ -101,6 +153,8 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
     private List<ADInfo> infos2 = new ArrayList<ADInfo>();
     private CycleViewPager cycleViewPager;
     private CycleViewPager cycleViewPager2;
+
+    private String mShopContent;
 
 //    private String[] imageUrls = {"http://www.51buyjc.com/Content/image/shopCommodity_1.jpg",
 //            "http://www.51buyjc.com/Content/image/shopCommodity_2.jpg",
@@ -129,14 +183,19 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
                     String SI_Contacts = jsonObject.optString("SI_Contacts");
                     String SI_Phone = jsonObject.optString("SI_Phone");
                     int SI_YJAuthentication = jsonObject.optInt("SI_YJAuthentication");
+                    String Content = jsonObject.optString("Content");
 
                     LogUtil.d("imagesURL==========" + ":" + imagesURL);
                     LogUtil.d("SI_Id==========" + ":" + SI_Id);
                     LogUtil.d("SI_YJAuthentication==========" + ":" + SI_YJAuthentication);
+                    LogUtil.d("Content==========" + ":" + Content);
+
+                    mShopContent = Content;
 
                     build_enterprise_companyName.setText(getString(R.string.buildEnterprises_companyName) + SI_CompanyName);
                     build_enterprise_address.setText(getString(R.string.buildEnterprises_address) + SI_Address);
                     build_enterprise_contacts.setText(getString(R.string.buildEnterprises_contacts) + SI_Contacts);
+//                    companyIntroduction.setText(getString(R.string.buildEnterprises_companyIntroduction) + Content);
 
                     //截取URL地址
                     int i = 0;
@@ -156,6 +215,9 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
 
                     initialize2(buffer.toString());
 
+                    companyIntroduction.setVisibility(View.VISIBLE);
+                    shopIntroduction.setVisibility(View.VISIBLE);
+
                     //截取电话号码
                     if (SI_Phone.contains("、")) {//判断是否包含两个号码
                         String[] s = SI_Phone.split("、");//使用split()方法截取
@@ -167,7 +229,7 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
                         build_enterprise_phone.setText(SI_Phone);
                     }
                     build_enterprise_callPhone.setVisibility(View.VISIBLE);
-                    buildEnterprise_isShowPhone.setVisibility(View.VISIBLE);
+//                    buildEnterprise_isShowPhone.setVisibility(View.VISIBLE);
                     build_enterprise_phone.setVisibility(View.GONE);
                     build_enterprise_callPhone.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -181,12 +243,13 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
                     if (SI_YJAuthentication == 0) {
                         buildEnterprise_isShowYJAuthentication.setVisibility(View.VISIBLE);
                         build_enterprise_YJAuthentication.setText("未认证");
-                        build_enterprise_YJAuthentication.setTextColor(getResources().getColor(R.color.SI_YJAuthentication_blue));
+                        build_enterprise_YJAuthentication.setTextColor(getResources().getColor(R.color.SI_YJAuthentication_green));
                     } else if (SI_YJAuthentication == 1) {
                         buildEnterprise_isShowYJAuthentication.setVisibility(View.VISIBLE);
                         build_enterprise_YJAuthentication.setText("已认证");
                         build_enterprise_YJAuthentication.setTextColor(getResources().getColor(R.color.SI_YJAuthentication_red));
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -201,6 +264,63 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
             ToastUtil.shortT(BuildEnterprisesDetailActivity.this, getText(R.string.buildEnterprises_fail).toString());
         }
     };
+
+    private void getSpecifyEnterpriseAllProducts(int buildEnterprise_id) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", buildEnterprise_id);
+            StringEntity stringEntity = new StringEntity(jsonObject.toString());
+            String url = HttpConfig.REQUEST_URL + "/Map/GetEnterpriseProductById";
+            RequestHandle post = HTTPTool.getClient().post(BuildEnterprisesDetailActivity.this, url, stringEntity, "application/json", new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.d("==============", response.toString());
+                    String d = JsonUtil.getData(response.toString());
+                    Log.d("-------------", d);
+
+                    try {
+                        JSONArray array = new JSONArray(d);
+                        if (array.length() > 0) {
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                int id = object.getInt("Id");
+                                String name = object.getString("Name");
+                                String image = object.getString("Image");
+                                String type = object.getString("Type");
+                                String price = object.getString("Price");
+                                String content = object.getString("Content");
+                                LogUtil.d("tag", id + "-------" + name + "-----" + image + "-----" + type + "------" + price + "----" + content);
+
+                                good = new Goods();
+                                good.setId(id);
+                                good.setName(name);
+                                good.setImage(image);
+                                good.setType(type);
+                                good.setPrice(price);
+                                good.setContent(content);
+                                list.add(good);
+                                LogUtil.d("tag", good.getId() + "-------" + good.getName() + "-----" + good.getImage() + "-----" + good.getType() + "------" + good.getPrice() + "----" + good.getContent());
+
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.d("================", responseString);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 解析JSON
@@ -242,18 +362,29 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
 
     }
 
+    /**
+     * html处理的 textview
+     *
+     * @param view
+     */
+//    private void setData() {
+//        // TODO Auto-generated method stub
+//        final String sText = "测试自定义标签：<br><h1><mxgsa>测试自定义标签</mxgsa></h1>";
+//        tView.setText(Html.fromHtml(sText, null, new MxgsaTagHandler(this)));
+//        tView.setClickable(true);
+//        tView.setMovementMethod(LinkMovementMethod.getInstance());
+//    }
     @Override
     public void initView(View view) {
         ButterKnife.bind(this);
-
-        //初始化Handler对象
-        handler = new Handler();
 
         //界面跳转带过来的数据
         int buildEnterprise_id = getIntent().getIntExtra("buildEnterprise_id", 0);
 
         //访问接口数据
         HttpUtil.specifyEnterpriseInformation(buildEnterprise_id, specifyEnterpriseInformationHandler);
+
+        getSpecifyEnterpriseAllProducts(buildEnterprise_id);
 
         //轮播图
         configImageLoader();
@@ -302,6 +433,7 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
 
     /**
      * 设置轮播图图片
+     *
      * @param imageUrl
      */
     private void initialize(String imageUrl) {
@@ -371,10 +503,10 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
         @Override
         public void onImageClick(ADInfo info, int position, View imageView) {
             if (cycleViewPager.isCycle()) {
-                position = position - 1;
-                Toast.makeText(BuildEnterprisesDetailActivity.this,
-                        "position-->" + info.getContent(), Toast.LENGTH_SHORT)
-                        .show();
+//                position = position - 1;
+//                Toast.makeText(BuildEnterprisesDetailActivity.this,
+//                        "position-->" + info.getContent(), Toast.LENGTH_SHORT)
+//                        .show();
             }
         }
     };
@@ -466,10 +598,10 @@ public class BuildEnterprisesDetailActivity extends BaseActivity {
         @Override
         public void onImageClick(ADInfo info, int position, View imageView) {
             if (cycleViewPager2.isCycle()) {
-                position = position - 1;
-                Toast.makeText(BuildEnterprisesDetailActivity.this,
-                        "position-->" + info.getContent(), Toast.LENGTH_SHORT)
-                        .show();
+//                position = position - 1;
+//                Toast.makeText(BuildEnterprisesDetailActivity.this,
+//                        "position-->" + info.getContent(), Toast.LENGTH_SHORT)
+//                        .show();
             }
         }
 

@@ -127,6 +127,7 @@
                 android:layout_height="@dimen/respone_message_edittext_height"
                 android:layout_marginRight="@dimen/respone_message_edittext_marginRight"
                 android:background="@color/white"
+                android:digits="1234567890"
                 android:hint="@string/response_messages_please_input_contacts_phone"
                 android:singleLine="true"
                 android:textSize="@dimen/respone_message_edittext_textsize" />

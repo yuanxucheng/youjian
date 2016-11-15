@@ -27,12 +27,12 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/my_buying_leads_stitle"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/my_buying_leads_font__size" />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/my_buying_leads_stitle"-->
+                    <!--android:textColor="#000000"-->
+                    <!--android:textSize="@dimen/my_buying_leads_font__size" />-->
 
                 <TextView
                     android:id="@+id/id_my_buying_leads_title"
@@ -49,12 +49,12 @@
                 android:gravity="right"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/my_buying_leads_category"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/my_buying_leads_font__size" />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/my_buying_leads_category"-->
+                    <!--android:textColor="#000000"-->
+                    <!--android:textSize="@dimen/my_buying_leads_font__size" />-->
 
                 <TextView
                     android:id="@+id/id_my_buying_leads_category"

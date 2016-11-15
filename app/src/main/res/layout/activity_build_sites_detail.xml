@@ -50,10 +50,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:text="@string/buildSites_projectName"
                 android:textColor="#000000"
-                android:textSize="@dimen/buildSites_font__size" />
+                android:textSize="@dimen/buildSites_font__size"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_build_site_projectName"
@@ -75,9 +75,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/buildSites_CUName"
-                android:visibility="gone"
                 android:textColor="#000000"
-                android:textSize="@dimen/buildSites_font__size" />
+                android:textSize="@dimen/buildSites_font__size"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_build_site_CUName"
@@ -98,10 +98,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:text="@string/buildSites_contacts"
                 android:textColor="#000000"
-                android:textSize="@dimen/buildSites_font__size" />
+                android:textSize="@dimen/buildSites_font__size"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_build_site_contacts"
@@ -123,9 +123,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/buildSites_startTime"
-                android:visibility="gone"
                 android:textColor="#000000"
-                android:textSize="@dimen/buildSites_font__size" />
+                android:textSize="@dimen/buildSites_font__size"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_build_site_startTime"
@@ -148,8 +148,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/buildSites_endTime"
                 android:textColor="#000000"
-                android:visibility="gone"
-                android:textSize="@dimen/buildSites_font__size" />
+                android:textSize="@dimen/buildSites_font__size"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_build_site_endTime"
@@ -172,8 +172,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/buildSites_address"
                 android:textColor="#000000"
-                android:visibility="gone"
-                android:textSize="@dimen/buildSites_font__size" />
+                android:textSize="@dimen/buildSites_font__size"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_build_site_address"
@@ -182,6 +182,39 @@
                 android:text=""
                 android:textColor="#000000"
                 android:textSize="@dimen/buildSites_font__size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/buildSites_margin_bottom"
+            android:layout_marginLeft="@dimen/buildSites_margin_left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_build_site_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buildSites_tip"
+                android:textColor="#000000"
+                android:textSize="@dimen/buildSites_font__size"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_build_site_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buildSites_phone"
+                android:textColor="#000000"
+                android:textSize="@dimen/buildSites_font__size"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_build_site_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/call_phone"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

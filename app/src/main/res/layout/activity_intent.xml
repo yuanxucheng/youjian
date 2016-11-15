@@ -176,6 +176,7 @@
                 android:background="@color/white"
                 android:hint="@string/register_input_number"
                 android:inputType="number"
+                android:digits="1234567890"
                 android:maxLength="11"
                 android:singleLine="true"
                 android:textSize="@dimen/register_edittext_textsize" />

@@ -32,6 +32,15 @@
     <dimen name="font_size_xlarge">22dp</dimen>
     <dimen name="font_size_xxlarge">24dp</dimen>
 
+    <!--添加模块-->
+    <dimen name="add_module_margin_left">40dp</dimen>
+    <dimen name="add_module_margin_top">30dp</dimen>
+    <dimen name="add_module_btn_height">70dp</dimen>
+    <dimen name="add_module_btn_width">40dp</dimen>
+    <dimen name="add_module_buttonright">40dp</dimen>
+    <dimen name="add_module_layout_height">48dp</dimen>
+    <dimen name="add_module_font__size">22sp</dimen>
+
     <!--首页-->
     <dimen name="frist_font__size">22sp</dimen>
     <dimen name="frist_font__size2">18sp</dimen>
@@ -83,6 +92,7 @@
 
     <!--建材企业-->
     <dimen name="buildEnterprises_dingwei_size">16sp</dimen>
+
     <!--建材企业详情-->
     <dimen name="buildEnterprises_layout_height">48dp</dimen>
     <dimen name="buildEnterprises_imageView_height">30dp</dimen>
@@ -90,11 +100,41 @@
     <dimen name="buildEnterprises_imageView_marginRight">10dp</dimen>
     <dimen name="buildEnterprises_font__titleSize">22sp</dimen>
     <dimen name="buildEnterprises_font__size">18sp</dimen>
+    <dimen name="buildEnterprises_tv_height">30dp</dimen>
+    <dimen name="buildEnterprises_tv_padding">5dp</dimen>
     <dimen name="buildEnterprises_margin_bottom2">145dp</dimen>
     <dimen name="buildEnterprises_margin_bottom">19dp</dimen>
     <dimen name="buildEnterprises_margin_left">8dp</dimen>
+    <dimen name="buildEnterprises_margin_right">8dp</dimen>
     <dimen name="buildEnterprises_fragment_left">15dp</dimen>
     <dimen name="buildEnterprises_fragment_height">200dp</dimen>
+
+    <!--公司介绍-->
+    <dimen name="companyIntroduction_font__titleSize">22sp</dimen>
+    <dimen name="companyIntroduction_imageView_marginRight">10dp</dimen>
+    <dimen name="companyIntroduction_imageView_height">30dp</dimen>
+    <dimen name="companyIntroduction_imageView_width">30dp</dimen>
+    <dimen name="companyIntroduction_layout_height">48dp</dimen>
+    <dimen name="companyIntroduction_margin_bottom">19dp</dimen>
+    <dimen name="companyIntroduction_margin_left">8dp</dimen>
+    <dimen name="companyIntroduction_font__size">18sp</dimen>
+
+    <!--商铺介绍-->
+    <dimen name="shopIntroduction_font__titleSize">22sp</dimen>
+    <dimen name="shopIntroduction_imageView_marginRight">10dp</dimen>
+    <dimen name="shopIntroduction_imageView_height">30dp</dimen>
+    <dimen name="shopIntroduction_imageView_width">30dp</dimen>
+    <dimen name="shopIntroduction_layout_height">48dp</dimen>
+    <dimen name="shopIntroduction_left">10sp</dimen>
+    <dimen name="shopIntroduction_left2">5sp</dimen>
+
+    <!--商品信息详情-->
+    <dimen name="goods_font__titleSize1">22sp</dimen>
+    <dimen name="goods_font__titleSize2">16sp</dimen>
+    <dimen name="goods_imageView_marginRight">10dp</dimen>
+    <dimen name="goods_imageView_height">30dp</dimen>
+    <dimen name="goods_imageView_width">30dp</dimen>
+    <dimen name="goods_layout_height">48dp</dimen>
 
     <!--五金超市-->
     <dimen name="hard_super_layout_height">48dp</dimen>
@@ -104,8 +144,21 @@
     <dimen name="hard_super_font__titleSize">22sp</dimen>
     <dimen name="hard_super_margin_bottom">19dp</dimen>
     <dimen name="hard_super_margin_left">8dp</dimen>
+    <dimen name="hard_super_margin_right">8dp</dimen>
     <dimen name="hard_super_font__size">18sp</dimen>
     <dimen name="hard_super_recycleViewItem_height">190dp</dimen>
+
+    <!--五金超市详情-->
+    <dimen name="hard_super_detail_layout_height">48dp</dimen>
+    <dimen name="hard_super_detail_imageView_width">30dp</dimen>
+    <dimen name="hard_super_detail_imageView_height">30dp</dimen>
+    <dimen name="hard_super_detail_imageView_marginRight">10dp</dimen>
+    <dimen name="hard_super_detail_font__titleSize">22sp</dimen>
+    <dimen name="hard_super_detail_margin_bottom">19dp</dimen>
+    <dimen name="hard_super_detail_margin_left">8dp</dimen>
+    <dimen name="hard_super_detail_margin_right">8dp</dimen>
+    <dimen name="hard_super_detail_font__size">18sp</dimen>
+    <dimen name="hard_super_detail_recycleViewItem_height">190dp</dimen>
 
     <!--劳务中介-->
     <dimen name="labour_agency_layout_height">48dp</dimen>
@@ -115,6 +168,7 @@
     <dimen name="labour_agency_font__titleSize">22sp</dimen>
     <dimen name="labour_agency_margin_bottom">19dp</dimen>
     <dimen name="labour_agency_margin_left">8dp</dimen>
+    <dimen name="labour_agency_margin_right">8dp</dimen>
     <dimen name="labour_agency_font__size">18sp</dimen>
     <dimen name="labour_agency_listViewItem_height">150dp</dimen>
 
@@ -290,7 +344,7 @@
     <dimen name="buying_leads_font__titleSize">22sp</dimen>
     <dimen name="buying_leads_margin_bottom">19dp</dimen>
     <dimen name="buying_leads_margin_left">8dp</dimen>
-    <dimen name="buying_leads_margin_right">8dp</dimen>
+    <dimen name="buying_leads_margin_right">10dp</dimen>
     <dimen name="buying_leads_font__size">18sp</dimen>
 
     <!--供求信息-->
@@ -345,4 +399,13 @@
     <dimen name="progress_dialog_layout_height">50dp</dimen>
     <dimen name="progress_dialog_image_width">50dp</dimen>
     <dimen name="progress_dialog_image_height">50dp</dimen>
+
+    <!--企业搜索-->
+    <dimen name="searchFrim_btn_height">40dp</dimen>
+    <dimen name="searchFrim_btn_width">50dp</dimen>
+    <dimen name="searchFrim_font_titleSize">22sp</dimen>
+    <dimen name="searchFrim_imageView_marginRight">10dp</dimen>
+    <dimen name="searchFrim_layout_height">48dp</dimen>
+    <dimen name="searchFrim_imageView_height">30dp</dimen>
+    <dimen name="searchFrim_imageView_width">30dp</dimen>
 </resources>

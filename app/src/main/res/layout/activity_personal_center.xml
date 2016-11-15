@@ -153,54 +153,6 @@
         <!--android:background="@drawable/shape_register_edittext"-->
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="@dimen/personal_center_width"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/personal_center_textview_marginBottom"
-        android:layout_marginLeft="@dimen/personal_center_layout_marginLeft"
-        android:layout_marginRight="@dimen/personal_center_layout_marginLeft"
-        android:layout_marginTop="@dimen/personal_center_margin_top"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/id_my_operation_guide"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/personal_center_edittext_height"
-            android:background="#E9E9E9"
-            android:drawableRight="@mipmap/icon_get_into"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:text="@string/personal_center_function_description"
-            android:textColor="@color/black"
-            android:textSize="@dimen/personal_center_edittext_textsize" />
-
-        <TextView
-            android:id="@+id/id_my_version_info"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/personal_center_edittext_height"
-            android:layout_marginTop="2dp"
-            android:background="#E9E9E9"
-            android:drawableRight="@mipmap/icon_get_into"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:text="@string/personal_center_version_info"
-            android:textColor="@color/black"
-            android:textSize="@dimen/personal_center_edittext_textsize" />
-
-        <TextView
-            android:id="@+id/id_my_about_us"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/personal_center_edittext_height"
-            android:layout_marginTop="2dp"
-            android:background="#E9E9E9"
-            android:drawableRight="@mipmap/icon_get_into"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:text="@string/personal_center_about_us"
-            android:textColor="@color/black"
-            android:textSize="@dimen/personal_center_edittext_textsize" />
-    </LinearLayout>
-
     <Button
         android:id="@+id/id_logged_on"
         android:layout_width="@dimen/personal_center_btn_width"

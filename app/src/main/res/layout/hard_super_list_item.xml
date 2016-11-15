@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/hard_super_margin_bottom"
             android:layout_marginLeft="@dimen/hard_super_margin_left"
+            android:layout_marginRight="@dimen/hard_super_margin_right"
             android:layout_marginTop="@dimen/hard_super_margin_bottom"
             android:orientation="horizontal">
 
@@ -28,12 +29,12 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/hard_super_name"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/hard_super_font__size" />
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/hard_super_name"-->
+                <!--android:textColor="#000000"-->
+                <!--android:textSize="@dimen/hard_super_font__size" />-->
 
                 <TextView
                     android:id="@+id/id_hard_super_name"
@@ -47,14 +48,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="right"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/hard_super_area"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/hard_super_font__size" />
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/hard_super_area"-->
+                <!--android:textColor="#000000"-->
+                <!--android:textSize="@dimen/hard_super_font__size" />-->
 
                 <TextView
                     android:id="@+id/id_hard_super_area"
@@ -71,28 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/hard_super_margin_bottom"
             android:layout_marginLeft="@dimen/hard_super_margin_left"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hard_super_category"
-                android:textColor="#000000"
-                android:textSize="@dimen/hard_super_font__size" />
-
-            <TextView
-                android:id="@+id/id_hard_super_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:textSize="@dimen/hard_super_font__size" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/hard_super_margin_bottom"
-            android:layout_marginLeft="@dimen/hard_super_margin_left"
+            android:layout_marginRight="@dimen/hard_super_margin_right"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -120,6 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="right"
                 android:orientation="horizontal">
 
                 <TextView
@@ -135,8 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
-                    android:textSize="@dimen/hard_super_font__size"
-                    android:visibility="gone" />
+                    android:textSize="@dimen/hard_super_font__size" />
 
                 <ImageView
                     android:id="@+id/id_hard_super_callPhone"
@@ -151,6 +132,30 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/hard_super_margin_bottom"
             android:layout_marginLeft="@dimen/hard_super_margin_left"
+            android:layout_marginRight="@dimen/hard_super_margin_right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hard_super_category"
+                android:textColor="#000000"
+                android:textSize="@dimen/hard_super_font__size" />
+
+            <TextView
+                android:id="@+id/id_hard_super_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="@dimen/hard_super_font__size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/hard_super_margin_bottom"
+            android:layout_marginLeft="@dimen/hard_super_margin_left"
+            android:layout_marginRight="@dimen/hard_super_margin_right"
             android:orientation="horizontal">
 
             <TextView

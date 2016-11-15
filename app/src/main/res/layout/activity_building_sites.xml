@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/buildSites_layout_height"
@@ -18,64 +19,84 @@
             android:src="@mipmap/icon_back" />
 
         <TextView
+            android:id="@+id/TextView_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="所在城市："
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/buildSites_title"
             android:textColor="@color/white"
             android:textSize="@dimen/buildSites_font__titleSize" />
+
+        <!-- 定义一个区域信息下拉菜单-->
+        <Spinner
+            android:id="@+id/Spinner_city"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/white"
+            android:visibility="gone"></Spinner>
     </RelativeLayout>
     <!--<LinearLayout-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="50dip"-->
-        <!--android:orientation="horizontal">-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="50dip"-->
+    <!--android:orientation="horizontal">-->
 
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="在"></TextView>-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="在"></TextView>-->
 
-        <!--<EditText-->
-            <!--android:id="@+id/build_site_city"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:text="上海" />-->
+    <!--<EditText-->
+    <!--android:id="@+id/build_site_city"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:text="上海" />-->
 
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="市内找"></TextView>-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="市内找"></TextView>-->
 
-        <!--<AutoCompleteTextView-->
-            <!--android:id="@+id/build_site_search_key"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="0.88"-->
-            <!--android:completionThreshold="1"-->
-            <!--android:text="建筑" />-->
+    <!--<AutoCompleteTextView-->
+    <!--android:id="@+id/build_site_search_key"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="0.88"-->
+    <!--android:completionThreshold="1"-->
+    <!--android:text="建筑" />-->
     <!--</LinearLayout>-->
 
     <!--<LinearLayout-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="50dip"-->
-        <!--android:orientation="horizontal">-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="50dip"-->
+    <!--android:orientation="horizontal">-->
 
-        <!--<Button-->
-            <!--android:id="@+id/build_site_search"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="12"-->
-            <!--android:onClick="searchButtonProcess"-->
-            <!--android:padding="10dip"-->
-            <!--android:text="开始" />-->
+    <!--<Button-->
+    <!--android:id="@+id/build_site_search"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="12"-->
+    <!--android:onClick="searchButtonProcess"-->
+    <!--android:padding="10dip"-->
+    <!--android:text="开始" />-->
 
-        <!--<Button-->
-            <!--android:id="@+id/id_dingwei"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="12"-->
-            <!--android:padding="10dip"-->
-            <!--android:text="定位" />-->
+    <!--<Button-->
+    <!--android:id="@+id/id_dingwei"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="12"-->
+    <!--android:padding="10dip"-->
+    <!--android:text="定位" />-->
     <!--</LinearLayout>-->
 
     <com.baidu.mapapi.map.MapView

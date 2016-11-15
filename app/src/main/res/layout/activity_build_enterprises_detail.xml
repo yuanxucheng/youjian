@@ -39,9 +39,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout1"
-        android:orientation="vertical">
+        android:layout_marginTop="20dp">
+
+        <fragment
+            android:id="@+id/fragment_cycle_viewpager_content"
+            android:name="com.example.yj.mapapp.banner.CycleViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/buildEnterprises_fragment_height"
+            android:layout_marginLeft="@dimen/buildEnterprises_margin_left"
+            android:layout_marginRight="@dimen/buildEnterprises_margin_right" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout2">
 
         <LinearLayout
+            android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/buildEnterprises_margin_bottom"
@@ -67,32 +83,10 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/buildEnterprises_margin_bottom"
-            android:layout_marginLeft="@dimen/buildEnterprises_margin_left"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/buildEnterprises_address"
-                android:textColor="#000000"
-                android:textSize="@dimen/buildEnterprises_font__size"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tv_build_enterprise_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="#000000"
-                android:textSize="@dimen/buildEnterprises_font__size" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayout1"
             android:layout_marginBottom="@dimen/buildEnterprises_margin_bottom"
             android:layout_marginLeft="@dimen/buildEnterprises_margin_left"
             android:orientation="horizontal">
@@ -114,16 +108,6 @@
                 android:textSize="@dimen/buildEnterprises_font__size" />
 
             <TextView
-                android:id="@+id/id_buildEnterprise_isShowPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/buildEnterprises_fragment_left"
-                android:text="@string/buildEnterprises_phone"
-                android:textColor="#000000"
-                android:textSize="@dimen/buildEnterprises_font__size"
-                android:visibility="gone" />
-
-            <TextView
                 android:id="@+id/tv_build_enterprise_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -131,27 +115,13 @@
                 android:textColor="#000000"
                 android:textSize="@dimen/buildEnterprises_font__size" />
 
-            <ImageView
-                android:id="@+id/iv_build_enterprise_callPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/call_phone"
-                android:visibility="invisible" />
         </LinearLayout>
 
-        <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="@dimen/buildEnterprises_margin_bottom"-->
-        <!--android:layout_marginLeft="@dimen/buildEnterprises_margin_left"-->
-        <!--android:orientation="horizontal">-->
-
-        <!-- -->
-        <!--</LinearLayout>-->
-
         <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayout2"
             android:layout_marginBottom="@dimen/buildEnterprises_margin_bottom"
             android:layout_marginLeft="@dimen/buildEnterprises_margin_left"
             android:orientation="horizontal">
@@ -172,22 +142,106 @@
                 android:text=""
                 android:textColor="#000000"
                 android:textSize="@dimen/buildEnterprises_font__size" />
-        </LinearLayout>
-    </LinearLayout>
 
-    <fragment
-        android:id="@+id/fragment_cycle_viewpager_content"
-        android:name="com.example.yj.mapapp.banner.CycleViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/buildEnterprises_fragment_height"
-        android:layout_below="@id/layout2"
-        android:layout_marginLeft="@dimen/buildEnterprises_margin_left"
-        android:layout_marginRight="@dimen/buildEnterprises_margin_left" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayout3"
+            android:layout_marginBottom="@dimen/buildEnterprises_margin_bottom"
+            android:layout_marginLeft="@dimen/buildEnterprises_margin_left"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buildEnterprises_address"
+                android:textColor="#000000"
+                android:textSize="@dimen/buildEnterprises_font__size"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_build_enterprise_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="@dimen/buildEnterprises_font__size" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayout5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayout4"
+            android:layout_marginBottom="@dimen/buildEnterprises_margin_bottom"
+            android:layout_marginLeft="@dimen/buildEnterprises_margin_left"
+            android:layout_marginRight="@dimen/buildEnterprises_margin_right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_build_enterprise_companyIntroduction"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/buildEnterprises_tv_height"
+                android:background="#E9E9E9"
+                android:drawableRight="@mipmap/icon_get_into"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/buildEnterprises_tv_padding"
+                android:text="@string/buildEnterprises_companyIntroduction"
+                android:textColor="@color/black"
+                android:textSize="@dimen/buildEnterprises_font__size"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayout6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearlayout5"
+            android:layout_marginBottom="@dimen/buildEnterprises_margin_bottom"
+            android:layout_marginLeft="@dimen/buildEnterprises_margin_left"
+            android:layout_marginRight="@dimen/buildEnterprises_margin_right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_build_enterprise_shopIntroduction"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/buildEnterprises_tv_height"
+                android:background="#E9E9E9"
+                android:drawableRight="@mipmap/icon_get_into"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/buildEnterprises_tv_padding"
+                android:text="@string/buildEnterprises_shopIntroduction"
+                android:textColor="@color/black"
+                android:textSize="@dimen/buildEnterprises_font__size"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="60dp">
+
+            <ImageView
+                android:id="@+id/iv_build_enterprise_callPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="250dp"
+                android:src="@mipmap/icon_phone"
+                android:visibility="invisible" />
+        </RelativeLayout>
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_alignParentBottom="true">
 
         <fragment
@@ -199,13 +253,5 @@
             <include layout="@layout/enterprises_details_advert_dialog" />
         </fragment>
     </FrameLayout>
-    <!--<FrameLayout-->
-    <!--android:id="@+id/shop_details_advert_layout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:visibility="gone">-->
 
-    <!--<include layout="@layout/shop_details_advert_dialog" />-->
-    <!--</FrameLayout>-->
 </RelativeLayout>

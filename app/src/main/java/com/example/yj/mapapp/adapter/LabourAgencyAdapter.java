@@ -67,7 +67,11 @@ public class LabourAgencyAdapter extends BaseAdapter {
         holder.labour_agency_name.setText(mData.get(position).getName());
         holder.labour_agency_area.setText(mData.get(position).getArea());
         holder.labour_agency_contacts.setText(mData.get(position).getContacts());
-        holder.labour_agency_phone.setText(mData.get(position).getPhone());
+        if (mData.get(position).getPhone().equals("0")) {
+            holder.labour_agency_phone.setText("0");
+        } else {
+            holder.labour_agency_phone.setText(mData.get(position).getPhone());
+        }
         holder.labour_agency_address.setText(mData.get(position).getAddress());
 
         final String phone = holder.labour_agency_phone.getText() + "";

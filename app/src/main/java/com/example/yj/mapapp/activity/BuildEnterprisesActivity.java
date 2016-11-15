@@ -53,6 +53,7 @@ import com.example.yj.mapapp.base.BaseActivity;
 import com.example.yj.mapapp.manager.PoiOverlay;
 
 import java.io.UnsupportedEncodingException;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,8 @@ import com.baidu.mapapi.map.InfoWindow.OnInfoWindowClickListener;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.example.yj.mapapp.model.Companys;
 import com.example.yj.mapapp.model.EnterpriseMapPoint;
+import com.example.yj.mapapp.model.Firm;
+import com.example.yj.mapapp.model.Goods;
 import com.example.yj.mapapp.model.IndustryClassification;
 import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
@@ -97,7 +100,6 @@ public class BuildEnterprisesActivity extends BaseActivity {
     private PoiSearch mPoiSearch = null;
     private SuggestionSearch mSuggestionSearch = null;
     private List<String> suggest;
-
     //自定义进度对话框
     private MProgressDialog pb;
     //显示对话框
@@ -123,32 +125,31 @@ public class BuildEnterprisesActivity extends BaseActivity {
     private MapStatus mMapStatus;
     private MapStatusUpdate mMapStatusUpdate;
     private LocationClientOption option;
-
     private InfoWindow mInfoWindow;
-
     private List<BitmapDescriptor> bdList = new ArrayList<>();
-
     // 定位相关
     private LocationClient mLocClient;
     //定位监听事件
     private MyLocationListenner myListener = new MyLocationListenner();
     private boolean isFirstLoc = true; // 是否首次定位
-
     //二级列表
     private ExpandTabView expandTabView;
     //视图集合
     private ArrayList<View> mViewArray = new ArrayList<View>();
     //左边视图
     private ViewLeft viewLeft;
-
     //分类广告对话框
     private LayoutInflater inflater;
     //对话框
     private AlertDialog dialog;
     //系统控件
     private TextView tv;
-
-    private boolean isLoadType;//是否加载分类气泡点
+    //是否加载分类气泡点
+    private boolean isLoadType;
+    //企业搜索对象集合
+    private List<Firm> list = new ArrayList<>();
+    //企业对象
+    private Firm firm;
 
 //    @Bind(R.id.id_dingwei)
 //    Button dingwei;
@@ -449,8 +450,10 @@ public class BuildEnterprisesActivity extends BaseActivity {
             LogUtil.d("tag", "全部=================");
         } else {
 
-            classifyAdvertDialog();
+//            classifyAdvertDialog();
 
+            // 不延迟，直接发送
+            handler.sendEmptyMessage(SHOW);
             getEnterpriseMapPointByType(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, Integer.valueOf(showText.getP_Id()));
         }
     }
@@ -474,7 +477,7 @@ public class BuildEnterprisesActivity extends BaseActivity {
         int i = 1;
 
         public void run() {
-            if (i < 6) {
+            if (i < 4) {
                 //设置TextView控件的数据内容
                 tv.setText(i++ + "s");
                 //延迟一秒加载
@@ -775,33 +778,6 @@ public class BuildEnterprisesActivity extends BaseActivity {
         }
     }
 
-//    private TextWatcher textWatcherListener = new TextWatcher() {
-//        @Override
-//        public void afterTextChanged(Editable arg0) {
-//        }
-//
-//        @Override
-//        public void beforeTextChanged(CharSequence arg0, int arg1,
-//                                      int arg2, int arg3) {
-//        }
-//
-//        @Override
-//        public void onTextChanged(CharSequence cs, int arg1, int arg2,
-//                                  int arg3) {
-//            if (cs.length() <= 0) {
-//                return;
-//            }
-//            String city = ((EditText) findViewById(R.id.build_enterprise_city)).getText()
-//                    .toString();
-//            /**
-//             * 使用建议搜索服务获取建议列表，结果在onSuggestionResult()中更新
-//             */
-//            mSuggestionSearch
-//                    .requestSuggestion((new SuggestionSearchOption())
-//                            .keyword(cs.toString()).city(city));
-//        }
-//    };
-
     public void initOverlay() {
     }
 
@@ -822,87 +798,60 @@ public class BuildEnterprisesActivity extends BaseActivity {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-//    /**
-//     * 影响搜索按钮点击事件
-//     * @param v
-//     */
-//    public void searchButtonProcess(View v) {
-//        EditText editCity = (EditText) findViewById(R.id.build_enterprise_city);
-//        EditText editSearchKey = (EditText) findViewById(R.id.build_enterprise_search_key);
-//        mPoiSearch.searchInCity((new PoiCitySearchOption())
-//                .city(editCity.getText().toString())
-//                .keyword(editSearchKey.getText().toString())
-//                .pageNum(loadIndex));
-//    }
+    private void getEnterpriseSearch(String search, int pageSize, int pageIndex) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("search", search);
+            jsonObject.put("pageSize", pageSize);
+            jsonObject.put("pageIndex", pageIndex);
+            StringEntity stringEntity = new StringEntity(jsonObject.toString());
+            String url = HttpConfig.REQUEST_URL + "/Map/GetEnterpriseSearch";
+            RequestHandle post = HTTPTool.getClient().post(BuildEnterprisesActivity.this, url, stringEntity, "application/json", new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.d("==============", response.toString());
+                    String d = JsonUtil.getData(response.toString());
+                    Log.d("-------------", d);
 
-//    public void onGetPoiResult(PoiResult result) {
-//        if (result == null
-//                || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
-//            Toast.makeText(BuildEnterprisesActivity.this, "未找到结果", Toast.LENGTH_LONG)
-//                    .show();
-//            return;
-//        }
-//        if (result.error == SearchResult.ERRORNO.NO_ERROR) {
-//            mBaiduMap.clear();
-//            PoiOverlay overlay = new MyPoiOverlay(mBaiduMap);
-//            mBaiduMap.setOnMarkerClickListener(overlay);
-//            overlay.setData(result);
-//            overlay.addToMap();
-//            overlay.zoomToSpan();
-//            return;
-//        }
-//        if (result.error == SearchResult.ERRORNO.AMBIGUOUS_KEYWORD) {
-//
-//            // 当输入关键字在本市没有找到，但在其他城市找到时，返回包含该关键字信息的城市列表
-//            String strInfo = "在";
-//            for (CityInfo cityInfo : result.getSuggestCityList()) {
-//                strInfo += cityInfo.city;
-//                strInfo += ",";
-//            }
-//            strInfo += "找到结果";
-//            Toast.makeText(BuildEnterprisesActivity.this, strInfo, Toast.LENGTH_LONG)
-//                    .show();
-//        }
-//    }
+                    try {
+                        JSONArray array = new JSONArray(d);
+                        if (array.length() > 0) {
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                int id = object.getInt("Id");
+                                String name = object.getString("Name");
+                                String address = object.getString("Address");
+                                String contacts = object.getString("Contacts");
+                                String authentication = object.getString("Authentication");
+                                LogUtil.d("tag", id + "-------" + id + "-----" + name + "-----" + name + "------" + address + "----" + address + "----------" + contacts + "----" + contacts + "----" + authentication + authentication + "----");
 
-//    public void onGetPoiDetailResult(PoiDetailResult result) {
-//        if (result.error != SearchResult.ERRORNO.NO_ERROR) {
-//            Toast.makeText(BuildEnterprisesActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT)
-//                    .show();
-//        }
-//    }
+                                firm = new Firm(R.id.item_search_iv_icon, id, name, address, contacts, authentication);
+                                firm.setIconId(R.id.item_search_iv_icon);
+                                firm.setId(id);
+                                firm.setName(name);
+                                firm.setAddress(address);
+                                firm.setContacts(contacts);
+                                firm.setAuthentication(authentication);
+                                list.add(firm);
+                                LogUtil.d("tag", firm.getId() + "-------" + firm.getName() + "-----" + firm.getAddress() + "-----" + firm.getContacts() + "-----" + firm.getAuthentication() + "-----");
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
 
-//    @Override
-//    public void onGetSuggestionResult(SuggestionResult res) {
-//        if (res == null || res.getAllSuggestions() == null) {
-//            return;
-//        }
-//        suggest = new ArrayList<String>();
-//        for (SuggestionResult.SuggestionInfo info : res.getAllSuggestions()) {
-//            if (info.key != null) {
-//                suggest.add(info.key);
-//            }
-//        }
-//        sugAdapter = new ArrayAdapter<String>(BuildEnterprisesActivity.this, android.R.layout.simple_dropdown_item_1line, suggest);
-////        keyWorldsView.setAdapter(sugAdapter);
-//        sugAdapter.notifyDataSetChanged();
-//    }
-
-//    private class MyPoiOverlay extends PoiOverlay {
-//
-//        public MyPoiOverlay(BaiduMap baiduMap) {
-//            super(baiduMap);
-//        }
-//
-//        @Override
-//        public boolean onPoiClick(int index) {
-//            super.onPoiClick(index);
-//            PoiInfo poi = getPoiResult().getAllPoi().get(index);
-//            // if (poi.hasCaterDetails) {
-//            mPoiSearch.searchPoiDetail((new PoiDetailSearchOption())
-//                    .poiUid(poi.uid));
-//            // }
-//            return true;
-//        }
-//    }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.d("================", responseString);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 }

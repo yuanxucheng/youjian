@@ -30,15 +30,15 @@
             android:textColor="@color/white"
             android:textSize="@dimen/trade_leads_font__titleSize1" />
 
-        <TextView
+        <Button
             android:id="@+id/id_trade_leads_release_news"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:layout_marginRight="@dimen/buying_leads_margin_right"
+            android:background="@drawable/shape_login_greens"
             android:text="@string/trade_leads_release_news"
-            android:textColor="@color/green"
+            android:textColor="@color/white"
             android:textSize="@dimen/trade_leads_font__titleSize3" />
     </RelativeLayout>
 
@@ -73,34 +73,33 @@
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-    </RelativeLayout>
+        android:layout_height="fill_parent"></RelativeLayout>
 
     <!--<LinearLayout-->
-        <!--android:id="@+id/id_layout1"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-        <!--&lt;!&ndash; 自定义控件或者重写控件在调用该控件时需要指明该控件所属的类 &ndash;&gt;-->
-        <!--<com.example.yj.mapapp.view.MListView-->
-            <!--android:id="@+id/lv1"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:scrollbars="none"-->
-            <!--android:scrollingCache="false" />-->
+    <!--android:id="@+id/id_layout1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+    <!--&lt;!&ndash; 自定义控件或者重写控件在调用该控件时需要指明该控件所属的类 &ndash;&gt;-->
+    <!--<com.example.yj.mapapp.view.MListView-->
+    <!--android:id="@+id/lv1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:scrollbars="none"-->
+    <!--android:scrollingCache="false" />-->
     <!--</LinearLayout>-->
 
     <!--<LinearLayout-->
-        <!--android:id="@+id/id_layout2"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:visibility="gone">-->
-        <!--&lt;!&ndash; 自定义控件或者重写控件在调用该控件时需要指明该控件所属的类 &ndash;&gt;-->
-        <!--<com.example.yj.mapapp.view.MListView-->
-            <!--android:id="@+id/lv2"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:scrollbars="none"-->
-            <!--android:scrollingCache="false" />-->
+    <!--android:id="@+id/id_layout2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:visibility="gone">-->
+    <!--&lt;!&ndash; 自定义控件或者重写控件在调用该控件时需要指明该控件所属的类 &ndash;&gt;-->
+    <!--<com.example.yj.mapapp.view.MListView-->
+    <!--android:id="@+id/lv2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:scrollbars="none"-->
+    <!--android:scrollingCache="false" />-->
     <!--</LinearLayout>-->
     <!--<include layout="@layout/content_trade_leads" />-->
 </LinearLayout>

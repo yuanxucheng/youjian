@@ -176,7 +176,6 @@ public class BuyingLeadsFragment extends Fragment implements AbsListView.OnScrol
 
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject object = array.getJSONObject(i);
-
                             int id = object.getInt("ID");
                             String name = object.getString("NAME");
                             String type = object.getString("TYPE");
@@ -185,7 +184,7 @@ public class BuyingLeadsFragment extends Fragment implements AbsListView.OnScrol
                             String content = object.getString("CONTENT");
                             String address = object.getString("ADDRESS");
                             String ctime = object.getString("CTIME");
-                            LogUtil.d("tag", name + "-----" + type + "-----" + contacts + "----------" + phone + "------" + content + "----" + address + "--------" + ctime);
+                            LogUtil.d("tag", id + "---------" + name + "-----" + type + "-----" + contacts + "----------" + phone + "------" + content + "----" + address + "--------" + ctime);
 
                             //创建求购信息对象并设置属性值
                             BuyingLeads bl = new BuyingLeads();
@@ -279,7 +278,7 @@ public class BuyingLeadsFragment extends Fragment implements AbsListView.OnScrol
         String name = bl.getNAME();
         String type = bl.getTYPE();
 
-        LogUtil.d("sd_id===============" + sd_id);
+        LogUtil.d("sd_id" + sd_id);
         LogUtil.d("name===============" + name);
         LogUtil.d("type===============" + type);
 

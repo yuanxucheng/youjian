@@ -1,6 +1,8 @@
 package com.example.yj.mapapp.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -51,6 +53,23 @@ public class BuildSitesDetailActivity extends BaseActivity {
     @OnClick(R.id.id_back)
     public void back(View v) {
         finish();
+    }
+
+    @Bind(R.id.tv_build_site_phone)
+    TextView tv_build_site_phone;
+
+    @Bind(R.id.tv_build_site_tip)
+    TextView tv_build_site_tip;
+
+    @Bind(R.id.iv_build_site_phone)
+    ImageView iv_build_site_phone;
+
+    @OnClick(R.id.iv_build_site_phone)
+    public void callPhone(View v) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_CALL);//指定意图动作
+        intent.setData(Uri.parse("tel:" + tv_build_site_phone.getText()));//指定电话号码
+        startActivity(intent);//跳转界面
     }
 
     @Override
@@ -125,6 +144,9 @@ public class BuildSitesDetailActivity extends BaseActivity {
                     build_site_endTime.setText(getString(R.string.buildSites_endTime) + CU_EndTime);
                     build_site_address.setText(getString(R.string.buildSites_address) + CU_Address);
 
+                    tv_build_site_tip.setVisibility(View.VISIBLE);
+                    iv_build_site_phone.setVisibility(View.VISIBLE);
+                    tv_build_site_phone.setVisibility(View.VISIBLE);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

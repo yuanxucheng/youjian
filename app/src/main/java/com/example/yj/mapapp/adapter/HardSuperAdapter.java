@@ -75,7 +75,13 @@ public class HardSuperAdapter extends BaseAdapter {
         holder.hard_super_area.setText(mData.get(position).getArea());
         holder.hard_super_category.setText(mData.get(position).getCategory());
         holder.hard_super_contacts.setText(mData.get(position).getContacts());
-        holder.hard_super_phone.setText(mData.get(position).getPhone());
+
+        if (mData.get(position).getPhone().equals("0")) {
+            holder.hard_super_phone.setText("无");
+        } else {
+            holder.hard_super_phone.setText(mData.get(position).getPhone());
+        }
+
         holder.hard_super_address.setText(mData.get(position).getAddress());
         //获取电话号码
         final String phone = holder.hard_super_phone.getText() + "";

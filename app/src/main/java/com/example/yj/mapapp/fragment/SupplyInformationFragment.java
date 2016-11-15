@@ -166,6 +166,7 @@ public class SupplyInformationFragment extends Fragment implements AbsListView.O
 
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject object = array.getJSONObject(i);
+                            int id = object.getInt("ID");
                             String name = object.getString("NAME");
                             String type = object.getString("TYPE");
                             String contacts = object.getString("CONTACTS");
@@ -173,10 +174,11 @@ public class SupplyInformationFragment extends Fragment implements AbsListView.O
                             String content = object.getString("CONTENT");
                             String address = object.getString("ADDRESS");
                             String ctime = object.getString("CTIME");
-                            LogUtil.d("tag", name + "-----" + type + "-----" + contacts + "----------" + phone + "------" + content + "----" + address + "--------" + ctime);
+                            LogUtil.d("tag", id + "---------" + name + "-----" + type + "-----" + contacts + "----------" + phone + "------" + content + "----" + address + "--------" + ctime);
 
                             //创建求购信息对象并设置属性值
                             Supply s = new Supply();
+                            s.setID(id);
                             s.setNAME(name);
                             s.setTYPE(type);
                             s.setCONTACTS(contacts);

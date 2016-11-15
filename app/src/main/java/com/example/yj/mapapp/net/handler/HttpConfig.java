@@ -18,7 +18,6 @@ public class HttpConfig {
 
     public static String TYPE_MEMBER = "member";
 
-
 //    public static String DeveiceType = "api.php";
 
 //    public static String REQUEST_URL = SERVERAND;

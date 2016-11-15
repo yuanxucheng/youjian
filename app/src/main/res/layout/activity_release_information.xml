@@ -106,6 +106,7 @@
                 android:layout_height="@dimen/release_information_edittext_height_phone"
                 android:layout_marginRight="@dimen/release_information_edittext_marginRight"
                 android:background="@color/white"
+                android:digits="1234567890"
                 android:hint="@string/please_input_contacts_phone"
                 android:singleLine="true"
                 android:textSize="@dimen/release_information_edittext_textsize" />

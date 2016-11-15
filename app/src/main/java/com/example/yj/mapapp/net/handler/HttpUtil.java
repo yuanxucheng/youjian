@@ -72,6 +72,18 @@ public class HttpUtil {
     }
 
     /**
+     * 获取指定企业所有商品
+     *
+     * @param buildEnterprise_id
+     */
+    public static void specifyEnterpriseAllProducts(int buildEnterprise_id, ResponseHandler responseHandler) {
+        String url = HttpConfig.REQUEST_URL + "/Map/GetEnterpriseProductById";
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        map.put("id", buildEnterprise_id);
+        HTTPTool.post("allProducts", url, map, responseHandler);
+    }
+
+    /**
      * 获取指定父类节点的所有类别
      *
      * @param pid

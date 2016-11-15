@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,8 +24,10 @@ import com.example.yj.mapapp.test.isChineseCharacters;
 import com.example.yj.mapapp.util.JsonUtil;
 import com.example.yj.mapapp.util.LogUtil;
 import com.example.yj.mapapp.util.ToastUtil;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestHandle;
+import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
@@ -99,11 +102,80 @@ public class IntentActivity extends BaseActivity {
 
             //访问后台接口
             register(user, pwd, contactPerson, contactNumber, type);
+
         } else {
             ToastUtil.shortT(this, getResources().getString(R.string.network_not_connected));
             return;
         }
+    }
 
+    private void register(String name, String pwd, String contacts, String phone, int type) {
+        if (name.equals("") || pwd.equals("") || contacts.equals("") || phone.equals("")) {
+            ToastUtil.shortT(IntentActivity.this, "所有信息不能为空!");
+        } else if (name.equals("")) {
+            ToastUtil.shortT(IntentActivity.this, "用户名不能为空!");
+        } else if (pwd.equals("")) {
+            ToastUtil.shortT(IntentActivity.this, "密码不能为空!");
+        } else if (contacts.equals("")) {
+            ToastUtil.shortT(IntentActivity.this, "联系人不能为空!");
+        } else if (phone.equals("")) {
+            ToastUtil.shortT(IntentActivity.this, "联系电话不能为空!");
+        } else if (surePwd.equals("")) {
+            ToastUtil.shortT(IntentActivity.this, "确认密码不能为空!");
+        } else if (!pwd.equals(surePwd)) {
+            ToastUtil.shortT(IntentActivity.this, "两次输入的密码不一致!");
+        } else if (ClassPathResource.isTellPhone(phone) == false) {
+            ToastUtil.shortT(IntentActivity.this, "手机号码输入错误!");
+        } else if (IsChinese.checkNameChese(contacts) == false || (4 < contacts.length() || contacts.length() < 2)) {
+            ToastUtil.shortT(IntentActivity.this, "联系人请输入2~4个汉字!");
+        } else if (isChineseCharacters.isNumeric(name)) {
+            ToastUtil.shortT(IntentActivity.this, "用户名不能以数字开头!");
+        } else if (IsChinese.checkNameChese(name)) {
+            ToastUtil.shortT(IntentActivity.this, "用户名不能为汉字");
+        } else {
+            String url = HttpConfig.REQUEST_URL + "/User/AddUser";
+            // 创建请求参数
+            RequestParams params = new RequestParams();
+            params.put("Name", name);
+            params.put("Pwd", pwd);
+            params.put("Contacts", contacts);
+            params.put("Phone", phone);
+            params.put("Type", type);
+
+            // 执行post方法
+            HTTPTool.getClient().post(url, params, new AsyncHttpResponseHandler() {
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers,
+                                      byte[] responseBody) {
+                    String response = new String(responseBody);
+                    LogUtil.d("tag----------", response);
+                    Log.d("response==============", response.toString());
+                    String d = JsonUtil.getData(response.toString());
+                    Log.d("d-------------", d);
+                    String s = JsonUtil.getS(response.toString());
+                    Log.d("s-------------", s);
+                    String m = JsonUtil.getMessage(response.toString());
+                    Log.d("m-------------", m);
+                    //判断注册状态
+                    if (s.equals("1")) {
+                        ToastUtil.longT(IntentActivity.this, "注册成功!");
+                    } else if (s.equals("2")) {
+                        ToastUtil.longT(IntentActivity.this, "注册失败!");
+                    }
+                    //界面跳转
+                    toPage(NetActivity.class);
+                    finish();
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers,
+                                      byte[] responseBody, Throwable error) {
+                    // 打印错误信息
+                    error.printStackTrace();
+                }
+            });
+        }
     }
 
     @Bind(R.id.id_corporate_user)
@@ -149,7 +221,7 @@ public class IntentActivity extends BaseActivity {
     @Override
     public void initView(View view) {
         ButterKnife.bind(this);
-
+        et_contactNumber.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         type = 11;
 
         /**
@@ -184,71 +256,4 @@ public class IntentActivity extends BaseActivity {
 
     }
 
-    private void register(String name, String pwd, String contacts, String phone, int type) {
-        if (name.equals("") || pwd.equals("") || et_surePwd.getText().equals("") || contacts.equals("") || phone.equals("")) {
-            ToastUtil.shortT(IntentActivity.this, "所有信息不能为空!");
-        } else if (name.equals("")) {
-            ToastUtil.shortT(IntentActivity.this, "用户名不能为空!");
-        } else if (pwd.equals("")) {
-            ToastUtil.shortT(IntentActivity.this, "密码不能为空!");
-        } else if (surePwd.equals("")) {
-            ToastUtil.shortT(IntentActivity.this, "确认密码不能为空!");
-        } else if (contacts.equals("")) {
-            ToastUtil.shortT(IntentActivity.this, "联系人不能为空!");
-        } else if (phone.equals("")) {
-            ToastUtil.shortT(IntentActivity.this, "联系电话不能为空!");
-        } else if (!pwd.equals(surePwd)) {
-            ToastUtil.shortT(IntentActivity.this, "两次输入的密码不匹配!");
-        } else if (ClassPathResource.isMobileNO(phone) == false) {
-            ToastUtil.shortT(IntentActivity.this, "手机号码输入错误!");
-        } else if (IsChinese.checkNameChese(contacts) == false || (4 < contacts.length() || contacts.length() < 2)) {
-            ToastUtil.shortT(IntentActivity.this, "联系人请输入2~4个汉字!");
-        } else if (isChineseCharacters.isNumeric(name)) {
-            ToastUtil.shortT(IntentActivity.this, "用户名不能以数字开头!");
-        } else {
-            try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("Name", name);
-                jsonObject.put("Pwd", pwd);
-                jsonObject.put("Contacts", contacts);
-                jsonObject.put("Phone", phone);
-                jsonObject.put("type", type);
-                StringEntity stringEntity = new StringEntity(jsonObject.toString());
-                String url = HttpConfig.REQUEST_URL + "/User/AddUser";
-                RequestHandle post = HTTPTool.getClient().post(IntentActivity.this, url, stringEntity, "application/json", new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        Log.d("==============", response.toString());
-
-                        String s = JsonUtil.getS(response.toString());
-                        Log.d("-------------", "s:========" + s.toString());
-                        String d = JsonUtil.getData(response.toString());
-                        Log.d("-------------", "d:========" + d.toString());
-                        String m = JsonUtil.getMessage(response.toString());
-                        Log.d("-------------", "m:========" + m.toString());
-
-                        if (s.equals("1")) {
-                            ToastUtil.longT(IntentActivity.this, d);
-                            toPage(NetActivity.class);
-                        } else if (s.equals("2")) {
-                            ToastUtil.longT(IntentActivity.this, m);
-                        } else if (s.equals("3")) {
-                            ToastUtil.longT(IntentActivity.this, m);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                        super.onFailure(statusCode, headers, responseString, throwable);
-                        Log.d("================", responseString);
-                    }
-                });
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

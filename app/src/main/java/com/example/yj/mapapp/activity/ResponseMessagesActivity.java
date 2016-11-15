@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -132,10 +133,11 @@ public class ResponseMessagesActivity extends BaseActivity {
         String name = this.getIntent().getStringExtra("name");
         String type = this.getIntent().getStringExtra("type");
 
-        LogUtil.d("sd_id===============" + sd_id);
+        LogUtil.d("sd___________________id===============" + sd_id);
         LogUtil.d("name===============" + name);
         LogUtil.d("type===============" + type);
 
+        response_phone.setInputType(EditorInfo.TYPE_CLASS_PHONE);
         response_title.setText(name);
         response_type.setText(type);
     }

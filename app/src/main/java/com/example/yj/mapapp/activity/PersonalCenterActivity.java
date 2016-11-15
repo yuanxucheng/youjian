@@ -37,31 +37,6 @@ public class PersonalCenterActivity extends BaseActivity {
         toPage(MyTradeLeadsActivity.class);
     }
 
-    @Bind(R.id.id_my_operation_guide)
-    TextView version_check;
-
-    @OnClick(R.id.id_my_operation_guide)
-    public void versionCheck(View v) {
-//        DialogUtils.versionUpdateDialog(PersonalCenterActivity.this);
-        toPage(UnderConstructionActivity.class);
-    }
-
-    @Bind(R.id.id_my_version_info)
-    TextView versionInfo;
-
-    @OnClick(R.id.id_my_version_info)
-    public void versionInfo(View v) {
-        toPage(UnderConstructionActivity.class);
-    }
-
-    @Bind(R.id.id_my_about_us)
-    TextView about_us;
-
-    @OnClick(R.id.id_my_about_us)
-    public void aboutUs(View v) {
-        toPage(UnderConstructionActivity.class);
-    }
-
     @Bind(R.id.id_my_respone_message)
     TextView respone_message;
 

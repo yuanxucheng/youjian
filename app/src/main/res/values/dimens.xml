@@ -22,6 +22,7 @@
     <dimen name="offset_7dp">7dp</dimen>
     <dimen name="offset_8dp">8dp</dimen>
     <dimen name="offset_10dp">10dp</dimen>
+    <dimen name="offset_20dp">20dp</dimen>
 
     <dimen name="font_size_tiny">106dp</dimen>
     <dimen name="font_size_small">12dp</dimen>
@@ -92,6 +93,7 @@
 
     <!--建材企业-->
     <dimen name="buildEnterprises_dingwei_size">16sp</dimen>
+    <dimen name="buildEnterprises_titleSize3">18sp</dimen>
 
     <!--建材企业详情-->
     <dimen name="buildEnterprises_layout_height">48dp</dimen>
@@ -331,9 +333,9 @@
     <dimen name="trade_leads_imageView_width">30dp</dimen>
     <dimen name="trade_leads_imageView_height">30dp</dimen>
     <dimen name="trade_leads_imageView_marginRight">10dp</dimen>
-    <dimen name="trade_leads_font__titleSize1">22sp</dimen>
-    <dimen name="trade_leads_font__titleSize2">20sp</dimen>
-    <dimen name="trade_leads_font__titleSize3">18sp</dimen>
+    <dimen name="trade_leads_font_titleSize1">22sp</dimen>
+    <dimen name="trade_leads_font_titleSize2">20sp</dimen>
+    <dimen name="trade_leads_font_titleSize3">18sp</dimen>
 
     <!--求购信息-->
     <dimen name="buying_leads_recycleViewItem_height">220dp</dimen>

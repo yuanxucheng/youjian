@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/trade_leads_layout_height"
-        android:background="@color/frist_toolbar_background">
+        android:background="@color/grays">
 
         <ImageView
             android:id="@+id/id_back"
@@ -28,18 +28,19 @@
             android:layout_centerInParent="true"
             android:text="@string/trade_leads"
             android:textColor="@color/white"
-            android:textSize="@dimen/trade_leads_font__titleSize1" />
+            android:textSize="@dimen/trade_leads_font_titleSize1" />
 
         <Button
             android:id="@+id/id_trade_leads_release_news"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/offset_10dp"
             android:background="@drawable/shape_login_greens"
             android:text="@string/trade_leads_release_news"
             android:textColor="@color/white"
-            android:textSize="@dimen/trade_leads_font__titleSize3" />
+            android:textSize="@dimen/trade_leads_font_titleSize3" />
     </RelativeLayout>
 
     <LinearLayout
@@ -56,7 +57,7 @@
             android:gravity="center"
             android:text="@string/trade_leads_supply"
             android:textColor="@color/black"
-            android:textSize="@dimen/trade_leads_font__titleSize2" />
+            android:textSize="@dimen/trade_leads_font_titleSize2" />
 
         <TextView
             android:id="@+id/layout_buying_leads"
@@ -67,7 +68,7 @@
             android:gravity="center"
             android:text="@string/trade_leads_buying_leads"
             android:textColor="@color/white"
-            android:textSize="@dimen/trade_leads_font__titleSize2" />
+            android:textSize="@dimen/trade_leads_font_titleSize2" />
     </LinearLayout>
 
     <RelativeLayout

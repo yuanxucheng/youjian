@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/buildEnterprises_layout_height"
-        android:background="@color/frist_toolbar_background">
+        android:background="@color/grays">
 
         <ImageView
             android:id="@+id/id_back"
@@ -26,6 +26,18 @@
             android:textColor="@color/white"
             android:textSize="@dimen/buildEnterprises_font__titleSize" />
 
+        <Button
+            android:id="@+id/build_enterprise_serach"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/offset_10dp"
+            android:background="@drawable/shape_login_greens"
+            android:text="@string/buildEnterprises_search"
+            android:textColor="@color/white"
+            android:textSize="@dimen/buildEnterprises_titleSize3"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <com.example.yj.mapapp.view.ExpandTabView
@@ -33,6 +45,14 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="@string/hello_world" />
+
+    <!-- 定义一个区域信息下拉菜单-->
+    <Spinner
+        android:id="@+id/build_enterprise_spinner_city"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/white"></Spinner>
 
     <com.baidu.mapapi.map.MapView
         android:id="@+id/build_enterprise_map"

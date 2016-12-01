@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/searchFrim_layout_height"
-        android:background="@color/frist_toolbar_background">
+        android:background="@color/grays">
 
         <ImageView
             android:id="@+id/id_back"

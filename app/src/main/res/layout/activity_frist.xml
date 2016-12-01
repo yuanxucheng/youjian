@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/frist_layout_height"
-        android:background="@color/frist_toolbar_background">
+        android:background="@color/grays">
 
         <TextView
             android:id="@+id/id_current_city"
@@ -131,7 +131,7 @@
                             android:layout_height="@dimen/frist_btn_height"
                             android:layout_marginRight="@dimen/frist_margin_buttonright"
                             android:layout_weight="1"
-                            android:background="@mipmap/search_firm" />
+                            android:background="@mipmap/firm_search" />
                     </LinearLayout>
 
                     <LinearLayout

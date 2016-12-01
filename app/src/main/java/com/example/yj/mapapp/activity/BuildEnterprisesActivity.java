@@ -13,13 +13,15 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -60,6 +62,7 @@ import java.util.List;
 import com.baidu.mapapi.map.BaiduMap.OnMarkerClickListener;
 import com.baidu.mapapi.map.InfoWindow.OnInfoWindowClickListener;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.example.yj.mapapp.model.Area;
 import com.example.yj.mapapp.model.Companys;
 import com.example.yj.mapapp.model.EnterpriseMapPoint;
 import com.example.yj.mapapp.model.Firm;
@@ -150,6 +153,13 @@ public class BuildEnterprisesActivity extends BaseActivity {
     private List<Firm> list = new ArrayList<>();
     //企业对象
     private Firm firm;
+    private Spinner mySpinner;
+    private ArrayAdapter<String> adapter;
+    private List<Area> infos;//区域对象集合
+    private List<String> nameList;//区域名称对象集合
+    //地图缩放级别数
+    private static float TWENTY = 20.0f;
+    private static float TWELVE = 12.0f;
 
 //    @Bind(R.id.id_dingwei)
 //    Button dingwei;
@@ -208,6 +218,10 @@ public class BuildEnterprisesActivity extends BaseActivity {
         pb.setCancelable(true);//设置进度条是否可以按退回键取消
         pb.setCanceledOnTouchOutside(true); //设置点击进度对话框外的区域对话框消失
 
+        infos = new ArrayList<>();
+        nameList = new ArrayList<>();
+        nameList.add("上海市");
+
         // 初始化搜索模块，注册搜索事件监听
         mPoiSearch = PoiSearch.newInstance();
 //        mPoiSearch.setOnGetPoiSearchResultListener(this);
@@ -225,33 +239,13 @@ public class BuildEnterprisesActivity extends BaseActivity {
         //初始化地图
         mMapView = (MapView) findViewById(R.id.build_enterprise_map);
         mBaiduMap = mMapView.getMap();
+
         //设定中心点坐标
-//        LatLng cenpt = new LatLng(31.083397,121.525437);//北京
-//        LatLng cenpt = new LatLng(31.14, 121.29);//上海市的经纬度
-        cenpt = new LatLng(31.5, 121.5);//上海市的经纬度
-        //定义地图状态
-        mMapStatus = new MapStatus.Builder()
-                .target(cenpt)
-                .zoom(11.5f)
-                .build();
-        //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
-        mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
-        //改变地图状态
-        mBaiduMap.setMapStatus(mMapStatusUpdate);
-        // 开启定位图层
-        mBaiduMap.setMyLocationEnabled(true);
-        // 定位初始化
-        mLocClient = new LocationClient(this);
-        //注册监听
-        mLocClient.registerLocationListener(myListener);
-        //创建LocationClientOption对象
-        option = new LocationClientOption();
-        option.setOpenGps(true); // 打开gps
-        option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(1000);//设置定时定位的时间间隔
-        mLocClient.setLocOption(option);
+        init(31.5, 121.5, TWENTY);//上海市的经纬度
+
 //        mMapView.showScaleControl(true);//隐藏地图上的比例尺
 //        mMapView.showZoomControls(false);//隐藏地图上的缩放控件
+
         /**
          * 当输入关键字变化时，动态更新建议列表
          */
@@ -276,9 +270,142 @@ public class BuildEnterprisesActivity extends BaseActivity {
         //开启百度定位
         mLocClient.start();
 
+        getMapAreaByPid(1);
+
         initView();
         initVaule();
         initListener();
+
+        //第一步：添加一个下拉列表项的list，这里添加的项就是下拉列表的菜单项
+        mySpinner = (Spinner) findViewById(R.id.build_enterprise_spinner_city);
+        //第二步：为下拉列表定义一个适配器，这里就用到里前面定义的list
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nameList);
+        //第三步：为适配器设置下拉列表下拉时的菜单样式
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //第四步：将适配器添加到下拉列表上
+        mySpinner.setAdapter(adapter);
+        //第五步：为下拉列表设置各种事件的响应，这个事响应菜单被选中
+        mySpinner.setOnItemSelectedListener(onItemSelectedListener);
+    }
+
+    private AdapterView.OnItemSelectedListener onItemSelectedListener = new Spinner.OnItemSelectedListener() {
+        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            if (arg2 == 0) {
+                init(31.234829, 121.483443, TWELVE);
+            } else {
+                LogUtil.d("tag", "arg2:=======" + arg2);
+                LogUtil.d("tag", "size:=======" + infos.size());
+                double latitude = Double.valueOf(infos.get(arg2 - 1).getLatitude());
+                double longitude = Double.valueOf(infos.get(arg2 - 1).getLongitude());
+                LogUtil.d("tag", "laaaaaaaaa:=======" + latitude);
+                LogUtil.d("tag", "loooooooo:=======" + longitude);
+                init(latitude, longitude, TWELVE);
+            }
+            arg0.getItemAtPosition(arg2);
+            // TODO Auto-generated method stub
+                /* 将mySpinner 显示*/
+            arg0.setVisibility(View.VISIBLE);
+        }
+
+        public void onNothingSelected(AdapterView<?> arg0) {
+            // TODO Auto-generated method stub
+            arg0.setVisibility(View.VISIBLE);
+        }
+    };
+
+    /**
+     * @param latitude  纬度
+     * @param longitude 经度
+     * @param f         缩放级别
+     */
+    private void init(double latitude, double longitude, float f) {
+        //设定中心点坐标
+        cenpt = new LatLng(latitude, longitude);//区域的经纬度
+        //定义地图状态
+        mMapStatus = new MapStatus.Builder()
+                .target(cenpt)
+                .zoom(f)
+                .build();
+        //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
+        mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+        //改变地图状态
+        mBaiduMap.setMapStatus(mMapStatusUpdate);
+        // 开启定位图层
+        mBaiduMap.setMyLocationEnabled(true);
+        // 定位初始化
+        mLocClient = new LocationClient(BuildEnterprisesActivity.this);
+        //注册监听
+        mLocClient.registerLocationListener(myListener);
+        //创建LocationClientOption对象
+        option = new LocationClientOption();
+        option.setOpenGps(true); // 打开gps
+        option.setCoorType("bd09ll"); // 设置坐标类型
+        option.setScanSpan(1000);//设置定时定位的时间间隔
+        mLocClient.setLocOption(option);
+    }
+
+    /**
+     * 获取所有的区域
+     *
+     * @param pid
+     */
+    private void getMapAreaByPid(int pid) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("pid", pid);
+            StringEntity stringEntity = new StringEntity(jsonObject.toString());
+            String url = HttpConfig.REQUEST_URL + "/Sys/GetMapAreaByPid";
+            RequestHandle post = HTTPTool.getClient().post(BuildEnterprisesActivity.this, url, stringEntity, "application/json", new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.d("==============", response.toString());
+                    String d = JsonUtil.getData(response.toString());
+                    Log.d("-------------", d);
+
+                    try {
+                        JSONArray array = new JSONArray(d);
+
+                        if (array.length() > 0) {
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                int id = object.getInt("Id");
+                                String name = object.getString("Name");
+                                int pid = object.getInt("Pid");
+                                String longitude = object.getString("Longitude");
+                                String latitude = object.getString("Latitude");
+                                LogUtil.d("tag", id + "-------" + name + "-----" + pid + "-----" + longitude + "------" + latitude);
+
+                                Area info = new Area();
+                                info.setId(id);
+                                info.setName(name);
+                                info.setPid(pid);
+                                info.setLatitude(latitude);
+                                info.setLongitude(longitude);
+                                infos.add(info);
+
+                                //第一步：添加数据
+                                String mName = infos.get(i).getName();
+                                nameList.add(mName);
+
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.d("================", responseString);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -452,9 +579,158 @@ public class BuildEnterprisesActivity extends BaseActivity {
 
 //            classifyAdvertDialog();
 
+//            ToastUtil.shortT(this, showText.getP_Name());
+//            ToastUtil.shortT(this, showText.getP_Id() + "");
+
             // 不延迟，直接发送
             handler.sendEmptyMessage(SHOW);
+            String area = mySpinner.getSelectedItem().toString();
+            int iArea = 0;
+            LogUtil.d(area);
+            if (area.equals("上海市")) {
+                iArea = 1;
+            } else if (area.equals("宝山区")) {
+                iArea = 2;
+            } else if (area.equals("嘉定区")) {
+                iArea = 3;
+            } else if (area.equals("青浦区")) {
+                iArea = 4;
+            } else if (area.equals("闵行区")) {
+                iArea = 5;
+            } else if (area.equals("松江区")) {
+                iArea = 6;
+            } else if (area.equals("金山区")) {
+                iArea = 7;
+            } else if (area.equals("奉贤区")) {
+                iArea = 8;
+            } else if (area.equals("崇明区")) {
+                iArea = 9;
+            } else if (area.equals("市区")) {
+                iArea = 10;
+            } else if (area.equals("浦东新区")) {
+                iArea = 11;
+            } else if (area.equals("徐汇区")) {
+                iArea = 12;
+            } else if (area.equals("长宁区")) {
+                iArea = 14;
+            } else if (area.equals("黄浦区")) {
+                iArea = 16;
+            } else if (area.equals("静安区")) {
+                iArea = 17;
+            } else if (area.equals("普陀区")) {
+                iArea = 18;
+            } else if (area.equals("虹口区")) {
+                iArea = 21;
+            } else if (area.equals("杨浦区")) {
+                iArea = 22;
+            }
+            LogUtil.d("tag", "" + iArea);
             getEnterpriseMapPointByType(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, Integer.valueOf(showText.getP_Id()));
+//            getEnterpriseMapPointByTypeOrArea(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, Integer.valueOf(showText.getP_Id()), iArea);
+        }
+    }
+
+    /**
+     * 获取产品分类，区域气泡点
+     *
+     * @param startLong
+     * @param startLat
+     * @param endLong
+     * @param endLat
+     * @param type
+     * @param area
+     */
+    private void getEnterpriseMapPointByTypeOrArea(String startLong, String startLat, String endLong, String endLat, int type, int area) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("startLong", startLong);
+            jsonObject.put("startLat", startLat);
+            jsonObject.put("endLong", endLong);
+            jsonObject.put("endLat", endLat);
+            jsonObject.put("type", type);
+            jsonObject.put("area", area);
+            StringEntity stringEntity = new StringEntity(jsonObject.toString());
+            String url = HttpConfig.REQUEST_URL + "/Map/GetEnterpriseMapPointByTypeOrArea";
+            RequestHandle post = HTTPTool.getClient().post(BuildEnterprisesActivity.this, url, stringEntity, "application/json", new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+
+                    mBaiduMap.clear();//清除地图上的内容
+
+                    Log.d("tag", response.toString());
+
+                    String d = JsonUtil.getData(response.toString());
+                    Log.d("-------------", d);
+
+                    if (d.equals("[]")) {
+                        //发送消息提示关闭对话框
+                        Message msg = new Message();
+                        msg.what = DISMISS;
+                        handler.sendMessage(msg);
+                        ToastUtil.shortT(BuildEnterprisesActivity.this, "没有相关数据");
+                    }
+
+                    try {
+                        JSONArray array = new JSONArray(d);
+
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject object = array.getJSONObject(i);
+                            int id = object.getInt("id");
+                            String name = object.getString("name");
+                            String pointLong = object.getString("pointLong");
+                            String pointLat = object.getString("pointLat");
+                            LogUtil.d("tag", id + "-------" + name + "-----" + pointLong + "-----" + pointLat);
+
+                            EnterpriseMapPoint em = new EnterpriseMapPoint();
+                            em.setId(id);
+                            em.setName(name);
+                            em.setPointLong(pointLong);
+                            em.setPointLat(pointLat);
+
+                            LatLng ll = new LatLng(Double.parseDouble(pointLat), Double.parseDouble(pointLong));
+                            Log.d("tag-------------", "" + Double.parseDouble(pointLat));
+                            Log.d("tag-------------", "" + Double.parseDouble(pointLong));
+
+//                            BitmapDescriptor bd = BitmapDescriptorFactory
+//                                    .fromResource(R.mipmap.icon_gcoding);
+
+                            //对图片进行压缩处理,在给地图设置压缩后的图片
+                            BitmapDescriptor bd = BitmapDescriptorFactory
+                                    .fromBitmap(BitmapUtil.readBitMap(BuildEnterprisesActivity.this, R.mipmap.icon_gcoding));
+                            //给集合添加数据
+                            bdList.add(bd);
+                            Log.d("size", bdList.size() + "==============");
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("buildEnterprise_id", id);
+                            bundle.putString("title", name);
+                            //设置气泡点信息,包括图片以及文字内容等
+                            MarkerOptions oo = new MarkerOptions().position(ll).icon(bd)
+                                    .zIndex(5).extraInfo(bundle);
+                            //给地图添加气泡点
+                            Marker mMarker = (Marker) (mBaiduMap.addOverlay(oo));
+
+                            //发送消息提示关闭对话框
+                            Message msg = new Message();
+                            msg.what = DISMISS;
+                            handler.sendMessage(msg);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.d("================", responseString);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 
@@ -549,7 +825,7 @@ public class BuildEnterprisesActivity extends BaseActivity {
                         location.getLongitude());
                 //实例化Builder对象
                 MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(ll).zoom(18.0f);//设置地图信息
+                builder.target(ll).zoom(15.0f);//设置地图信息
                 //设置地图状态
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
             }

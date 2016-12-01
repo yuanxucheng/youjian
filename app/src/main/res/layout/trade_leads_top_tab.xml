@@ -18,7 +18,7 @@
             android:gravity="center"
             android:text="@string/trade_leads_supply"
             android:textColor="@color/black"
-            android:textSize="@dimen/trade_leads_font__titleSize2" />
+            android:textSize="@dimen/trade_leads_font_titleSize2" />
 
         <TextView
             android:id="@+id/id_trade_leads_buying_leads"
@@ -29,7 +29,7 @@
             android:gravity="center"
             android:text="@string/trade_leads_buying_leads"
             android:textColor="@color/white"
-            android:textSize="@dimen/trade_leads_font__titleSize2" />
+            android:textSize="@dimen/trade_leads_font_titleSize2" />
     </LinearLayout>
 
 </LinearLayout>

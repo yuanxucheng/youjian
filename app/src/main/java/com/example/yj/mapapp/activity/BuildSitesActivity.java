@@ -1,29 +1,18 @@
 package com.example.yj.mapapp.activity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -40,40 +29,33 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.map.Projection;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.search.core.CityInfo;
-import com.baidu.mapapi.search.core.PoiInfo;
-import com.baidu.mapapi.search.core.SearchResult;
-import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener;
-import com.baidu.mapapi.search.poi.PoiCitySearchOption;
-import com.baidu.mapapi.search.poi.PoiDetailResult;
-import com.baidu.mapapi.search.poi.PoiDetailSearchOption;
-import com.baidu.mapapi.search.poi.PoiResult;
-import com.baidu.mapapi.search.poi.PoiSearch;
-import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
-import com.baidu.mapapi.search.sug.SuggestionResult;
-import com.baidu.mapapi.search.sug.SuggestionSearch;
-import com.baidu.mapapi.search.sug.SuggestionSearchOption;
 import com.example.yj.mapapp.R;
 import com.example.yj.mapapp.base.BaseActivity;
 import com.example.yj.mapapp.manager.PoiOverlay;
+import com.example.yj.mapapp.model.Area;
 import com.example.yj.mapapp.model.Companys;
+import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
 import com.example.yj.mapapp.net.handler.HttpUtil;
 import com.example.yj.mapapp.net.handler.ResponseHandler;
 import com.example.yj.mapapp.util.BitmapUtil;
 import com.example.yj.mapapp.util.JsonParser;
+import com.example.yj.mapapp.util.JsonUtil;
 import com.example.yj.mapapp.util.LogUtil;
 import com.example.yj.mapapp.util.ToastUtil;
 import com.example.yj.mapapp.view.MProgressDialog;
 import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestHandle;
 
+import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,20 +67,15 @@ import butterknife.OnClick;
  * 建筑工地
  */
 public class BuildSitesActivity extends BaseActivity {
-    //implements OnGetPoiSearchResultListener, OnGetSuggestionResultListener
 
     /**
      * Called when the activity is first created.
      */
     private List<String> list = new ArrayList<String>();
-    private TextView myTextView;
     private Spinner mySpinner;
     private ArrayAdapter<String> adapter;
-
-//    private PoiSearch mPoiSearch = null;
-//    private SuggestionSearch mSuggestionSearch = null;
-//    private List<String> suggest;
-
+    private List<Area> infos;//区域对象集合
+    private List<String> nameList;//区域名称对象集合
     //自定义进度对话框
     private MProgressDialog pb;
     //显示对话框
@@ -107,43 +84,24 @@ public class BuildSitesActivity extends BaseActivity {
     private static final int DISMISS = 2;
     //第几次进入该界面
     private int count = 0;
-
-    /**
-     * 搜索关键字输入窗口
-     */
-//    private AutoCompleteTextView keyWorldsView = null;
-//    private ArrayAdapter<String> sugAdapter = null;
-//    private int loadIndex = 0;
-
-    /**
-     * MapView 是地图主控件
-     */
+    //MapView 是地图主控件
     private MapView mMapView;
     private BaiduMap mBaiduMap;
     private LatLng cenpt;
     private MapStatus mMapStatus;
     private MapStatusUpdate mMapStatusUpdate;
     private LocationClientOption option;
-
     private InfoWindow mInfoWindow;//地图气泡点窗口
-
     //地图覆盖物集合对象
     private List<BitmapDescriptor> bdList = new ArrayList<>();
-
     // 定位相关
     LocationClient mLocClient;
     //实例化定位监听对象
     public MyLocationListenner myListener = new MyLocationListenner();
     boolean isFirstLoc = true; // 是否首次定位
-
-//    @Bind(R.id.id_dingwei)
-//    Button dingwei;
-//
-//    @OnClick(R.id.id_dingwei)
-//    public void dingwei(View v) {
-//        ToastUtil.longT(this, "正在定位...");
-//        mLocClient.start();
-//    }
+    //地图缩放级别数
+    private static float TWENTY = 20.0f;
+    private static float TWELVE = 12.0f;
 
     @Bind(R.id.id_back)
     ImageView back;
@@ -196,59 +154,18 @@ public class BuildSitesActivity extends BaseActivity {
         pb.setCancelable(true);//设置进度条是否可以按退回键取消
         pb.setCanceledOnTouchOutside(true); //设置点击进度对话框外的区域对话框消失
 
-        // 初始化搜索模块，注册搜索事件监听
-//        mPoiSearch = PoiSearch.newInstance();
-//        mPoiSearch.setOnGetPoiSearchResultListener(this);
-//        mSuggestionSearch = SuggestionSearch.newInstance();
-//        mSuggestionSearch.setOnGetSuggestionResultListener(this);
-//        keyWorldsView = (AutoCompleteTextView) findViewById(R.id.build_site_search_key);
-//        sugAdapter = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_dropdown_item_1line);
-//        keyWorldsView.setAdapter(sugAdapter);
-//        keyWorldsView.setThreshold(1);
-
-//        mBaiduMap = ((SupportMapFragment) (getSupportFragmentManager()
-//                .findFragmentById(R.id.map))).getBaiduMap();
+        infos = new ArrayList<>();
+        nameList = new ArrayList<>();
+        nameList.add("上海市");
 
         //初始化地图
         mMapView = (MapView) findViewById(R.id.build_site_map);
         mBaiduMap = mMapView.getMap();
         //设定中心点坐标
-//        LatLng cenpt = new LatLng(31.083397,121.525437);//北京
-//        LatLng cenpt = new LatLng(31.14, 121.29);//上海市的经纬度
-        cenpt = new LatLng(31.5, 121.5);//上海市的经纬度
-        //定义地图状态
-        mMapStatus = new MapStatus.Builder()
-                .target(cenpt)
-                .zoom(11.5f)
-                .build();
-        //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
-        mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
-        //改变地图状态
-        mBaiduMap.setMapStatus(mMapStatusUpdate);
-        // 开启定位图层
-        mBaiduMap.setMyLocationEnabled(true);
-        // 定位初始化
-        mLocClient = new LocationClient(this);
-        //注册监听
-        mLocClient.registerLocationListener(myListener);
-        //创建LocationClientOption对象
-        option = new LocationClientOption();
-        option.setOpenGps(true); // 打开gps
-        option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(1000);//设置定时定位的时间间隔
-        mLocClient.setLocOption(option);
+        init(31.5, 121.5, TWENTY);//上海市的经纬度
 
-        /**
-         * 当输入关键字变化时，动态更新建议列表
-         */
-//        keyWorldsView.addTextChangedListener(textWatcherListener);
-
-        //源码
-//        mMapView = (MapView) findViewById(R.id.map);
-//        mBaiduMap = mMapView.getMap();
-//        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(14.0f);
-//        mBaiduMap.setMapStatus(msu);
+//        mMapView.showScaleControl(true);//隐藏地图上的比例尺
+//        mMapView.showZoomControls(false);//隐藏地图上的缩放控件
 
         initOverlay();
 
@@ -262,55 +179,75 @@ public class BuildSitesActivity extends BaseActivity {
         //开启百度定位
         mLocClient.start();
 
+        getMapAreaByPid(1);
+
 //        HttpUtil.constructionCoordinate(initPoint().get(3), initPoint().get(2), initPoint().get(1), initPoint().get(0), constructionCoordinateHandler);
 
-        //第一步：添加一个下拉列表项的list，这里添加的项就是下拉列表的菜单项
-        list.add("北京");
-        list.add("上海");
-        list.add("深圳");
-        list.add("福州");
-        list.add("厦门");
-        myTextView = (TextView) findViewById(R.id.TextView_city);
-        mySpinner = (Spinner) findViewById(R.id.Spinner_city);
-        //第二步：为下拉列表定义一个适配器，这里就用到里前面定义的list。
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
-        //第三步：为适配器设置下拉列表下拉时的菜单样式。
+        mySpinner = (Spinner) findViewById(R.id.build_site_spinner_city);
+        //第二步：为下拉列表定义一个适配器，这里就用到里前面定义的list
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nameList);
+        //第三步：为适配器设置下拉列表下拉时的菜单样式
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //第四步：将适配器添加到下拉列表上
         mySpinner.setAdapter(adapter);
         //第五步：为下拉列表设置各种事件的响应，这个事响应菜单被选中
-        mySpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                // TODO Auto-generated method stub
-                /* 将所选mySpinner 的值带入myTextView 中*/
-                myTextView.setText("您选择的是：" + adapter.getItem(arg2));
+        mySpinner.setOnItemSelectedListener(onItemSelectedListener);
+    }
+
+    private AdapterView.OnItemSelectedListener onItemSelectedListener = new Spinner.OnItemSelectedListener() {
+        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            if (arg2 == 0) {
+                init(31.234829, 121.483443, TWELVE);
+            } else {
+                LogUtil.d("tag", "arg2:=======" + arg2);
+                LogUtil.d("tag", "size:=======" + infos.size());
+                double latitude = Double.valueOf(infos.get(arg2 - 1).getLatitude());
+                double longitude = Double.valueOf(infos.get(arg2 - 1).getLongitude());
+                LogUtil.d("tag", "laaaaaaaaa:=======" + latitude);
+                LogUtil.d("tag", "loooooooo:=======" + longitude);
+                init(latitude, longitude, TWELVE);
+            }
+            arg0.getItemAtPosition(arg2);
+            // TODO Auto-generated method stub
                 /* 将mySpinner 显示*/
-                arg0.setVisibility(View.VISIBLE);
-            }
+            arg0.setVisibility(View.VISIBLE);
+        }
 
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-                myTextView.setText("NONE");
-                arg0.setVisibility(View.VISIBLE);
-            }
-        });
-        /*下拉菜单弹出的内容选项触屏事件处理*/
-        mySpinner.setOnTouchListener(new Spinner.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                // TODO Auto-generated method stub
-                /**
-                 *
-                 */
-                return false;
-            }
-        });
-        /*下拉菜单弹出的内容选项焦点改变事件处理*/
-        mySpinner.setOnFocusChangeListener(new Spinner.OnFocusChangeListener() {
-            public void onFocusChange(View v, boolean hasFocus) {
-                // TODO Auto-generated method stub
+        public void onNothingSelected(AdapterView<?> arg0) {
+            // TODO Auto-generated method stub
+            arg0.setVisibility(View.VISIBLE);
+        }
+    };
 
-            }
-        });
+    /**
+     * @param latitude  纬度
+     * @param longitude 经度
+     * @param f         缩放级别
+     */
+    private void init(double latitude, double longitude, float f) {
+        //设定中心点坐标
+        cenpt = new LatLng(latitude, longitude);//区域的经纬度
+        //定义地图状态
+        mMapStatus = new MapStatus.Builder()
+                .target(cenpt)
+                .zoom(f)
+                .build();
+        //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
+        mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+        //改变地图状态
+        mBaiduMap.setMapStatus(mMapStatusUpdate);
+        // 开启定位图层
+        mBaiduMap.setMyLocationEnabled(true);
+        // 定位初始化
+        mLocClient = new LocationClient(BuildSitesActivity.this);
+        //注册监听
+        mLocClient.registerLocationListener(myListener);
+        //创建LocationClientOption对象
+        option = new LocationClientOption();
+        option.setOpenGps(true); // 打开gps
+        option.setCoorType("bd09ll"); // 设置坐标类型
+        option.setScanSpan(1000);//设置定时定位的时间间隔
+        mLocClient.setLocOption(option);
     }
 
     /**
@@ -531,7 +468,7 @@ public class BuildSitesActivity extends BaseActivity {
                         location.getLongitude());
                 //实例化Builder对象
                 MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(ll).zoom(18.0f);//设置地图信息
+                builder.target(ll).zoom(15.0f);//设置地图信息
                 //设置地图状态
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
             }
@@ -682,32 +619,68 @@ public class BuildSitesActivity extends BaseActivity {
         }
     }
 
-//    private TextWatcher textWatcherListener = new TextWatcher() {
-//        @Override
-//        public void afterTextChanged(Editable arg0) {
-//        }
-//
-//        @Override
-//        public void beforeTextChanged(CharSequence arg0, int arg1,
-//                                      int arg2, int arg3) {
-//        }
-//
-//        @Override
-//        public void onTextChanged(CharSequence cs, int arg1, int arg2,
-//                                  int arg3) {
-//            if (cs.length() <= 0) {
-//                return;
-//            }
-//            String city = ((EditText) findViewById(R.id.build_enterprise_city)).getText()
-//                    .toString();
-//            /**
-//             * 使用建议搜索服务获取建议列表，结果在onSuggestionResult()中更新
-//             */
-//            mSuggestionSearch
-//                    .requestSuggestion((new SuggestionSearchOption())
-//                            .keyword(cs.toString()).city(city));
-//        }
-//    };
+    /**
+     * 获取所有的区域
+     *
+     * @param pid
+     */
+    private void getMapAreaByPid(int pid) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("pid", pid);
+            StringEntity stringEntity = new StringEntity(jsonObject.toString());
+            String url = HttpConfig.REQUEST_URL + "/Sys/GetMapAreaByPid";
+            RequestHandle post = HTTPTool.getClient().post(BuildSitesActivity.this, url, stringEntity, "application/json", new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.d("==============", response.toString());
+                    String d = JsonUtil.getData(response.toString());
+                    Log.d("-------------", d);
+
+                    try {
+                        JSONArray array = new JSONArray(d);
+
+                        if (array.length() > 0) {
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                int id = object.getInt("Id");
+                                String name = object.getString("Name");
+                                int pid = object.getInt("Pid");
+                                String longitude = object.getString("Longitude");
+                                String latitude = object.getString("Latitude");
+                                LogUtil.d("tag", id + "-------" + name + "-----" + pid + "-----" + longitude + "------" + latitude);
+
+                                Area info = new Area();
+                                info.setId(id);
+                                info.setName(name);
+                                info.setPid(pid);
+                                info.setLatitude(latitude);
+                                info.setLongitude(longitude);
+                                infos.add(info);
+
+                                //第一步：添加数据
+                                String mName = infos.get(i).getName();
+                                nameList.add(mName);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                    Log.d("================", responseString);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void initOverlay() {
     }
@@ -722,87 +695,17 @@ public class BuildSitesActivity extends BaseActivity {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-//    /**
-//     * 影响搜索按钮点击事件
-//     * @param v
-//     */
-//    public void searchButtonProcess(View v) {
-//        EditText editCity = (EditText) findViewById(R.id.build_site_city);
-//        EditText editSearchKey = (EditText) findViewById(R.id.build_site_search_key);
-//        mPoiSearch.searchInCity((new PoiCitySearchOption())
-//                .city(editCity.getText().toString())
-//                .keyword(editSearchKey.getText().toString())
-//                .pageNum(loadIndex));
-//    }
+    private class MyPoiOverlay extends PoiOverlay {
 
-//    public void onGetPoiResult(PoiResult result) {
-//        if (result == null
-//                || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
-//            Toast.makeText(BuildSitesActivity.this, "未找到结果", Toast.LENGTH_LONG)
-//                    .show();
-//            return;
-//        }
-//        if (result.error == SearchResult.ERRORNO.NO_ERROR) {
-//            mBaiduMap.clear();
-//            PoiOverlay overlay = new MyPoiOverlay(mBaiduMap);
-//            mBaiduMap.setOnMarkerClickListener(overlay);
-//            overlay.setData(result);
-//            overlay.addToMap();
-//            overlay.zoomToSpan();
-//            return;
-//        }
-//        if (result.error == SearchResult.ERRORNO.AMBIGUOUS_KEYWORD) {
-//
-//            // 当输入关键字在本市没有找到，但在其他城市找到时，返回包含该关键字信息的城市列表
-//            String strInfo = "在";
-//            for (CityInfo cityInfo : result.getSuggestCityList()) {
-//                strInfo += cityInfo.city;
-//                strInfo += ",";
-//            }
-//            strInfo += "找到结果";
-//            Toast.makeText(BuildSitesActivity.this, strInfo, Toast.LENGTH_LONG)
-//                    .show();
-//        }
-//    }
+        public MyPoiOverlay(BaiduMap baiduMap) {
+            super(baiduMap);
+        }
 
-//    public void onGetPoiDetailResult(PoiDetailResult result) {
-//        if (result.error != SearchResult.ERRORNO.NO_ERROR) {
-//            Toast.makeText(BuildSitesActivity.this, "抱歉，未找到结果", Toast.LENGTH_SHORT)
-//                    .show();
-//        }
-//    }
+        @Override
+        public boolean onPoiClick(int index) {
+            super.onPoiClick(index);
 
-//    @Override
-//    public void onGetSuggestionResult(SuggestionResult res) {
-//        if (res == null || res.getAllSuggestions() == null) {
-//            return;
-//        }
-//        suggest = new ArrayList<String>();
-//        for (SuggestionResult.SuggestionInfo info : res.getAllSuggestions()) {
-//            if (info.key != null) {
-//                suggest.add(info.key);
-//            }
-//        }
-//        sugAdapter = new ArrayAdapter<String>(BuildSitesActivity.this, android.R.layout.simple_dropdown_item_1line, suggest);
-////        keyWorldsView.setAdapter(sugAdapter);
-//        sugAdapter.notifyDataSetChanged();
-//    }
-
-//    private class MyPoiOverlay extends PoiOverlay {
-//
-//        public MyPoiOverlay(BaiduMap baiduMap) {
-//            super(baiduMap);
-//        }
-//
-//        @Override
-//        public boolean onPoiClick(int index) {
-//            super.onPoiClick(index);
-//            PoiInfo poi = getPoiResult().getAllPoi().get(index);
-//            // if (poi.hasCaterDetails) {
-//            mPoiSearch.searchPoiDetail((new PoiDetailSearchOption())
-//                    .poiUid(poi.uid));
-//            // }
-//            return true;
-//        }
-//    }
+            return true;
+        }
+    }
 }

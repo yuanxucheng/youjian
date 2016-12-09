@@ -205,7 +205,7 @@ public class BuildSitesActivity extends BaseActivity {
                 double longitude = Double.valueOf(infos.get(arg2 - 1).getLongitude());
                 LogUtil.d("tag", "laaaaaaaaa:=======" + latitude);
                 LogUtil.d("tag", "loooooooo:=======" + longitude);
-                init(latitude, longitude, TWELVE);
+                init(latitude, longitude, TWENTY);
             }
             arg0.getItemAtPosition(arg2);
             // TODO Auto-generated method stub

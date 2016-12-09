@@ -161,6 +161,10 @@ public class BuildEnterprisesActivity extends BaseActivity {
     private static float TWENTY = 20.0f;
     private static float TWELVE = 12.0f;
 
+    private int mPId;
+
+    private int num = 0;
+
 //    @Bind(R.id.id_dingwei)
 //    Button dingwei;
 //
@@ -286,25 +290,77 @@ public class BuildEnterprisesActivity extends BaseActivity {
         mySpinner.setAdapter(adapter);
         //第五步：为下拉列表设置各种事件的响应，这个事响应菜单被选中
         mySpinner.setOnItemSelectedListener(onItemSelectedListener);
+
+//        getEnterpriseMapPointByTypeOrArea(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, 0, 0);
     }
 
     private AdapterView.OnItemSelectedListener onItemSelectedListener = new Spinner.OnItemSelectedListener() {
         public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-            if (arg2 == 0) {
-                init(31.234829, 121.483443, TWELVE);
-            } else {
-                LogUtil.d("tag", "arg2:=======" + arg2);
-                LogUtil.d("tag", "size:=======" + infos.size());
-                double latitude = Double.valueOf(infos.get(arg2 - 1).getLatitude());
-                double longitude = Double.valueOf(infos.get(arg2 - 1).getLongitude());
-                LogUtil.d("tag", "laaaaaaaaa:=======" + latitude);
-                LogUtil.d("tag", "loooooooo:=======" + longitude);
-                init(latitude, longitude, TWELVE);
+            String area = mySpinner.getSelectedItem().toString();
+            int iArea = 0;
+            LogUtil.d(area);
+            if (area.equals("上海市")) {
+                iArea = 0;
+            } else if (area.equals("宝山区")) {
+                iArea = 2;
+            } else if (area.equals("嘉定区")) {
+                iArea = 3;
+            } else if (area.equals("青浦区")) {
+                iArea = 4;
+            } else if (area.equals("闵行区")) {
+                iArea = 5;
+            } else if (area.equals("松江区")) {
+                iArea = 6;
+            } else if (area.equals("金山区")) {
+                iArea = 7;
+            } else if (area.equals("奉贤区")) {
+                iArea = 8;
+            } else if (area.equals("崇明区")) {
+                iArea = 9;
+            } else if (area.equals("市区")) {
+                iArea = 10;
+            } else if (area.equals("浦东新区")) {
+                iArea = 11;
+            } else if (area.equals("徐汇区")) {
+                iArea = 12;
+            } else if (area.equals("长宁区")) {
+                iArea = 14;
+            } else if (area.equals("黄浦区")) {
+                iArea = 16;
+            } else if (area.equals("静安区")) {
+                iArea = 17;
+            } else if (area.equals("普陀区")) {
+                iArea = 18;
+            } else if (area.equals("虹口区")) {
+                iArea = 21;
+            } else if (area.equals("杨浦区")) {
+                iArea = 22;
             }
-            arg0.getItemAtPosition(arg2);
-            // TODO Auto-generated method stub
+
+//            ToastUtil.shortT(BuildEnterprisesActivity.this, mPId + "");
+//            ToastUtil.shortT(BuildEnterprisesActivity.this, iArea + "");
+            LogUtil.d("tag", mPId + "");
+            LogUtil.d("iArea", iArea + "");
+            if (num > 0) {
+                if (arg2 == 0) {
+                    getEnterpriseMapPointByTypeOrArea(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, mPId, iArea);
+                    init(31.234829, 121.483443, TWELVE);
+                } else {
+                    LogUtil.d("tag", "arg2:=======" + arg2);
+                    LogUtil.d("tag", "size:=======" + infos.size());
+                    double latitude = Double.valueOf(infos.get(arg2 - 1).getLatitude());
+                    double longitude = Double.valueOf(infos.get(arg2 - 1).getLongitude());
+                    LogUtil.d("tag", "laaaaaaaaa:=======" + latitude);
+                    LogUtil.d("tag", "loooooooo:=======" + longitude);
+                    getEnterpriseMapPointByTypeOrArea(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, mPId, iArea);
+                    init(latitude, longitude, TWELVE);
+                }
+                arg0.getItemAtPosition(arg2);
+                // TODO Auto-generated method stub
                 /* 将mySpinner 显示*/
-            arg0.setVisibility(View.VISIBLE);
+                arg0.setVisibility(View.VISIBLE);
+            }
+            num++;
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {
@@ -579,7 +635,9 @@ public class BuildEnterprisesActivity extends BaseActivity {
 
 //            classifyAdvertDialog();
 
+            mPId = showText.getP_Id();
 //            ToastUtil.shortT(this, showText.getP_Name());
+//            ToastUtil.shortT(this, mPId + "");
 //            ToastUtil.shortT(this, showText.getP_Id() + "");
 
             // 不延迟，直接发送
@@ -624,9 +682,12 @@ public class BuildEnterprisesActivity extends BaseActivity {
             } else if (area.equals("杨浦区")) {
                 iArea = 22;
             }
-            LogUtil.d("tag", "" + iArea);
-            getEnterpriseMapPointByType(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, Integer.valueOf(showText.getP_Id()));
-//            getEnterpriseMapPointByTypeOrArea(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, Integer.valueOf(showText.getP_Id()), iArea);
+//            ToastUtil.shortT(this, Integer.valueOf(showText.getP_Id()) + "");
+//            ToastUtil.shortT(this, iArea + "");
+            LogUtil.d("tag", Integer.valueOf(showText.getP_Id()) + "");
+            LogUtil.d("iArea", iArea + "");
+//            getEnterpriseMapPointByType(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, Integer.valueOf(showText.getP_Id()));
+            getEnterpriseMapPointByTypeOrArea(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, Integer.valueOf(showText.getP_Id()), iArea);
         }
     }
 
@@ -668,7 +729,7 @@ public class BuildEnterprisesActivity extends BaseActivity {
                         Message msg = new Message();
                         msg.what = DISMISS;
                         handler.sendMessage(msg);
-                        ToastUtil.shortT(BuildEnterprisesActivity.this, "没有相关数据");
+                        ToastUtil.shortT(BuildEnterprisesActivity.this, "没有数据");
                     }
 
                     try {
@@ -714,6 +775,8 @@ public class BuildEnterprisesActivity extends BaseActivity {
                             Message msg = new Message();
                             msg.what = DISMISS;
                             handler.sendMessage(msg);
+
+                            ToastUtil.shortT(BuildEnterprisesActivity.this, "搜索完毕");
                         }
 
                     } catch (JSONException e) {

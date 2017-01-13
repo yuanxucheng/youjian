@@ -267,7 +267,7 @@ public class HardSuperActivity extends Activity implements AbsListView.OnScrollL
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "item", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "item", Toast.LENGTH_LONG).show();
         int parentId = mData.get(position - 1).getId();
         String name = mData.get(position - 1).getName();
 

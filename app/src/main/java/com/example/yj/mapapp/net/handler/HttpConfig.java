@@ -32,6 +32,7 @@ public class HttpConfig {
 
     //应用宝版本
     public static String VERSION_NUMBER_URL = "http://a.app.qq.com/o/simple.jsp?pkgname=com.example.yj.mapapp";
+//    public static String VERSION_NUMBER_URL = " http://android.myapp.com/myapp/detail.htm?apkName=com.tencent.tmgp.sgame";
 
     //开始横坐标
     public static String startLong = "120";

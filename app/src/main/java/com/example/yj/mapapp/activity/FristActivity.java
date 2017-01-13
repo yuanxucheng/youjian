@@ -1,5 +1,6 @@
 package com.example.yj.mapapp.activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,17 +8,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -30,7 +33,6 @@ import com.example.yj.mapapp.base.BaseActivity;
 import com.example.yj.mapapp.base.MApplication;
 import com.example.yj.mapapp.location.LocationService;
 import com.example.yj.mapapp.model.Banner;
-import com.example.yj.mapapp.net.handler.HTTPTool;
 import com.example.yj.mapapp.net.handler.HttpConfig;
 import com.example.yj.mapapp.net.handler.HttpUtil;
 import com.example.yj.mapapp.net.handler.ResponseHandler;
@@ -41,17 +43,14 @@ import com.example.yj.mapapp.util.ToastUtil;
 import com.example.yj.mapapp.view.ExitDialog;
 import com.example.yj.mapapp.view.MPopwindow;
 import com.google.gson.reflect.TypeToken;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
-import org.apache.http.Header;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +124,9 @@ public class FristActivity extends BaseActivity {
 
     @Bind(R.id.find)
     Button find;
+
+    @Bind(R.id.id_webview)
+    WebView webView;
 
     @OnClick(R.id.find)
     public void find() {
@@ -247,6 +249,7 @@ public class FristActivity extends BaseActivity {
 
     }
 
+    @SuppressLint("JavascriptInterface")
     @Override
     public void initView(View view) {
         ButterKnife.bind(this);
@@ -281,12 +284,12 @@ public class FristActivity extends BaseActivity {
 //            }
 //        }
 
-//        getVersionMessage();
-
         isFrist();
 
-        current_city.setMovementMethod(ScrollingMovementMethod.getInstance());
-
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(new InJavaScriptLocalObj(), "local_obj");
+        webView.setWebViewClient(new MyWebViewClient());
+        webView.loadUrl("http://android.myapp.com/myapp/detail.htm?apkName=com.example.yj.mapapp");
         HttpUtil.homeCarousel(homeCarouselHandler);
 
         configImageLoader();
@@ -307,10 +310,8 @@ public class FristActivity extends BaseActivity {
             Log.d("debug", "第一次运行");
             editor.putBoolean("isFirstRun", false);
             editor.commit();
-            getVersionMessage();
         } else {
             Log.d("debug", "不是第一次运行");
-            getVersionMessage();
         }
     }
 
@@ -368,86 +369,6 @@ public class FristActivity extends BaseActivity {
             e.printStackTrace();
         }
         return versionName;
-    }
-
-    /**
-     * 获取版本信息
-     */
-    private void getVersionMessage() {
-        HTTPTool.getClient().post(HttpConfig.VERSION_NUMBER_URL, null, new AsyncHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers,
-                                  byte[] responseBody) {
-                try {
-                    BufferedReader r = new BufferedReader(new StringReader(new String(responseBody)));
-                    String line = null;
-                    while ((line = r.readLine()) != null) {
-                        if (line.contains("window.AppInfoData={")) {
-                            String content = line.trim().replace("window.AppInfoData=", "");
-                            content = content.substring(0, content.length() - 1);
-                            LogUtil.d("content=" + content);
-                            JSONObject jsonObject = new JSONObject(content);
-                            JSONObject appDetail = jsonObject.getJSONObject("appDetail");
-                            String versionName = appDetail.getString("versionName");
-                            String versionCode = appDetail.getString("versionCode");
-                            String packageName = appDetail.getString("packageName");
-                            String appId = appDetail.getString("appId");
-                            String appName = appDetail.getString("appName");
-                            String categoryId = appDetail.getString("categoryId");
-                            String categoryName = appDetail.getString("categoryName");
-                            String author = appDetail.getString("author");
-                            String apkUrl = appDetail.getString("apkUrl");
-                            String publishTime = appDetail.getString("publishTime");
-                            String downCount = appDetail.getString("downCount");
-                            JSONObject object = new JSONObject(downCount);
-                            String bytes = object.getString("bytes");
-                            String desc = object.getString("desc");
-                            LogUtil.d("versionName=" + versionName + "versionCode=" + versionCode + "packageName=" + packageName + "appId=" + appId + "appName=" + appName + "categoryId=" + categoryId + "categoryName=" + categoryName + "author=" + author + "publishTime=" + publishTime + "apkUrl=" + apkUrl + "downCount=" + downCount);
-
-//                            if (!isFirstRun) {
-//                                if (!readVersionMessage().equals(versionName)) {
-//                                    showNoticeDialog();
-//                                }
-//                            }
-
-                            if (!isFirstRun) {
-                                LogUtil.d("tag", "versionName:===============" + getAppVersionName(FristActivity.this));
-                                if (!getAppVersionName(FristActivity.this).equals(versionName)) {
-                                    showNoticeDialog();
-                                }
-                            }
-
-                            SharedPreferences sp = getSharedPreferences("version", MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sp.edit();
-                            editor.putString("versionName", versionName);
-                            editor.putString("versionCode", versionCode);
-                            editor.putString("packageName", packageName);
-                            editor.putString("appId", appId);
-                            editor.putString("appName", appName);
-                            editor.putString("categoryId", categoryId);
-                            editor.putString("categoryName", categoryName);
-                            editor.putString("author", author);
-                            editor.putString("apkUrl", apkUrl);
-                            editor.putString("publishTime", publishTime);
-                            editor.putString("bytes", bytes);
-                            editor.putString("desc", desc);
-                            editor.commit();
-                        }
-                    }
-                    r.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers,
-                                  byte[] responseBody, Throwable error) {
-                // 打印错误信息
-                error.printStackTrace();
-            }
-        });
     }
 
     /**
@@ -767,5 +688,58 @@ public class FristActivity extends BaseActivity {
                 .threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
                 .discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).build();
         ImageLoader.getInstance().init(config);
+    }
+
+    final class InJavaScriptLocalObj {
+        @JavascriptInterface
+        public void getSource(String html) {
+            Log.d("html=", html);//网页源代码
+
+            BufferedReader r = new BufferedReader(new StringReader(new String(html)));
+            String line = null;
+            try {
+                while ((line = r.readLine()) != null) {
+                    if (line.contains("版本号：")) {
+                        LogUtil.d("line", "line=" + line);
+                        String versionLine = r.readLine();
+                        LogUtil.d("versionLine", "versionLine=" + versionLine);
+                        String versionName = versionLine.substring(versionLine.indexOf(">") + 2, versionLine.lastIndexOf("<"));
+                        LogUtil.d("versionName", versionName);
+                        LogUtil.d("tag", "versionName:===============" + getAppVersionName(FristActivity.this));
+                        if (!isFirstRun) {
+//                            ToastUtil.shortT(FristActivity.this, versionName);
+//                            ToastUtil.shortT(FristActivity.this, getAppVersionName(FristActivity.this));
+                            if (!getAppVersionName(FristActivity.this).equals(versionName)) {
+                                showNoticeDialog();
+                            }
+                        }
+                    }
+                }
+                r.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+final class MyWebViewClient extends WebViewClient {
+    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        view.loadUrl(url);
+        return true;
+    }
+
+    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        Log.d("WebView", "onPageStarted");
+        super.onPageStarted(view, url, favicon);
+    }
+
+    public void onPageFinished(WebView view, String url) {
+        Log.d("WebView", "onPageFinished ");
+        //获取网页内容
+        view.loadUrl("javascript:window.local_obj.getSource('123:'+document.body.innerHTML+'')");
+        LogUtil.d("url=============" + url);
+        super.onPageFinished(view, url);
     }
 }

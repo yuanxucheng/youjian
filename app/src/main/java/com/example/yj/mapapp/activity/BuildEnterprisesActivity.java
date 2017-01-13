@@ -288,7 +288,7 @@ public class BuildEnterprisesActivity extends BaseActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //第四步：将适配器添加到下拉列表上
         mySpinner.setAdapter(adapter);
-        //第五步：为下拉列表设置各种事件的响应，这个事响应菜单被选中
+        //第五步：为下拉列表设置各种事件的响应，这个是响应菜单被选中
         mySpinner.setOnItemSelectedListener(onItemSelectedListener);
 
 //        getEnterpriseMapPointByTypeOrArea(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, 0, 0);
@@ -343,8 +343,8 @@ public class BuildEnterprisesActivity extends BaseActivity {
             LogUtil.d("iArea", iArea + "");
             if (num > 0) {
                 if (arg2 == 0) {
-                    getEnterpriseMapPointByTypeOrArea(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, mPId, iArea);
-                    init(31.234829, 121.483443, TWELVE);
+//                    getEnterpriseMapPointByTypeOrArea(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, mPId, iArea);
+                    init(31.234829, 121.483443, TWENTY);
                 } else {
                     LogUtil.d("tag", "arg2:=======" + arg2);
                     LogUtil.d("tag", "size:=======" + infos.size());
@@ -352,8 +352,8 @@ public class BuildEnterprisesActivity extends BaseActivity {
                     double longitude = Double.valueOf(infos.get(arg2 - 1).getLongitude());
                     LogUtil.d("tag", "laaaaaaaaa:=======" + latitude);
                     LogUtil.d("tag", "loooooooo:=======" + longitude);
-                    getEnterpriseMapPointByTypeOrArea(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, mPId, iArea);
-                    init(latitude, longitude, TWELVE);
+//                    getEnterpriseMapPointByTypeOrArea(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, mPId, iArea);
+                    init(latitude, longitude, TWENTY);
                 }
                 arg0.getItemAtPosition(arg2);
                 // TODO Auto-generated method stub
@@ -686,8 +686,8 @@ public class BuildEnterprisesActivity extends BaseActivity {
 //            ToastUtil.shortT(this, iArea + "");
             LogUtil.d("tag", Integer.valueOf(showText.getP_Id()) + "");
             LogUtil.d("iArea", iArea + "");
-//            getEnterpriseMapPointByType(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, Integer.valueOf(showText.getP_Id()));
-            getEnterpriseMapPointByTypeOrArea(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, Integer.valueOf(showText.getP_Id()), iArea);
+            getEnterpriseMapPointByType(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, Integer.valueOf(showText.getP_Id()));
+//            getEnterpriseMapPointByTypeOrArea(HttpConfig.startLong, HttpConfig.startLat, HttpConfig.endLong, HttpConfig.endLat, Integer.valueOf(showText.getP_Id()), iArea);
         }
     }
 

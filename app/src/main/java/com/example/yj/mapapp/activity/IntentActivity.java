@@ -110,6 +110,7 @@ public class IntentActivity extends BaseActivity {
     }
 
     private void register(String name, String pwd, String contacts, String phone, int type) {
+        LogUtil.d("TAG", "type:=========" + type);
         if (name.equals("") || pwd.equals("") || contacts.equals("") || phone.equals("")) {
             ToastUtil.shortT(IntentActivity.this, "所有信息不能为空!");
         } else if (name.equals("")) {
@@ -187,7 +188,7 @@ public class IntentActivity extends BaseActivity {
         corporate_user.setBackgroundResource(R.color.white);
         construction_user.setBackgroundResource(R.color.register_btn_color_click);
         //设置注册用户类型
-        type = 11;
+        type = 7;
     }
 
     @Bind(R.id.id_construction_user)
@@ -197,7 +198,7 @@ public class IntentActivity extends BaseActivity {
     public void construction_user() {
         construction_user.setBackgroundResource(R.color.white);
         corporate_user.setBackgroundResource(R.color.register_btn_color_click);
-        type = 3;
+        type = 8;
     }
 
     @Bind(R.id.id_frist_tip)
@@ -222,7 +223,7 @@ public class IntentActivity extends BaseActivity {
     public void initView(View view) {
         ButterKnife.bind(this);
         et_contactNumber.setInputType(EditorInfo.TYPE_CLASS_PHONE);
-        type = 11;
+        type = 7;
 
         /**
          * EditText控件获取焦点事件

@@ -210,4 +210,11 @@
                 android:src="@mipmap/personal_center" />
         </LinearLayout>
     </LinearLayout>
+
+    <WebView
+        android:id="@+id/id_webview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:visibility="gone"></WebView>
 </LinearLayout>
